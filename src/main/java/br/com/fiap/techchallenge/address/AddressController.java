@@ -2,6 +2,7 @@ package br.com.fiap.techchallenge.address;
 
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -26,10 +27,16 @@ public class AddressController {
     }
 
     @PostMapping
-    public ResponseEntity<AddressDTO> createAddress(@Valid @RequestBody AddressDTO address){
+    public ResponseEntity<?> createAddress(@Valid @RequestBody AddressDTO address, BindingResult bindingResult){
+
+        if (bindingResult.hasErrors()){
+            return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
+        }
+
         Address entity = new Address();
         entity.toEntity(address);
         addressRepository.save(entity);
+
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(address.id()).toUri();
         return ResponseEntity.created(uri).body(address);
     }

@@ -1,7 +1,7 @@
 package br.com.fiap.techchallenge.address;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.*;
 
 @Entity
 public class Address {
@@ -12,6 +12,7 @@ public class Address {
     @NotBlank(message = "Rua é obrigatória")
     private String street;
     @NotBlank(message = "Número é obrigatório")
+    @Size(min = 2, message = "Número deve conter 2 caracteres")
     private String number;
     @NotBlank(message = "Bairro é obrigatório")
     private String neighborhood;
