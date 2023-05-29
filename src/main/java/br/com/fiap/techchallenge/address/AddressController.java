@@ -1,6 +1,9 @@
 package br.com.fiap.techchallenge.address;
 
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Path;
 import jakarta.validation.Valid;
+import jakarta.validation.Validation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -8,6 +11,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/address")
@@ -27,17 +33,16 @@ public class AddressController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createAddress(@Valid @RequestBody AddressDTO address, BindingResult bindingResult){
+    public ResponseEntity<?> createAddress(@RequestBody AddressDTO addressDTO){
+        Set<ConstraintViolation<AddressDTO>> violations = Validation.buildDefaultValidatorFactory().getValidator().validate(addressDTO);
 
-        if (bindingResult.hasErrors()){
-            return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
-        }
+        Map<Path, String> violationsMap = violations.stream().collect(Collectors.toMap(ConstraintViolation::getPropertyPath, ConstraintViolation::getMessage));
 
-        Address entity = new Address();
-        entity.toEntity(address);
-        addressRepository.save(entity);
+        if (!violationsMap.isEmpty()) return ResponseEntity.badRequest().body(violationsMap);
 
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(address.id()).toUri();
+        Address address = addressRepository.save(addressDTO.toEntity());
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(address.getId()).toUri();
         return ResponseEntity.created(uri).body(address);
     }
 }

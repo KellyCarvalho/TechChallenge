@@ -19,4 +19,8 @@ public record AddressDTO(Long id,
     public AddressDTO(Address address) {
         this(address.getId(), address.getStreet(), address.getNumber(), address.getNeighborhood(), address.getCity(), address.getState());
     }
+
+    public Address toEntity() {
+        return new Address(street, number, neighborhood, city, state);
+    }
 }
