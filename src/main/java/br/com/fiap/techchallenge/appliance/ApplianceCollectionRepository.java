@@ -32,13 +32,18 @@ public class ApplianceCollectionRepository  {
         return appliances.stream().filter(appliance -> appliance.getId().equals(id)).findFirst();
     }
 
-    public static void save(Appliance appliance) {
+    public static Appliance create(Appliance appliance) {
         appliance.setId(appliances.size() + 1L);
         appliances.add(appliance);
+        return appliance;
+    }
+
+    public Appliance save(Appliance appliance) {
+        return create(appliance);
     }
 
     private static void saveAll(List<Appliance> appliances) {
-        appliances.forEach(ApplianceCollectionRepository::save);
+        appliances.forEach(ApplianceCollectionRepository::create);
     }
 
 }
