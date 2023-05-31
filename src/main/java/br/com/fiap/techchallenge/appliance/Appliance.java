@@ -28,6 +28,16 @@ public class Appliance {
         this.voltage = voltage;
     }
 
+    public Appliance merge(Appliance appliance, Appliance applianceForm) {
+        this.id = appliance.getId();
+        this.name = applianceForm.getName();
+        this.brand = applianceForm.getBrand();
+        this.model = applianceForm.getModel();
+        this.potencyInWatts = applianceForm.getPotencyInWatts();
+        this.voltage = applianceForm.getVoltage();
+        return this;
+    }
+
     public Long getId() {
         return id;
     }

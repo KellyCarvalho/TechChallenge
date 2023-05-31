@@ -8,8 +8,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/appliances")
@@ -40,6 +38,17 @@ public class ApplianceController {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(applianceForm.getId()).toUri();
 
         return ResponseEntity.created(uri).body(appliance);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Appliance> update(@PathVariable("id")Long id, @RequestBody Appliance applianceForm) {
+
+        // todo continuar a partir daqui, lembrar que todos os Apliances estão em uma lista, então precisa modificar a lista um item na lista
+        Appliance appliance = applianceCollectionRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        appliance = applianceForm.merge(appliance, applianceForm);
+        applianceCollectionRepository.save(appliance);
+
+        return ResponseEntity.accepted().body(appliance);
     }
 
 
