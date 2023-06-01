@@ -1,5 +1,6 @@
 package br.com.fiap.techchallenge.appliance;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +38,7 @@ public class ApplianceController {
         return ResponseEntity.ok(new ApplianceView(appliance));
     }
     @PostMapping
-    public ResponseEntity<ApplianceView> create(@RequestBody ApplianceForm applianceForm) {
+    public ResponseEntity<ApplianceView> create(@Valid @RequestBody ApplianceForm applianceForm) {
         Appliance appliance = applianceCollectionRepository.save(applianceForm.toEntity());
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(appliance.getId()).toUri();
@@ -45,7 +46,7 @@ public class ApplianceController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApplianceView> update(@PathVariable Long id, @RequestBody ApplianceForm applianceForm) {
+    public ResponseEntity<ApplianceView> update(@PathVariable Long id, @Valid @RequestBody ApplianceForm applianceForm) {
         ApplianceView applianceView = applianceService.update(id, applianceForm);
 
         return ResponseEntity.ok(applianceView);

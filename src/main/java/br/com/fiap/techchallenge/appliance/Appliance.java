@@ -1,20 +1,17 @@
 package br.com.fiap.techchallenge.appliance;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
 
-@Entity
 public class Appliance {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "Nome é obrigatório")
     private String name;
+    @NotBlank(message = "Marca é obrigatório")
     private String brand;
     private String model;
     private Integer potencyInWatts;
+    @NotBlank(message = "Voltagem é obrigatório")
     private Voltage voltage;
 
     public Appliance() {

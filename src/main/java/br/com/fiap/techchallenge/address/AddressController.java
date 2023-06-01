@@ -2,6 +2,7 @@ package br.com.fiap.techchallenge.address;
 
 import br.com.fiap.techchallenge.exception.NotFoundException;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
