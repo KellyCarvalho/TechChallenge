@@ -48,4 +48,11 @@ public class AddressController {
         addressDTO = addressService.update(id, addressDTO);
         return ResponseEntity.ok(addressDTO);
     }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        addressRepository.findById(id).orElseThrow(() -> new NotFoundException("Endereço não encontrado"));
+        addressRepository.deleteById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }
