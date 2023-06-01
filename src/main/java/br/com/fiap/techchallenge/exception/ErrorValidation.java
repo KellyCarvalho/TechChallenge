@@ -23,4 +23,10 @@ public class ErrorValidation {
         });
         return errors;
     }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NotFoundException.class)
+    public Map<String, String> handleNotFoundException(NotFoundException ex) {
+        return Map.of("error", ex.getMessage()) ;
+    }
 }
