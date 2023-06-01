@@ -34,9 +34,9 @@ public class ApplianceController {
     public ResponseEntity<ApplianceView> findById(@PathVariable("id") Long id) {
         Appliance appliance = applianceCollectionRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-
         return ResponseEntity.ok(new ApplianceView(appliance));
     }
+
     @PostMapping
     public ResponseEntity<ApplianceView> create(@Valid @RequestBody ApplianceForm applianceForm) {
         Appliance appliance = applianceCollectionRepository.save(applianceForm.toEntity());
@@ -58,6 +58,5 @@ public class ApplianceController {
 
         return ResponseEntity.ok("delete com sucesso");
     }
-
 
 }

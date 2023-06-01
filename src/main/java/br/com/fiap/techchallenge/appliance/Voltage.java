@@ -21,6 +21,6 @@ public enum Voltage {
         return Arrays.stream(Voltage.values())
                 .filter(v -> v.getDisplayName().equals(voltage))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("Status não suportado"));
+                .orElseThrow(() -> new RuntimeException("Voltagem não encontrada"));
     }
 }

@@ -42,11 +42,11 @@ public class ApplianceCollectionRepository  {
         return create(appliance);
     }
 
-    private static void saveAll(List<Appliance> appliances) {
-        appliances.forEach(ApplianceCollectionRepository::create);
-    }
-
     public void deleteById(Long id) {
         appliances.removeIf(appliance -> appliance.getId().equals(id));
+    }
+
+    private static void saveAll(List<Appliance> appliances) {
+        appliances.forEach(ApplianceCollectionRepository::create);
     }
 }
