@@ -64,4 +64,10 @@ public class Person {
     public void setGender(Gender gender) {
         this.gender = gender;
     }
+
+    public void update(PersonForm personForm) {
+        setName(personForm.name());
+        setBirthDate(personForm.birthDate());
+        setGender(personForm.gender());
+    }
 }
