@@ -23,20 +23,20 @@ public class AddressController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getAddresses(){
+    public ResponseEntity<?> getAddresses() {
         List<Address> addresses = addressRepository.findAll();
         List<AddressDTO> addressDTOS = addresses.stream().map(AddressDTO::new).toList();
         return ResponseEntity.ok().body(addressDTOS);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<?> getAddress(@PathVariable Long id){
+    public ResponseEntity<?> getAddress(@PathVariable Long id) {
         Address address = addressRepository.findById(id).orElseThrow(() -> new NotFoundException("Endereço não encontrado"));
         return ResponseEntity.ok(new AddressDTO(address));
     }
 
     @PostMapping
-    public ResponseEntity<?> createAddress(@Valid @RequestBody AddressDTO addressDTO){
+    public ResponseEntity<?> createAddress(@Valid @RequestBody AddressDTO addressDTO) {
         Address address = addressRepository.save(addressDTO.toEntity());
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(address.getId()).toUri();
@@ -44,8 +44,8 @@ public class AddressController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody AddressDTO addressDTO){
-            addressDTO = addressService.update(id, addressDTO);
-            return ResponseEntity.ok(addressDTO);
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody AddressDTO addressDTO) {
+        addressDTO = addressService.update(id, addressDTO);
+        return ResponseEntity.ok(addressDTO);
     }
 }
