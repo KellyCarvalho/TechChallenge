@@ -31,12 +31,8 @@ public class AddressController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> getAddress(@PathVariable Long id){
-        try{
-            AddressDTO address = addressService.findById(id);
-            return ResponseEntity.ok().body(address);
-        }catch (NotFoundException e){
-            String errorMessage = "Endereço não encontrado para o ID: "+id;
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);        }
+        Address address = addressRepository.findById(id).orElseThrow(() -> new NotFoundException("Endereço não encontrado"));
+        return ResponseEntity.ok(new AddressDTO(address));
     }
 
     @PostMapping
