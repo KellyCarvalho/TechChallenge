@@ -1,19 +1,27 @@
 package br.com.fiap.techchallenge.appliance;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 public class Appliance {
 
     private Long id;
-    @NotBlank(message = "Nome é obrigatório")
+    @NotNull
+    @Size(min = 1, max = 255)
     private String name;
-    @NotBlank(message = "Marca é obrigatório")
+    @NotNull
+    @Size(min = 1, max = 100)
     private String brand;
     private String model;
     private Integer potencyInWatts;
-    @NotBlank(message = "Voltagem é obrigatório")
+    @NotNull
+    @Enumerated(EnumType.STRING)
     private Voltage voltage;
 
+    @Deprecated
     public Appliance() {
     }
 
@@ -23,10 +31,6 @@ public class Appliance {
         this.model = model;
         this.potencyInWatts = potencyInWatts;
         this.voltage = voltage;
-    }
-
-    public Appliance(String name, String brand, String model, Integer potencyInWatts, String voltage) {
-       this(name, brand, model, potencyInWatts, Voltage.get(voltage));
     }
 
     public Long getId() {

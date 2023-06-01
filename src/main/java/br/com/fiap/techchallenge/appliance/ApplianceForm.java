@@ -1,13 +1,13 @@
 package br.com.fiap.techchallenge.appliance;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
-public record ApplianceForm(@NotBlank(message = "Nome é obrigatório")String name,
-                            @NotBlank(message = "Marca é obrigatório")String brand,
+public record ApplianceForm(@NotBlank String name,
+                            @NotBlank String brand,
                             String model,
                             Integer potencyInWatts,
-                            @NotBlank(message = "Voltagem é obrigatório")
-                            String voltage) {
+                            @NotNull Voltage voltage) {
 
     public Appliance toEntity() {
         return new Appliance(name, brand, model, potencyInWatts, voltage);

@@ -19,7 +19,7 @@ public class ApplianceService {
         appliance.setBrand(applianceForm.brand());
         appliance.setModel(applianceForm.model());
         appliance.setPotencyInWatts(applianceForm.potencyInWatts());
-        appliance.setVoltage(Voltage.get(applianceForm.voltage()));
+        appliance.setVoltage(applianceForm.voltage());
 
         return new ApplianceView(appliance);
     }
