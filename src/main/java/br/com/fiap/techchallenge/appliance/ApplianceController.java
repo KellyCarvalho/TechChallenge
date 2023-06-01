@@ -23,7 +23,7 @@ public class ApplianceController {
     }
 
     @GetMapping
-    public ResponseEntity<Collection<ApplianceView>> findAll() {
+    ResponseEntity<Collection<ApplianceView>> findAll() {
         Collection<Appliance> appliances = applianceCollectionRepository.findAll();
         Collection<ApplianceView> appliancesView = appliances.stream().map(ApplianceView::new).toList();
 
@@ -31,14 +31,14 @@ public class ApplianceController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApplianceView> findById(@PathVariable("id") Long id) {
+    ResponseEntity<ApplianceView> findById(@PathVariable("id") Long id) {
         Appliance appliance = applianceCollectionRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         return ResponseEntity.ok(new ApplianceView(appliance));
     }
 
     @PostMapping
-    public ResponseEntity<ApplianceView> create(@Valid @RequestBody ApplianceForm applianceForm) {
+    ResponseEntity<ApplianceView> create(@Valid @RequestBody ApplianceForm applianceForm) {
         Appliance appliance = applianceCollectionRepository.save(applianceForm.toEntity());
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(appliance.getId()).toUri();
@@ -46,17 +46,17 @@ public class ApplianceController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApplianceView> update(@PathVariable Long id, @Valid @RequestBody ApplianceForm applianceForm) {
+    ResponseEntity<ApplianceView> update(@PathVariable Long id, @Valid @RequestBody ApplianceForm applianceForm) {
         ApplianceView applianceView = applianceService.update(id, applianceForm);
 
         return ResponseEntity.ok(applianceView);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
+    ResponseEntity<?> delete(@PathVariable Long id) {
         applianceCollectionRepository.deleteById(id);
 
-        return ResponseEntity.ok("delete com sucesso");
+        return ResponseEntity.noContent().build();
     }
 
 }
