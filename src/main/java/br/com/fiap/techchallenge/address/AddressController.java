@@ -45,12 +45,7 @@ public class AddressController {
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody AddressDTO addressDTO){
-        try {
             addressDTO = addressService.update(id, addressDTO);
-            return ResponseEntity.ok().body(addressDTO);
-        }catch (NotFoundException e){
-            String errorMessage = "Endereço não encontrado para o ID: "+id;
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
-        }
+            return ResponseEntity.ok(addressDTO);
     }
 }
