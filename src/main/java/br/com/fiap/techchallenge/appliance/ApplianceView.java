@@ -1,12 +1,13 @@
 package br.com.fiap.techchallenge.appliance;
 
-public record ApplianceView(String name,
+public record ApplianceView(Long id,
+                            String name,
                             String brand,
                             String model,
                             Integer potencyInWatts,
                             String voltage) {
 
     public ApplianceView(Appliance appliance) {
-        this(appliance.getName(), appliance.getBrand(), appliance.getModel(), appliance.getPotencyInWatts(), appliance.getVoltage().getDisplayName());
+        this(appliance.getId(), appliance.getName(), appliance.getBrand(), appliance.getModel(), appliance.getPotencyInWatts(), appliance.getVoltage().getDisplayName());
     }
 }
