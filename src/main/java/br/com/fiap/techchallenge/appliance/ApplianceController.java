@@ -1,10 +1,9 @@
 package br.com.fiap.techchallenge.appliance;
 
+import br.com.fiap.techchallenge.exception.NotFoundException;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
@@ -32,7 +31,7 @@ public class ApplianceController {
 
     @GetMapping("/{id}")
     ResponseEntity<ApplianceView> findById(@PathVariable("id") Long id) {
-        Appliance appliance = applianceCollectionRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        Appliance appliance = applianceCollectionRepository.findById(id).orElseThrow(NotFoundException::new);
 
         return ResponseEntity.ok(new ApplianceView(appliance));
     }
