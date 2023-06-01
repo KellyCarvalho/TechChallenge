@@ -22,4 +22,10 @@ public class AddressService {
         addressRepository.save(address);
         return new AddressDTO(address);
     }
+
+    public AddressDTO findById(Long id){
+        Address address = addressRepository.findById(id).orElseThrow(() -> new NotFoundException("Endereço não encontrado"));
+        return new AddressDTO(address);
+    }
+
 }

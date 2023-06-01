@@ -28,59 +28,56 @@ public class Appliance {
         this.voltage = voltage;
     }
 
-    public Appliance merge(Appliance appliance, Appliance applianceForm) {
-        this.id = appliance.getId();
-        this.name = applianceForm.getName();
-        this.brand = applianceForm.getBrand();
-        this.model = applianceForm.getModel();
-        this.potencyInWatts = applianceForm.getPotencyInWatts();
-        this.voltage = applianceForm.getVoltage();
-        return this;
+    public Appliance(String name, String brand, String model, Integer potencyInWatts, String voltage) {
+       this(name, brand, model, potencyInWatts, Voltage.get(voltage));
     }
 
     public Long getId() {
         return id;
     }
 
-    public Appliance setId(Long id) {
+    public void setId(Long id) {
         this.id = id;
-        return this;
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getBrand() {
         return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
     public String getModel() {
         return model;
     }
 
+    public void setModel(String model) {
+        this.model = model;
+    }
+
     public Integer getPotencyInWatts() {
         return potencyInWatts;
+    }
+
+    public void setPotencyInWatts(Integer potencyInWatts) {
+        this.potencyInWatts = potencyInWatts;
     }
 
     public Voltage getVoltage() {
         return voltage;
     }
 
-    public enum Voltage {
-        ONE_HUNDRED_TWENTY_SEVEN("127V"),
-        TWO_HUNDRED_AND_TWENTY("220V"),
-        BIVOLT("bivolt");
-
-        private String displayName;
-
-        Voltage(String displayName) {
-            this.displayName = displayName;
-        }
-
-        public String getDisplayName() {
-            return displayName;
-        }
+    public void setVoltage(Voltage voltage) {
+        this.voltage = voltage;
     }
 
 }

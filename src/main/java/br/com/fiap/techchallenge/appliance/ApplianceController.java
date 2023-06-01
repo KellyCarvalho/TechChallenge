@@ -8,47 +8,55 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("/appliances")
 public class ApplianceController {
 
     private final ApplianceCollectionRepository applianceCollectionRepository;
+    private final ApplianceService applianceService;
 
-    public ApplianceController(ApplianceCollectionRepository applianceCollectionRepository) {
+    public ApplianceController(ApplianceCollectionRepository applianceCollectionRepository, ApplianceService applianceService) {
         this.applianceCollectionRepository = applianceCollectionRepository;
+        this.applianceService = applianceService;
     }
 
     @GetMapping
-    public ResponseEntity<Collection<Appliance>> findAll() {
+    public ResponseEntity<Collection<ApplianceView>> findAll() {
         Collection<Appliance> appliances = applianceCollectionRepository.findAll();
+        Collection<ApplianceView> appliancesView = appliances.stream().map(ApplianceView::new).toList();
 
-        return ResponseEntity.ok(appliances);
+        return ResponseEntity.ok(appliancesView);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Appliance> findById(@PathVariable("id") Long id) {
+    public ResponseEntity<ApplianceView> findById(@PathVariable("id") Long id) {
         Appliance appliance = applianceCollectionRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        return ResponseEntity.ok(appliance);
+
+        return ResponseEntity.ok(new ApplianceView(appliance));
     }
     @PostMapping
-    public ResponseEntity<Appliance> create(@RequestBody Appliance applianceForm) {
-        Appliance appliance = applianceCollectionRepository.save(applianceForm);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(applianceForm.getId()).toUri();
+    public ResponseEntity<ApplianceView> create(@RequestBody ApplianceForm applianceForm) {
+        Appliance appliance = applianceCollectionRepository.save(applianceForm.toEntity());
 
-        return ResponseEntity.created(uri).body(appliance);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(appliance.getId()).toUri();
+        return ResponseEntity.created(uri).body(new ApplianceView(appliance));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Appliance> update(@PathVariable("id")Long id, @RequestBody Appliance applianceForm) {
+    public ResponseEntity<ApplianceView> update(@PathVariable Long id, @RequestBody ApplianceForm applianceForm) {
+        ApplianceView applianceView = applianceService.update(id, applianceForm);
 
-        // todo continuar a partir daqui, lembrar que todos os Apliances estão em uma lista, então precisa modificar a lista um item na lista
-        Appliance appliance = applianceCollectionRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        appliance = applianceForm.merge(appliance, applianceForm);
-        applianceCollectionRepository.save(appliance);
+        return ResponseEntity.ok(applianceView);
+    }
 
-        return ResponseEntity.accepted().body(appliance);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        applianceCollectionRepository.deleteById(id);
+
+        return ResponseEntity.ok("delete com sucesso");
     }
 
 
