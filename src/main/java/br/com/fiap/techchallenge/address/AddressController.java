@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -24,8 +25,8 @@ public class AddressController {
 
     @GetMapping
     public ResponseEntity<?> getAddresses() {
-        List<Address> addresses = addressRepository.findAll();
-        List<AddressDTO> addressDTOS = addresses.stream().map(AddressDTO::new).toList();
+        Collection<Address> addresses = addressRepository.findAll();
+        Collection<AddressDTO> addressDTOS = addresses.stream().map(AddressDTO::new).toList();
         return ResponseEntity.ok().body(addressDTOS);
     }
 
