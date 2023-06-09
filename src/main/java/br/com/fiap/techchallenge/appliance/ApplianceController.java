@@ -31,7 +31,7 @@ public class ApplianceController {
 
     @GetMapping("/{id}")
     ResponseEntity<ApplianceView> findById(@PathVariable("id") Long id) {
-        Appliance appliance = applianceCollectionRepository.findById(id).orElseThrow(NotFoundException::new);
+        Appliance appliance = applianceCollectionRepository.findById(id).orElseThrow(() -> new NotFoundException("Appliance not found"));
 
         return ResponseEntity.ok(new ApplianceView(appliance));
     }
