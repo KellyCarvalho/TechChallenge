@@ -13,7 +13,7 @@ public class AddressService {
     }
 
     public AddressDTO update(Long id, AddressDTO addressDTO){
-        Address address = addressRepository.findById(id).orElseThrow(() -> new NotFoundException("Endereço não encontrado"));
+        Address address = addressRepository.findById(id).orElseThrow(() -> new NotFoundException("Address not found"));
         address.setCity(addressDTO.city());
         address.setNeighborhood(addressDTO.neighborhood());
         address.setState(addressDTO.state());
