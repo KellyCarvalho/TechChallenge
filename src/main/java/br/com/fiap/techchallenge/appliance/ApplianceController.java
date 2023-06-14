@@ -1,6 +1,7 @@
 package br.com.fiap.techchallenge.appliance;
 
 import br.com.fiap.techchallenge.exception.NotFoundException;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
