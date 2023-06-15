@@ -1,7 +1,7 @@
 package br.com.fiap.techchallenge.address;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public class Address {
 
@@ -18,7 +18,8 @@ public class Address {
     @NotBlank(message = "State is required")
     private String state;
 
-    public Address() {}
+    public Address() {
+    }
 
     public Address(String street, String number, String neighborhood, String city, String state) {
         this.street = street;
@@ -28,7 +29,7 @@ public class Address {
         this.state = state;
     }
 
-    public void toEntity(AddressDTO addressDTO){
+    public void toEntity(AddressDTO addressDTO) {
         this.street = addressDTO.street();
         this.number = addressDTO.number();
         this.neighborhood = addressDTO.neighborhood();

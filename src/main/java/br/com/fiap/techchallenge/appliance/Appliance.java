@@ -1,7 +1,5 @@
 package br.com.fiap.techchallenge.appliance;
 
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -17,7 +15,6 @@ public class Appliance {
     private String model;
     private Integer potencyInWatts;
     @NotNull
-    @Enumerated(EnumType.STRING)
     private Voltage voltage;
 
     @Deprecated
