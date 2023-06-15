@@ -1,6 +1,5 @@
 package br.com.fiap.techchallenge.person;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
@@ -18,11 +17,11 @@ public class Person {
     private LocalDate birthDate;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
     private Gender gender;
 
     @Deprecated
-    public Person() {}
+    public Person() {
+    }
 
     public Person(String name, LocalDate birthDate, Gender gender) {
         this.name = name;
