@@ -31,7 +31,7 @@ public class AddressController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> getAddress(@PathVariable Long id) {
-        Address address = addressRepository.findById(id).orElseThrow(() -> new NotFoundException("Address not found"));
+        Address address = addressRepository.findById(id).orElseThrow(NotFoundException::new);
         return ResponseEntity.ok(new AddressDTO(address));
     }
 
@@ -51,7 +51,7 @@ public class AddressController {
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
-        addressRepository.findById(id).orElseThrow(() -> new NotFoundException("Address not found"));
+        addressRepository.findById(id).orElseThrow(NotFoundException::new);
         addressRepository.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
