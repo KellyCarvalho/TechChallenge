@@ -7,15 +7,16 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.Collection;
 import java.util.List;
 
 @RestController
 @RequestMapping("/person")
 public class PersonController {
 
-    private final PersonRepository personRepository;
+    private final PersonCollectionRepository personRepository;
 
-    public PersonController(PersonRepository personRepository) {
+    public PersonController(PersonCollectionRepository personRepository) {
         this.personRepository = personRepository;
     }
 
@@ -28,7 +29,7 @@ public class PersonController {
 
     @GetMapping
     ResponseEntity<List<PersonView>> getPeople() {
-        List<Person> people = personRepository.findAll();
+        Collection<Person> people = personRepository.findAll();
         List<PersonView> peopleView = people.stream().map(PersonView::new).toList();
 
         return ResponseEntity.ok(peopleView);
@@ -52,9 +53,9 @@ public class PersonController {
     }
 
     @DeleteMapping("/{id}")
-    ResponseEntity<PersonView> deletePerson(@PathVariable Long id) {
+    ResponseEntity<?> deletePerson(@PathVariable Long id) {
         Person person = personRepository.findById(id).orElseThrow(NotFoundException::new);
-        personRepository.delete(person);
+        personRepository.delete(person.getId());
 
         return ResponseEntity.noContent().build();
     }

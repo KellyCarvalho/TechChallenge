@@ -5,15 +5,12 @@ import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 
-@Entity
 public class Person {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
-    @Size(min = 2, max = 255)
+    @Size(min = 1, max = 255)
     private String name;
 
     @NotNull
