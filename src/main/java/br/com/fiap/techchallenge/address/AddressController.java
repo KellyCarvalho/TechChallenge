@@ -1,39 +1,58 @@
 package br.com.fiap.techchallenge.address;
 
-import jakarta.validation.*;
+import br.com.fiap.techchallenge.exception.NotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/address")
 public class AddressController {
 
     private final AddressRepository addressRepository;
+    private final AddressService addressService;
 
-    public AddressController(AddressRepository addressRepository) {
+    public AddressController(AddressRepository addressRepository, AddressService addressService) {
         this.addressRepository = addressRepository;
+        this.addressService = addressService;
     }
 
     @GetMapping
-    public ResponseEntity<?> getAddresses(){
-        List<Address> addresses = addressRepository.findAll();
-        List<AddressDTO> addressDTOS = addresses.stream().map(AddressDTO::new).toList();
+    public ResponseEntity<?> getAddresses() {
+        Collection<Address> addresses = addressRepository.findAll();
+        Collection<AddressDTO> addressDTOS = addresses.stream().map(AddressDTO::new).toList();
         return ResponseEntity.ok().body(addressDTOS);
     }
 
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<?> getAddress(@PathVariable Long id) {
+        Address address = addressRepository.findById(id).orElseThrow(() -> new NotFoundException("Address not found"));
+        return ResponseEntity.ok(new AddressDTO(address));
+    }
+
     @PostMapping
-    public ResponseEntity<?> createAddress(@Valid @RequestBody AddressDTO addressDTO){
+    public ResponseEntity<?> createAddress(@Valid @RequestBody AddressDTO addressDTO) {
         Address address = addressRepository.save(addressDTO.toEntity());
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(address.getId()).toUri();
         return ResponseEntity.created(uri).body(address);
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody AddressDTO addressDTO) {
+        addressDTO = addressService.update(id, addressDTO);
+        return ResponseEntity.ok(addressDTO);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        addressRepository.findById(id).orElseThrow(() -> new NotFoundException("Address not found"));
+        addressRepository.deleteById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
