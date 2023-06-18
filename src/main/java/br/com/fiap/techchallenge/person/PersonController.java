@@ -41,8 +41,7 @@ public class PersonController {
 
     @Operation(description = "Retorna uma lista de pessoas",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Caso a pessoa tenha sido encontrada na base"),
-                    @ApiResponse(responseCode = "404", description = "Caso o usuario não tenha permisao de acesso aeste recurso")
+                    @ApiResponse(responseCode = "200", description = "Sucesso no retorno da lista")
             }
     )
     @GetMapping
