@@ -1,6 +1,5 @@
 package br.com.fiap.techchallenge.appliance;
 
-import br.com.fiap.techchallenge.exception.NotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -32,8 +31,7 @@ public class ApplianceController {
     )
     @GetMapping
     ResponseEntity<Collection<ApplianceView>> findAll() {
-        Collection<Appliance> appliances = applianceRepository.findAll();
-        Collection<ApplianceView> appliancesView = appliances.stream().map(ApplianceView::new).toList();
+        Collection<ApplianceView> appliancesView = applianceService.findAll();
 
         return ResponseEntity.ok(appliancesView);
     }
@@ -46,9 +44,9 @@ public class ApplianceController {
     )
     @GetMapping("/{id}")
     ResponseEntity<ApplianceView> findById(@PathVariable("id") Long id) {
-        Appliance appliance = applianceRepository.findById(id).orElseThrow(() -> new NotFoundException("Appliance id: %s not found.".formatted(id)));
+        ApplianceView applianceView = applianceService.findById(id);
 
-        return ResponseEntity.ok(new ApplianceView(appliance));
+        return ResponseEntity.ok(applianceView);
     }
 
     @Operation(description = "Cria um eletrodoméstico na base de dados",
@@ -59,10 +57,10 @@ public class ApplianceController {
     )
     @PostMapping
     ResponseEntity<ApplianceView> create(@Valid @RequestBody ApplianceForm applianceForm) {
-        Appliance appliance = applianceRepository.save(applianceForm.toEntity());
+        ApplianceView applianceView =  applianceService.createAppliance(applianceForm);
 
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(appliance.getId()).toUri();
-        return ResponseEntity.created(uri).body(new ApplianceView(appliance));
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(applianceView.id()).toUri();
+        return ResponseEntity.created(uri).body(applianceView);
     }
 
     @Operation(description = "Atualiza um eletrodoméstico na base de dados",
@@ -86,8 +84,7 @@ public class ApplianceController {
     )
     @DeleteMapping("/{id}")
     ResponseEntity<?> delete(@PathVariable Long id) {
-        applianceRepository.findById(id).orElseThrow(() -> new NotFoundException("Appliance id: %s not found.".formatted(id)));
-        applianceRepository.deleteById(id);
+        applianceService.deleteById(id);
 
         return ResponseEntity.noContent().build();
     }

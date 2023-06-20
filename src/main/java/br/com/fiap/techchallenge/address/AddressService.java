@@ -14,12 +14,12 @@ public class AddressService {
         this.addressRepository = addressRepository;
     }
 
-    public Collection<AddressView> getAddresses() {
+    public Collection<AddressView> findAll() {
         Collection<Address> addresses = addressRepository.findAll();
         return addresses.stream().map(AddressView::new).toList();
     }
 
-    public AddressView getAddress(Long id) throws NotFoundException {
+    public AddressView findById(Long id) throws NotFoundException {
         Address address = addressRepository.findById(id).orElseThrow(() -> new NotFoundException("Address id: %s not found.".formatted(id)));
         return new AddressView(address);
     }

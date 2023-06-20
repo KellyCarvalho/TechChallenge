@@ -28,8 +28,8 @@ public class AddressController {
             }
     )
     @GetMapping
-    public ResponseEntity<?> getAddresses() {
-       Collection<AddressView> addressViews = addressService.getAddresses();
+    public ResponseEntity<?> findAll() {
+       Collection<AddressView> addressViews = addressService.findAll();
         return ResponseEntity.ok().body(addressViews);
     }
 
@@ -40,8 +40,8 @@ public class AddressController {
             }
     )
     @GetMapping(value = "/{id}")
-    public ResponseEntity<?> getAddress(@PathVariable Long id) {
-        AddressView addressView = addressService.getAddress(id);
+    public ResponseEntity<?> findById(@PathVariable Long id) {
+        AddressView addressView = addressService.findById(id);
         return ResponseEntity.ok(addressView);
     }
 
