@@ -18,9 +18,9 @@ import java.util.List;
 @Tag(name = "Person", description = "Manipula dados de pessoas")
 public class PersonController {
 
-    private final PersonCollectionRepository personRepository;
+    private final PersonRepository personRepository;
 
-    public PersonController(PersonCollectionRepository personRepository) {
+    public PersonController(PersonRepository personRepository) {
         this.personRepository = personRepository;
     }
 
@@ -78,7 +78,6 @@ public class PersonController {
     ResponseEntity<PersonView> updatePerson(@Valid @RequestBody PersonForm personForm, @PathVariable Long id) {
         Person person = personRepository.findById(id).orElseThrow(NotFoundException::new);
         person.update(personForm);
-        personRepository.save(person);
 
         return ResponseEntity.ok(new PersonView(person));
     }

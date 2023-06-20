@@ -8,9 +8,10 @@ import java.util.*;
 public class AddressRepository {
 
     static private final Set<Address> addresses = new LinkedHashSet<>();
+    private static Long idAutoincrement = 1L;
 
     public Address save(Address address) {
-        address.setId(addresses.size() + 1L);
+        address.setId(idAutoincrement++);
         addresses.add(address);
         return address;
     }

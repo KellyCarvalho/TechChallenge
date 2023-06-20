@@ -7,14 +7,14 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 public class ApplianceService {
 
-    private final ApplianceCollectionRepository applianceCollectionRepository;
+    private final ApplianceRepository applianceRepository;
 
-    public ApplianceService(ApplianceCollectionRepository applianceCollectionRepository) {
-        this.applianceCollectionRepository = applianceCollectionRepository;
+    public ApplianceService(ApplianceRepository applianceRepository) {
+        this.applianceRepository = applianceRepository;
     }
 
     public ApplianceView update(Long id, ApplianceForm applianceForm) {
-        Appliance appliance = applianceCollectionRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        Appliance appliance = applianceRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         appliance.setName(applianceForm.name());
         appliance.setBrand(applianceForm.brand());
         appliance.setModel(applianceForm.model());

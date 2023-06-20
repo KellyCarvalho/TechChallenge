@@ -5,9 +5,11 @@ import org.springframework.stereotype.Repository;
 import java.util.*;
 
 @Repository
-public class ApplianceCollectionRepository  {
+public class ApplianceRepository {
 
     static private final Set<Appliance> appliances  = new LinkedHashSet<>();
+
+    private static Long idAutoincrement = 1L;
 
     public Collection<Appliance> findAll() {
         return appliances;
@@ -18,7 +20,7 @@ public class ApplianceCollectionRepository  {
     }
 
     public static Appliance create(Appliance appliance) {
-        appliance.setId(appliances.size() + 1L);
+        appliance.setId(idAutoincrement++);
         appliances.add(appliance);
         return appliance;
     }

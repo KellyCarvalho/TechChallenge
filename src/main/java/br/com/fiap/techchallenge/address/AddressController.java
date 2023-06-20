@@ -1,6 +1,5 @@
 package br.com.fiap.techchallenge.address;
 
-import br.com.fiap.techchallenge.exception.NotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -17,12 +16,9 @@ import java.util.Collection;
 @RestController
 @RequestMapping("/address")
 public class AddressController {
-
-    private final AddressRepository addressRepository;
     private final AddressService addressService;
 
-    public AddressController(AddressRepository addressRepository, AddressService addressService) {
-        this.addressRepository = addressRepository;
+    public AddressController(AddressService addressService) {
         this.addressService = addressService;
     }
 
@@ -33,9 +29,8 @@ public class AddressController {
     )
     @GetMapping
     public ResponseEntity<?> getAddresses() {
-        Collection<Address> addresses = addressRepository.findAll();
-        Collection<AddressDTO> addressDTOS = addresses.stream().map(AddressDTO::new).toList();
-        return ResponseEntity.ok().body(addressDTOS);
+       Collection<AddressView> addressViews = addressService.getAddresses();
+        return ResponseEntity.ok().body(addressViews);
     }
 
     @Operation(description = "Retorna um endereço específico",
@@ -46,8 +41,8 @@ public class AddressController {
     )
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> getAddress(@PathVariable Long id) {
-        Address address = addressRepository.findById(id).orElseThrow(NotFoundException::new);
-        return ResponseEntity.ok(new AddressDTO(address));
+        AddressView addressView = addressService.getAddress(id);
+        return ResponseEntity.ok(addressView);
     }
 
     @Operation(description = "Cria um endereço na base de dados",
@@ -57,11 +52,11 @@ public class AddressController {
             }
     )
     @PostMapping
-    public ResponseEntity<?> createAddress(@Valid @RequestBody AddressDTO addressDTO) {
-        Address address = addressRepository.save(addressDTO.toEntity());
+    public ResponseEntity<?> createAddress(@Valid @RequestBody AddressForm addressForm) {
+        AddressView addressView = addressService.createAddress(addressForm);
 
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(address.getId()).toUri();
-        return ResponseEntity.created(uri).body(address);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(addressView.id()).toUri();
+        return ResponseEntity.created(uri).body(addressView);
     }
 
     @Operation(description = "Atualiza um endereço na base de dados",
@@ -71,9 +66,9 @@ public class AddressController {
             }
     )
     @PutMapping(value = "/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody AddressDTO addressDTO) {
-        addressDTO = addressService.update(id, addressDTO);
-        return ResponseEntity.ok(addressDTO);
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody AddressForm addressForm) {
+        AddressView addressView = addressService.update(id, addressForm);
+        return ResponseEntity.ok(addressView);
     }
 
     @Operation(description = "Deleta um endereço na base de dados",
@@ -84,8 +79,7 @@ public class AddressController {
     )
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
-        addressRepository.findById(id).orElseThrow(NotFoundException::new);
-        addressRepository.deleteById(id);
+        addressService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

@@ -29,12 +29,12 @@ public class Address {
         this.state = state;
     }
 
-    public void toEntity(AddressDTO addressDTO) {
-        this.street = addressDTO.street();
-        this.number = addressDTO.number();
-        this.neighborhood = addressDTO.neighborhood();
-        this.city = addressDTO.city();
-        this.state = addressDTO.state();
+    public void toEntity(AddressView addressView) {
+        this.street = addressView.street();
+        this.number = addressView.number();
+        this.neighborhood = addressView.neighborhood();
+        this.city = addressView.city();
+        this.state = addressView.state();
     }
 
     public Long getId() {

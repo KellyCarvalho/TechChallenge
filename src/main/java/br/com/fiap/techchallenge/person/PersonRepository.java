@@ -5,9 +5,11 @@ import org.springframework.stereotype.Repository;
 import java.util.*;
 
 @Repository
-public class PersonCollectionRepository {
+public class PersonRepository {
 
-    private static Set<Person> people = new HashSet<>();
+    private static Set<Person> people = new LinkedHashSet<>();
+
+    private static Long idAutoincrement = 1L;
 
     public Collection<Person> findAll() {
         return Collections.unmodifiableCollection(people);
@@ -18,7 +20,7 @@ public class PersonCollectionRepository {
     }
 
     public Person save(Person p) {
-        p.setId(people.size() + 1L);
+        p.setId(idAutoincrement++);
         people.add(p);
         return p;
     }

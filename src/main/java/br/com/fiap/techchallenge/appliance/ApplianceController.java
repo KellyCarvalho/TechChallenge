@@ -17,11 +17,11 @@ import java.util.Collection;
 @RequestMapping("/appliances")
 public class ApplianceController {
 
-    private final ApplianceCollectionRepository applianceCollectionRepository;
+    private final ApplianceRepository applianceRepository;
     private final ApplianceService applianceService;
 
-    public ApplianceController(ApplianceCollectionRepository applianceCollectionRepository, ApplianceService applianceService) {
-        this.applianceCollectionRepository = applianceCollectionRepository;
+    public ApplianceController(ApplianceRepository applianceRepository, ApplianceService applianceService) {
+        this.applianceRepository = applianceRepository;
         this.applianceService = applianceService;
     }
 
@@ -32,7 +32,7 @@ public class ApplianceController {
     )
     @GetMapping
     ResponseEntity<Collection<ApplianceView>> findAll() {
-        Collection<Appliance> appliances = applianceCollectionRepository.findAll();
+        Collection<Appliance> appliances = applianceRepository.findAll();
         Collection<ApplianceView> appliancesView = appliances.stream().map(ApplianceView::new).toList();
 
         return ResponseEntity.ok(appliancesView);
@@ -46,7 +46,7 @@ public class ApplianceController {
     )
     @GetMapping("/{id}")
     ResponseEntity<ApplianceView> findById(@PathVariable("id") Long id) {
-        Appliance appliance = applianceCollectionRepository.findById(id).orElseThrow(NotFoundException::new);
+        Appliance appliance = applianceRepository.findById(id).orElseThrow(NotFoundException::new);
 
         return ResponseEntity.ok(new ApplianceView(appliance));
     }
@@ -59,7 +59,7 @@ public class ApplianceController {
     )
     @PostMapping
     ResponseEntity<ApplianceView> create(@Valid @RequestBody ApplianceForm applianceForm) {
-        Appliance appliance = applianceCollectionRepository.save(applianceForm.toEntity());
+        Appliance appliance = applianceRepository.save(applianceForm.toEntity());
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(appliance.getId()).toUri();
         return ResponseEntity.created(uri).body(new ApplianceView(appliance));
@@ -86,7 +86,7 @@ public class ApplianceController {
     )
     @DeleteMapping("/{id}")
     ResponseEntity<?> delete(@PathVariable Long id) {
-        applianceCollectionRepository.deleteById(id);
+        applianceRepository.deleteById(id);
 
         return ResponseEntity.noContent().build();
     }
