@@ -18,10 +18,10 @@ import java.util.List;
 @Tag(name = "Person", description = "Manipula dados de pessoas")
 public class PersonController {
 
-    private final PersonRepository personRepository;
+    private final PersonService personService;
 
-    public PersonController(PersonRepository personRepository) {
-        this.personRepository = personRepository;
+    public PersonController(PersonService personService) {
+        this.personService = personService;
     }
 
 
@@ -33,9 +33,9 @@ public class PersonController {
     )
     @GetMapping("/{id}")
     ResponseEntity<PersonView> getPerson(@PathVariable Long id) {
-        Person person = personRepository.findById(id).orElseThrow(() -> new NotFoundException("Person id: %s not found.".formatted(id)));
+        PersonView personView = personService.findById(id);
 
-        return ResponseEntity.ok(new PersonView(person));
+        return ResponseEntity.ok(personView);
     }
 
 
@@ -46,8 +46,7 @@ public class PersonController {
     )
     @GetMapping
     ResponseEntity<List<PersonView>> getPeople() {
-        Collection<Person> people = personRepository.findAll();
-        List<PersonView> peopleView = people.stream().map(PersonView::new).toList();
+        List<PersonView> peopleView = personService.findAll();
 
         return ResponseEntity.ok(peopleView);
     }
@@ -61,10 +60,10 @@ public class PersonController {
     )
     @PostMapping
     ResponseEntity<PersonView> createPerson(@Valid @RequestBody PersonForm personForm) {
-        Person person = personRepository.save(personForm.toEntity());
+        PersonView personView = personService.create(personForm);
 
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(person.getId()).toUri();
-        return ResponseEntity.created(uri).body(new PersonView(person));
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(personView.id()).toUri();
+        return ResponseEntity.created(uri).body(personView);
     }
 
 
@@ -76,10 +75,9 @@ public class PersonController {
     )
     @PutMapping("/{id}")
     ResponseEntity<PersonView> updatePerson(@Valid @RequestBody PersonForm personForm, @PathVariable Long id) {
-        Person person = personRepository.findById(id).orElseThrow(() -> new NotFoundException("Person id: %s not found.".formatted(id)));
-        person.update(personForm);
+        PersonView personView = personService.update(personForm, id);
 
-        return ResponseEntity.ok(new PersonView(person));
+        return ResponseEntity.ok(personView);
     }
 
     @Operation(description = "Deleta uma pessoa na base de dados",
@@ -90,8 +88,7 @@ public class PersonController {
     )
     @DeleteMapping("/{id}")
     ResponseEntity<?> deletePerson(@PathVariable Long id) {
-        Person person = personRepository.findById(id).orElseThrow(() -> new NotFoundException("Person id: %s not found.".formatted(id)));
-        personRepository.delete(person.getId());
+        personService.deleteById(id);
 
         return ResponseEntity.noContent().build();
     }

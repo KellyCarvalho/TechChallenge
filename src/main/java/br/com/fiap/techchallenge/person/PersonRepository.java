@@ -25,7 +25,7 @@ public class PersonRepository {
         return p;
     }
 
-    public void delete(Long id) {
+    public void deleteById(Long id) {
         people.removeIf(p -> p.getId().equals(id));
     }
 }
