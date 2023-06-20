@@ -1,6 +1,5 @@
 package br.com.fiap.techchallenge.person;
 
-import br.com.fiap.techchallenge.exception.NotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -27,12 +25,12 @@ public class PersonController {
 
     @Operation(description = "Retorna uma pessoa específica",
             responses = {
-                @ApiResponse(responseCode = "200", description = "Caso a pessoa tenha sido encontrada na base"),
-                @ApiResponse(responseCode = "404", description = "Caso a pessoa não tenha sido encontrada na base")
+                    @ApiResponse(responseCode = "200", description = "Caso a pessoa tenha sido encontrada na base"),
+                    @ApiResponse(responseCode = "404", description = "Caso a pessoa não tenha sido encontrada na base")
             }
     )
     @GetMapping("/{id}")
-    ResponseEntity<PersonView> getPerson(@PathVariable Long id) {
+    ResponseEntity<PersonView> findById(@PathVariable Long id) {
         PersonView personView = personService.findById(id);
 
         return ResponseEntity.ok(personView);
@@ -45,7 +43,7 @@ public class PersonController {
             }
     )
     @GetMapping
-    ResponseEntity<List<PersonView>> getPeople() {
+    ResponseEntity<List<PersonView>> findAll() {
         List<PersonView> peopleView = personService.findAll();
 
         return ResponseEntity.ok(peopleView);
@@ -59,7 +57,7 @@ public class PersonController {
             }
     )
     @PostMapping
-    ResponseEntity<PersonView> createPerson(@Valid @RequestBody PersonForm personForm) {
+    ResponseEntity<PersonView> create(@Valid @RequestBody PersonForm personForm) {
         PersonView personView = personService.create(personForm);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(personView.id()).toUri();
@@ -74,7 +72,7 @@ public class PersonController {
             }
     )
     @PutMapping("/{id}")
-    ResponseEntity<PersonView> updatePerson(@Valid @RequestBody PersonForm personForm, @PathVariable Long id) {
+    ResponseEntity<PersonView> update(@Valid @RequestBody PersonForm personForm, @PathVariable Long id) {
         PersonView personView = personService.update(personForm, id);
 
         return ResponseEntity.ok(personView);
@@ -87,7 +85,7 @@ public class PersonController {
             }
     )
     @DeleteMapping("/{id}")
-    ResponseEntity<?> deletePerson(@PathVariable Long id) {
+    ResponseEntity<?> deleteById(@PathVariable Long id) {
         personService.deleteById(id);
 
         return ResponseEntity.noContent().build();

@@ -15,7 +15,7 @@ public class PersonService {
         this.personRepository = personRepository;
     }
 
-    public PersonView findById(final Long id) {
+    public PersonView findById(Long id) {
         Person person = personRepository.findById(id).orElseThrow(() -> new NotFoundException("Person id: %s not found.".formatted(id)));
         return new PersonView(person);
     }
