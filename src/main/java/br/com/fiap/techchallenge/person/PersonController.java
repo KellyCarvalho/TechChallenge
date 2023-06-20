@@ -33,7 +33,7 @@ public class PersonController {
     )
     @GetMapping("/{id}")
     ResponseEntity<PersonView> getPerson(@PathVariable Long id) {
-        Person person = personRepository.findById(id).orElseThrow(NotFoundException::new);
+        Person person = personRepository.findById(id).orElseThrow(() -> new NotFoundException("Person id: %s not found.".formatted(id)));
 
         return ResponseEntity.ok(new PersonView(person));
     }
@@ -76,7 +76,7 @@ public class PersonController {
     )
     @PutMapping("/{id}")
     ResponseEntity<PersonView> updatePerson(@Valid @RequestBody PersonForm personForm, @PathVariable Long id) {
-        Person person = personRepository.findById(id).orElseThrow(NotFoundException::new);
+        Person person = personRepository.findById(id).orElseThrow(() -> new NotFoundException("Person id: %s not found.".formatted(id)));
         person.update(personForm);
 
         return ResponseEntity.ok(new PersonView(person));
@@ -90,7 +90,7 @@ public class PersonController {
     )
     @DeleteMapping("/{id}")
     ResponseEntity<?> deletePerson(@PathVariable Long id) {
-        Person person = personRepository.findById(id).orElseThrow(NotFoundException::new);
+        Person person = personRepository.findById(id).orElseThrow(() -> new NotFoundException("Person id: %s not found.".formatted(id)));
         personRepository.delete(person.getId());
 
         return ResponseEntity.noContent().build();

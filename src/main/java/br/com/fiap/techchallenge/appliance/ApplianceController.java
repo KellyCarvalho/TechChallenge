@@ -46,7 +46,7 @@ public class ApplianceController {
     )
     @GetMapping("/{id}")
     ResponseEntity<ApplianceView> findById(@PathVariable("id") Long id) {
-        Appliance appliance = applianceRepository.findById(id).orElseThrow(NotFoundException::new);
+        Appliance appliance = applianceRepository.findById(id).orElseThrow(() -> new NotFoundException("Appliance id: %s not found.".formatted(id)));
 
         return ResponseEntity.ok(new ApplianceView(appliance));
     }
@@ -86,6 +86,7 @@ public class ApplianceController {
     )
     @DeleteMapping("/{id}")
     ResponseEntity<?> delete(@PathVariable Long id) {
+        applianceRepository.findById(id).orElseThrow(() -> new NotFoundException("Appliance id: %s not found.".formatted(id)));
         applianceRepository.deleteById(id);
 
         return ResponseEntity.noContent().build();

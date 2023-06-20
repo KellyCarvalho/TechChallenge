@@ -19,8 +19,8 @@ public class AddressService {
         return addresses.stream().map(AddressView::new).toList();
     }
 
-    public AddressView getAddress(Long id) {
-        Address address = addressRepository.findById(id).orElseThrow(NotFoundException::new);
+    public AddressView getAddress(Long id) throws NotFoundException {
+        Address address = addressRepository.findById(id).orElseThrow(() -> new NotFoundException("Address id: %s not found.".formatted(id)));
         return new AddressView(address);
     }
 
@@ -30,7 +30,7 @@ public class AddressService {
     }
 
     public AddressView update(Long id, AddressForm addressForm) {
-        Address address = addressRepository.findById(id).orElseThrow(NotFoundException::new);
+        Address address = addressRepository.findById(id).orElseThrow(() -> new NotFoundException("Address id: %s not found.".formatted(id)));
         address.setCity(addressForm.city());
         address.setNeighborhood(addressForm.neighborhood());
         address.setState(addressForm.state());
@@ -40,7 +40,7 @@ public class AddressService {
     }
 
     public void delete(Long id) {
-        addressRepository.findById(id).orElseThrow(NotFoundException::new);
+        addressRepository.findById(id).orElseThrow(() -> new NotFoundException("Address id: %s not found.".formatted(id)));
         addressRepository.deleteById(id);
     }
 }
