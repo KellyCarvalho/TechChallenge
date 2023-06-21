@@ -8,9 +8,11 @@ A primeira tentativa foi utilizando o binding result que aparentemente era uma b
 A outra opção que pareceu melhor para o resultado que queríamos foi utilizar um handler geral para capturar erros com o @ExceptionHandler e o @RestControllerAdvice, 
 que nos permitiu tratar as exceções de forma mais genérica, inclusive exceções de validação, em um único ponto.
 
+
 - Padronização de estilo de código:
 Outro desafio foi a padronização do código, pois cada um tem seu estilo de codificação, e isso pode gerar conflitos. Não foi um desafio grande, mas foi necessário uma discussão para definir um estilo.
 Além do estilo de código também foi importante discutir padrões de nomenclatura para variáveis, métodos e classes, e também o idioma geral do sistema.
+
 
 - Lógica no controller ou service:
 Discussão sobre onde a lógica deveria estar surgiu na metade final do desenvolvimento, pois como ainda estamos trabalhando em um sistema pequeno a lógica é bem simples e curta, por isso estava direto no controller. 
