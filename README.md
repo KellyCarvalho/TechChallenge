@@ -33,4 +33,7 @@ Pensando que este sistema tende a crescer e sofrer alterações não é boa prá
 - Copilot
 - Spring initializr
 
+## Link para os endpoints
+- [Postman](https://www.postman.com/grupo10-poestech-fiap/workspace/techchallenge/overview)
+
 
