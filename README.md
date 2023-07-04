@@ -33,7 +33,116 @@ Pensando que este sistema tende a crescer e sofrer alterações não é boa prá
 - Copilot
 - Spring initializr
 
-## Link para os endpoints
-- [Postman](https://www.postman.com/grupo10-poestech-fiap/workspace/techchallenge/overview)
-
-
+## Documentação das APIs
+- API de Endereços:
+  - Cadastrar um endereço:
+      - POST: http://localhost:8080/address/
+      - Exemplo de requisição:
+    ```bash
+    curl -X POST 'localhost:8080/address' \
+    -H 'Content-Type: application/json' \
+    --data '{
+        "street": "Rua dos Bobos",
+        "number": "0",
+        "neighborhood": "Vila Pompéia",
+        "city": "São Paulo",
+        "state": "SP"
+    }'
+    ```
+      - Exemplo de retorno em caso de sucesso:
+    ```json
+    // status 201
+    {
+      "id": 1,
+      "street": "Rua dos Bobos",
+      "number": "0",
+      "neighborhood": "Vila Pompéia",
+      "city": "São Paulo",
+      "state": "SP"
+    }
+    ```
+  - Buscar um endereço: 
+    - GET: http://localhost:8080/address/{id}
+      - {id}: id do endereço buscado
+    - Exemplo de requisição:
+    ```bash
+    curl -X GET 'localhost:8080/address/1'
+    ```
+    - Exemplo de retorno em caso de sucesso:
+    ```json
+    // status 200
+    {
+      "id": 1,
+      "street": "Rua dos Bobos",
+      "number": "0",
+      "neighborhood": "Vila Pompéia",
+      "city": "São Paulo",
+      "state": "SP"
+    }
+    ```
+  - Buscar todos os endereços:
+      - GET: http://localhost:8080/address
+      - Exemplo de requisição:
+    ```bash
+    curl 'localhost:8080/address'
+    ```
+      - Exemplo de retorno em caso de sucesso:
+    ```json
+    // status 200
+    [
+      {
+        "id": 1,
+        "street": "Rua dos Bobos",
+        "number": "0",
+        "neighborhood": "Vila Pompéia",
+        "city": "São Paulo",
+        "state": "SP"
+      },
+      {
+        "id": 2,
+        "street": "Rua dos dois",
+        "number": "1",
+        "neighborhood": "Vila Pompéia",
+        "city": "São Paulo",
+        "state": "SP"
+      }
+    ]
+    ```
+  - Atualizar um endereço:
+    - PUT: http://localhost:8080/address/{id}
+      - {id}: id do endereço a ser atualizado
+    - Exemplo de requisição:
+    ```bash
+    curl -X PUT 'localhost:8080/address/1' \
+    -H 'Content-Type: application/json' \
+    --data '{
+        "street": "Rua dos Bobos",
+        "number": "00",
+        "neighborhood": "Vila Pompéia",
+        "city": "São Paulo",
+        "state": "SP"
+    }'
+    ```
+    - Exemplo de retorno em caso de sucesso:
+    ```json
+    // status 200
+    {
+      "id": 1,
+      "street": "Rua dos Bobos",
+      "number": "00",
+      "neighborhood": "Vila Pompéia",
+      "city": "São Paulo",
+      "state": "SP"
+    }
+    ```
+  - Deletar um endereço:
+    - DELETE: http://localhost:8080/address/{id}
+        - {id}: id do endereço a ser deletado 
+    - Exemplo de requisição:
+    ```bash
+    curl -X DELETE 'localhost:8080/address/1'
+    ```
+    - Exemplo de retorno em caso de sucesso:
+    ```json
+    // status 204
+    ```
