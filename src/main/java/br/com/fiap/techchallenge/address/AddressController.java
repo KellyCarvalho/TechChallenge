@@ -28,7 +28,7 @@ public class AddressController {
             }
     )
     @GetMapping
-    public ResponseEntity<?> findAll() {
+    public ResponseEntity<Collection<AddressView>> findAll() {
        Collection<AddressView> addressViews = addressService.findAll();
         return ResponseEntity.ok().body(addressViews);
     }
@@ -40,7 +40,7 @@ public class AddressController {
             }
     )
     @GetMapping(value = "/{id}")
-    public ResponseEntity<?> findById(@PathVariable Long id) {
+    public ResponseEntity<AddressView> findById(@PathVariable Long id) {
         AddressView addressView = addressService.findById(id);
         return ResponseEntity.ok(addressView);
     }
@@ -52,7 +52,7 @@ public class AddressController {
             }
     )
     @PostMapping
-    public ResponseEntity<?> createAddress(@Valid @RequestBody AddressForm addressForm) {
+    public ResponseEntity<AddressView> createAddress(@Valid @RequestBody AddressForm addressForm) {
         AddressView addressView = addressService.createAddress(addressForm);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(addressView.id()).toUri();
@@ -66,7 +66,7 @@ public class AddressController {
             }
     )
     @PutMapping(value = "/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody AddressForm addressForm) {
+    public ResponseEntity<AddressView> update(@PathVariable Long id, @RequestBody AddressForm addressForm) {
         AddressView addressView = addressService.update(id, addressForm);
         return ResponseEntity.ok(addressView);
     }

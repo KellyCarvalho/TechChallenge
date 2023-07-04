@@ -9,7 +9,7 @@ public class Address {
     @NotBlank(message = "Street is mandatory")
     private String street;
     @NotBlank(message = "Number is required")
-    @Size(min = 2, message = "Number must contain 2 characters")
+    @Size(min = 1, message = "Number must contain 1 characters")
     private String number;
     @NotBlank(message = "Neighborhood is required")
     private String neighborhood;
