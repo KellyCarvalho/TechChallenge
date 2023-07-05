@@ -84,7 +84,7 @@ Pensando que este sistema tende a crescer e sofrer alterações não é boa prá
       - GET: http://localhost:8080/addresses
       - Exemplo de requisição:
     ```bash
-    curl 'localhost:8080/addresses'
+    curl -X GET 'localhost:8080/addresses'
     ```
       - Exemplo de retorno em caso de sucesso:
     ```json
@@ -197,7 +197,7 @@ Pensando que este sistema tende a crescer e sofrer alterações não é boa prá
         - GET: http://localhost:8080/appliances
         - Exemplo de requisição:
       ```bash
-      curl 'localhost:8080/appliances'
+      curl -X GET 'localhost:8080/appliances'
       ```
         - Exemplo de retorno em caso de sucesso:
       ```json
@@ -304,7 +304,7 @@ Pensando que este sistema tende a crescer e sofrer alterações não é boa prá
         - GET: http://localhost:8080/people
         - Exemplo de requisição:
       ```bash
-      curl 'localhost:8080/people'
+      curl -X GET 'localhost:8080/people'
       ```
         - Exemplo de retorno em caso de sucesso:
       ```json
