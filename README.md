@@ -36,10 +36,10 @@ Pensando que este sistema tende a crescer e sofrer alterações não é boa prá
 ## Documentacao das APIs
 - ### API de Endereços:
   - Cadastrar um endereço:
-      - POST: http://localhost:8080/address/
+      - POST: http://localhost:8080/addresses/
       - Exemplo de requisição:
     ```bash
-    curl -X POST 'localhost:8080/address' \
+    curl -X POST 'localhost:8080/addresses' \
     -H 'Content-Type: application/json' \
     --data '{
         "street": "Rua dos Bobos",
@@ -62,11 +62,11 @@ Pensando que este sistema tende a crescer e sofrer alterações não é boa prá
     }
     ```
   - Buscar um endereço: 
-    - GET: http://localhost:8080/address/{id}
+    - GET: http://localhost:8080/addresses/{id}
       - {id}: id do endereço buscado
     - Exemplo de requisição:
     ```bash
-    curl -X GET 'localhost:8080/address/1'
+    curl -X GET 'localhost:8080/addresses/1'
     ```
     - Exemplo de retorno em caso de sucesso:
     ```json
@@ -81,10 +81,10 @@ Pensando que este sistema tende a crescer e sofrer alterações não é boa prá
     }
     ```
   - Buscar todos os endereços:
-      - GET: http://localhost:8080/address
+      - GET: http://localhost:8080/addresses
       - Exemplo de requisição:
     ```bash
-    curl 'localhost:8080/address'
+    curl 'localhost:8080/addresses'
     ```
       - Exemplo de retorno em caso de sucesso:
     ```json
@@ -109,11 +109,11 @@ Pensando que este sistema tende a crescer e sofrer alterações não é boa prá
     ]
     ```
   - Atualizar um endereço:
-    - PUT: http://localhost:8080/address/{id}
+    - PUT: http://localhost:8080/addresses/{id}
       - {id}: id do endereço a ser atualizado
     - Exemplo de requisição:
     ```bash
-    curl -X PUT 'localhost:8080/address/1' \
+    curl -X PUT 'localhost:8080/addresses/1' \
     -H 'Content-Type: application/json' \
     --data '{
         "street": "Rua dos Bobos",
@@ -136,11 +136,11 @@ Pensando que este sistema tende a crescer e sofrer alterações não é boa prá
     }
     ```
   - Deletar um endereço:
-    - DELETE: http://localhost:8080/address/{id}
+    - DELETE: http://localhost:8080/addresses/{id}
         - {id}: id do endereço a ser deletado 
     - Exemplo de requisição:
     ```bash
-    curl -X DELETE 'localhost:8080/address/1'
+    curl -X DELETE 'localhost:8080/addresses/1'
     ```
     - Exemplo de retorno em caso de sucesso:
     ```json
@@ -262,10 +262,10 @@ Pensando que este sistema tende a crescer e sofrer alterações não é boa prá
 
 - ### API de Pessoas:
     - Cadastrar uma pessoa:
-        - POST: http://localhost:8080/person/
+        - POST: http://localhost:8080/people/
         - Exemplo de requisição:
       ```bash
-      curl -X POST 'localhost:8080/person' \
+      curl -X POST 'localhost:8080/people' \
       -H 'Content-Type: application/json' \
       --data '{
           "name": "Sergio Bezerra da Silva",
@@ -284,11 +284,11 @@ Pensando que este sistema tende a crescer e sofrer alterações não é boa prá
       }
       ```
     - Buscar uma pessoa:
-        - GET: http://localhost:8080/person/{id}
-            - {id}: id do pessoa buscado
+        - GET: http://localhost:8080/people/{id}
+            - {id}: id da pessoa buscada
         - Exemplo de requisição:
       ```bash
-      curl -X GET 'localhost:8080/person/1'
+      curl -X GET 'localhost:8080/people/1'
       ```
         - Exemplo de retorno em caso de sucesso:
       ```json
@@ -301,10 +301,10 @@ Pensando que este sistema tende a crescer e sofrer alterações não é boa prá
       }
       ```
     - Buscar todas as pessoas:
-        - GET: http://localhost:8080/person
+        - GET: http://localhost:8080/people
         - Exemplo de requisição:
       ```bash
-      curl 'localhost:8080/person'
+      curl 'localhost:8080/people'
       ```
         - Exemplo de retorno em caso de sucesso:
       ```json
@@ -325,11 +325,11 @@ Pensando que este sistema tende a crescer e sofrer alterações não é boa prá
       ]
       ```
     - Atualizar uma pessoa:
-        - PUT: http://localhost:8080/person/{id}
-            - {id}: id da pessoa a ser atualizado
+        - PUT: http://localhost:8080/people/{id}
+            - {id}: id da pessoa a ser atualizada
         - Exemplo de requisição:
       ```bash
-      curl -X PUT 'localhost:8080/person/1' \
+      curl -X PUT 'localhost:8080/people/1' \
       -H 'Content-Type: application/json' \
       --data '{
           "name": "Sergio Bezerra Oliveira",
@@ -348,11 +348,11 @@ Pensando que este sistema tende a crescer e sofrer alterações não é boa prá
       }
       ```
     - Deletar uma pessoa:
-        - DELETE: http://localhost:8080/person/{id}
+        - DELETE: http://localhost:8080/people/{id}
             - {id}: id da pessoa a ser deletada
         - Exemplo de requisição:
       ```bash
-      curl -X DELETE 'localhost:8080/person/1'
+      curl -X DELETE 'localhost:8080/people/1'
       ```
         - Exemplo de retorno em caso de sucesso:
       ```json

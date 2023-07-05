@@ -14,7 +14,7 @@ import java.util.Collection;
 
 @Tag(name = "Address", description = "Manipula dados de endereços")
 @RestController
-@RequestMapping("/address")
+@RequestMapping("/addresses")
 public class AddressController {
     private final AddressService addressService;
 

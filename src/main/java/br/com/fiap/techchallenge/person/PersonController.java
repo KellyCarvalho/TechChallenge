@@ -12,7 +12,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/person")
+@RequestMapping("/people")
 @Tag(name = "Person", description = "Manipula dados de pessoas")
 public class PersonController {
 
