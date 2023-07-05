@@ -34,7 +34,7 @@ Pensando que este sistema tende a crescer e sofrer alterações não é boa prá
 - Spring initializr
 
 ## Documentação das APIs
-- API de Endereços:
+- ### API de Endereços:
   - Cadastrar um endereço:
       - POST: http://localhost:8080/address/
       - Exemplo de requisição:
@@ -147,7 +147,7 @@ Pensando que este sistema tende a crescer e sofrer alterações não é boa prá
     // status 204
     ```
 
-- API de Eletrodomésticos:
+- ### API de Eletrodomésticos:
     - Cadastrar um eletrodoméstico:
         - POST: http://localhost:8080/appliances/
         - Exemplo de requisição:
@@ -260,7 +260,7 @@ Pensando que este sistema tende a crescer e sofrer alterações não é boa prá
       // status 204
       ```
 
-- API de Pessoas:
+- ### API de Pessoas:
     - Cadastrar uma pessoa:
         - POST: http://localhost:8080/person/
         - Exemplo de requisição:
