@@ -33,7 +33,7 @@ Pensando que este sistema tende a crescer e sofrer alterações não é boa prá
 - Copilot
 - Spring initializr
 
-## Documentação das APIs
+## Documentacao das APIs
 - ### API de Endereços:
   - Cadastrar um endereço:
       - POST: http://localhost:8080/address/
