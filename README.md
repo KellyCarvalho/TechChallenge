@@ -146,3 +146,215 @@ Pensando que este sistema tende a crescer e sofrer alterações não é boa prá
     ```json
     // status 204
     ```
+
+- API de Eletrodomésticos:
+    - Cadastrar um eletrodoméstico:
+        - POST: http://localhost:8080/appliances/
+        - Exemplo de requisição:
+      ```bash
+      curl -X POST 'localhost:8080/appliances' \
+      -H 'Content-Type: application/json' \
+      --data '{
+          "name": "Refrigerador dummie",
+          "brand": "alta fridge",
+          "model": "UVNANO",
+          "potencyInWatts":5200,
+          "voltage": "ONE_HUNDRED_TWENTY_SEVEN"
+      }'
+      ```
+        - Exemplo de retorno em caso de sucesso:
+      ```json
+      // status 201
+      {
+          "id": 2,
+          "name": "Refrigerador dummie",
+          "brand": "alta fridge",
+          "model": "UVNANO",
+          "potencyInWatts": 5200,
+          "voltage": "ONE_HUNDRED_TWENTY_SEVEN"
+      }
+      ```
+    - Buscar um eletrodoméstico:
+        - GET: http://localhost:8080/appliances/{id}
+            - {id}: id do endereço buscado
+        - Exemplo de requisição:
+      ```bash
+      curl -X GET 'localhost:8080/appliances/1'
+      ```
+        - Exemplo de retorno em caso de sucesso:
+      ```json
+      // status 200
+      {
+          "id": 1,
+          "name": "Refrigerador dummie",
+          "brand": "alta fridge",
+          "model": "UVNANO",
+          "potencyInWatts": 5200,
+          "voltage": "ONE_HUNDRED_TWENTY_SEVEN"
+      }
+      ```
+    - Buscar todos os eletrodomésticos:
+        - GET: http://localhost:8080/appliances
+        - Exemplo de requisição:
+      ```bash
+      curl 'localhost:8080/appliances'
+      ```
+        - Exemplo de retorno em caso de sucesso:
+      ```json
+      // status 200
+      [
+          {
+              "id": 1,
+              "name": "Refrigerador dummie",
+              "brand": "alta fridge",
+              "model": "UVNANO",
+              "potencyInWatts": 5200,
+              "voltage": "ONE_HUNDRED_TWENTY_SEVEN"
+          },
+          {
+              "id": 2,
+              "name": "Refrigerador dummie",
+              "brand": "alta fridge",
+              "model": "UVNANO",
+              "potencyInWatts": 5200,
+              "voltage": "ONE_HUNDRED_TWENTY_SEVEN"
+          }
+      ]
+      ```
+    - Atualizar um eletrodoméstico:
+        - PUT: http://localhost:8080/appliances/{id}
+            - {id}: id do eletrodoméstico a ser atualizado
+        - Exemplo de requisição:
+      ```bash
+      curl -X PUT 'localhost:8080/appliances/1' \
+      -H 'Content-Type: application/json' \
+      --data '{
+          "name": "Lavadora Lavanada",
+          "brand": "Suggatudo",
+          "model": "LGPD",
+          "potencyInWatts": 2000,
+          "voltage": "BIVOLT"
+      }'
+      ```
+        - Exemplo de retorno em caso de sucesso:
+      ```json
+      // status 200
+      {
+          "id": 1,
+          "name": "Lavadora Lavanada",
+          "brand": "Suggatudo",
+          "model": "LGPD",
+          "potencyInWatts": 2000,
+          "voltage": "BIVOLT"
+      }
+      ```
+    - Deletar um eletrodoméstico:
+        - DELETE: http://localhost:8080/appliances/{id}
+            - {id}: id do eletrodoméstico a ser deletado
+        - Exemplo de requisição:
+      ```bash
+      curl -X DELETE 'localhost:8080/appliances/1'
+      ```
+        - Exemplo de retorno em caso de sucesso:
+      ```json
+      // status 204
+      ```
+
+- API de Pessoas:
+    - Cadastrar uma pessoa:
+        - POST: http://localhost:8080/person/
+        - Exemplo de requisição:
+      ```bash
+      curl -X POST 'localhost:8080/person' \
+      -H 'Content-Type: application/json' \
+      --data '{
+          "name": "Sergio Bezerra da Silva",
+          "birthDate": "1974-05-25",
+          "gender": "MALE"
+      }'
+      ```
+        - Exemplo de retorno em caso de sucesso:
+      ```json
+      // status 201
+      {
+          "id": 1,
+          "name": "Sergio Bezerra da Silva",
+          "birthDate": "1974-05-25",
+          "gender": "MALE"
+      }
+      ```
+    - Buscar uma pessoa:
+        - GET: http://localhost:8080/person/{id}
+            - {id}: id do pessoa buscado
+        - Exemplo de requisição:
+      ```bash
+      curl -X GET 'localhost:8080/person/1'
+      ```
+        - Exemplo de retorno em caso de sucesso:
+      ```json
+      // status 200
+      {
+          "id": 2,
+          "name": "Sergio Bezerra da Silva",
+          "birthDate": "1974-05-25",
+          "gender": "MALE"
+      }
+      ```
+    - Buscar todas as pessoas:
+        - GET: http://localhost:8080/person
+        - Exemplo de requisição:
+      ```bash
+      curl 'localhost:8080/person'
+      ```
+        - Exemplo de retorno em caso de sucesso:
+      ```json
+      // status 200
+      [
+          {
+              "id": 1,
+              "name": "Sergio Bezerra da Silva",
+              "birthDate": "1974-05-25",
+              "gender": "MALE"
+          },
+         {
+              "id": 2,
+              "name": "Sergio Bezerra da Silva",
+              "birthDate": "1974-05-25",
+              "gender": "MALE"
+         }
+      ]
+      ```
+    - Atualizar uma pessoa:
+        - PUT: http://localhost:8080/person/{id}
+            - {id}: id da pessoa a ser atualizado
+        - Exemplo de requisição:
+      ```bash
+      curl -X PUT 'localhost:8080/person/1' \
+      -H 'Content-Type: application/json' \
+      --data '{
+          "name": "Sergio Bezerra Oliveira",
+          "birthDate": "1974-05-25",
+          "gender": "MALE"
+      }'
+      ```
+        - Exemplo de retorno em caso de sucesso:
+      ```json
+      // status 200
+      {
+          "id": 2,
+          "name": "Sergio Bezerra Oliveira",
+          "birthDate": "1974-05-25",
+          "gender": "MALE"
+      }
+      ```
+    - Deletar uma pessoa:
+        - DELETE: http://localhost:8080/person/{id}
+            - {id}: id da pessoa a ser deletada
+        - Exemplo de requisição:
+      ```bash
+      curl -X DELETE 'localhost:8080/person/1'
+      ```
+        - Exemplo de retorno em caso de sucesso:
+      ```json
+      // status 204
+      ```
