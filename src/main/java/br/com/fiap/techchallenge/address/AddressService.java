@@ -1,6 +1,8 @@
 package br.com.fiap.techchallenge.address;
 
 import br.com.fiap.techchallenge.exception.NotFoundException;
+import br.com.fiap.techchallenge.person.Person;
+import br.com.fiap.techchallenge.person.PersonRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -9,9 +11,11 @@ import java.util.Collection;
 public class AddressService {
 
     private final AddressRepository addressRepository;
+    private final PersonRepository personRepository;
 
-    public AddressService(AddressRepository addressRepository) {
+    public AddressService(AddressRepository addressRepository, PersonRepository personRepository) {
         this.addressRepository = addressRepository;
+        this.personRepository = personRepository;
     }
 
     public Collection<AddressView> findAll() {
@@ -25,7 +29,12 @@ public class AddressService {
     }
 
     public AddressView createAddress(AddressForm addressForm) {
+        Person person = personRepository.findById(addressForm.personId()).orElseThrow(() -> new NotFoundException("Person id: %s not found.".formatted(addressForm.personId())));
         Address address = addressRepository.save(addressForm.toEntity());
+
+        person.addAddress(address);
+        personRepository.save(person);
+
         return new AddressView(address);
     }
 

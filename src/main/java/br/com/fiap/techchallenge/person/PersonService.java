@@ -5,14 +5,18 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PersonService {
 
     private final PersonRepository personRepository;
+    private final RelatedPersonRepository relatedPersonRepository;
 
-    public PersonService(PersonRepository personRepository) {
+    public PersonService(PersonRepository personRepository,
+                         RelatedPersonRepository relatedPersonRepository) {
         this.personRepository = personRepository;
+        this.relatedPersonRepository = relatedPersonRepository;
     }
 
     public PersonView findById(Long id) {
@@ -27,6 +31,16 @@ public class PersonService {
 
     public PersonView create(PersonForm personForm) {
         Person person = personRepository.save(personForm.toEntity());
+
+        List<RelatedPerson> relations = personForm.relatedPersons().stream().map(relatedPersonForm -> {
+            Person relatedPerson = personRepository.findById(relatedPersonForm.personId()).orElseThrow(() -> new NotFoundException("Related Person id: %s not found.".formatted(relatedPersonForm.personId())));
+            return new RelatedPerson(person, relatedPerson, relatedPersonForm.connection());
+        }).collect(Collectors.toList());
+
+        relations.addAll(relations.stream().map(RelatedPerson::createInverseRelation).toList());
+
+        relatedPersonRepository.saveAll(relations);
+
         return new PersonView(person);
     }
 

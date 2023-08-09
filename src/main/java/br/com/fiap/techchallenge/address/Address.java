@@ -1,20 +1,29 @@
 package br.com.fiap.techchallenge.address;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+@Entity
 public class Address {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotBlank(message = "Street is mandatory")
     private String street;
+
     @NotBlank(message = "Number is required")
     @Size(min = 1, message = "Number must contain 1 characters")
     private String number;
+
     @NotBlank(message = "Neighborhood is required")
     private String neighborhood;
+
     @NotBlank(message = "City is required")
     private String city;
+
     @NotBlank(message = "State is required")
     private String state;
 
