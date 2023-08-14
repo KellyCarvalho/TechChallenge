@@ -1,5 +1,7 @@
 package br.com.fiap.techchallenge.appliance;
 
+import br.com.fiap.techchallenge.address.Address;
+import br.com.fiap.techchallenge.address.AddressRepository;
 import br.com.fiap.techchallenge.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -9,9 +11,11 @@ import java.util.Collection;
 public class ApplianceService {
 
     private final ApplianceRepository applianceRepository;
+    private final AddressRepository addressRepository;
 
-    public ApplianceService(ApplianceRepository applianceRepository) {
+    public ApplianceService(ApplianceRepository applianceRepository, AddressRepository addressRepository) {
         this.applianceRepository = applianceRepository;
+        this.addressRepository = addressRepository;
     }
 
     public Collection<ApplianceView> findAll() {
@@ -27,7 +31,9 @@ public class ApplianceService {
     }
 
     public ApplianceView createAppliance(ApplianceForm applianceForm) {
-        Appliance appliance = applianceRepository.save(applianceForm.toEntity());
+        Address address = addressRepository.findById(applianceForm.addressId()).orElseThrow(() -> new NotFoundException("Address id: %s not found.".formatted(applianceForm.addressId())));
+
+        Appliance appliance = applianceRepository.save(applianceForm.toEntity(address));
 
         return new ApplianceView(appliance);
     }

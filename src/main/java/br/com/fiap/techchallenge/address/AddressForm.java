@@ -2,9 +2,10 @@ package br.com.fiap.techchallenge.address;
 
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public record AddressForm(@NotBlank(message = "Person is mandatory")
+public record AddressForm(@NotNull(message = "Person is mandatory")
                           Long personId,
                           @NotBlank(message = "Street is mandatory")
                           String street,

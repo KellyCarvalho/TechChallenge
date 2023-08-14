@@ -16,11 +16,9 @@ import java.util.Collection;
 @RequestMapping("/appliances")
 public class ApplianceController {
 
-    private final ApplianceRepository applianceRepository;
     private final ApplianceService applianceService;
 
-    public ApplianceController(ApplianceRepository applianceRepository, ApplianceService applianceService) {
-        this.applianceRepository = applianceRepository;
+    public ApplianceController(ApplianceService applianceService) {
         this.applianceService = applianceService;
     }
 

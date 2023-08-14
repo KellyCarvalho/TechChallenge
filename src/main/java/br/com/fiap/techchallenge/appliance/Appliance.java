@@ -1,11 +1,16 @@
 package br.com.fiap.techchallenge.appliance;
 
+import br.com.fiap.techchallenge.address.Address;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+@Entity
 public class Appliance {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank
     @Size(min = 1, max = 255)
@@ -16,18 +21,23 @@ public class Appliance {
     private String model;
     private Integer potencyInWatts;
     @NotNull
+    @Enumerated(EnumType.STRING)
     private Voltage voltage;
+
+    @OneToOne
+    private Address address;
 
     @Deprecated
     public Appliance() {
     }
 
-    public Appliance(String name, String brand, String model, Integer potencyInWatts, Voltage voltage) {
+    public Appliance(String name, String brand, String model, Integer potencyInWatts, Voltage voltage, Address address) {
         this.name = name;
         this.brand = brand;
         this.model = model;
         this.potencyInWatts = potencyInWatts;
         this.voltage = voltage;
+        this.address = address;
     }
 
     public Long getId() {
@@ -78,4 +88,7 @@ public class Appliance {
         this.voltage = voltage;
     }
 
+    public Address getAddress() {
+        return address;
+    }
 }
