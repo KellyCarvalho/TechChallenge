@@ -1,6 +1,8 @@
 package br.com.fiap.techchallenge.person;
 
 import br.com.fiap.techchallenge.exception.NotFoundException;
+import br.com.fiap.techchallenge.person.relatedPerson.RelatedPerson;
+import br.com.fiap.techchallenge.person.relatedPerson.RelatedPersonRepository;
 import br.com.fiap.techchallenge.user.User;
 import br.com.fiap.techchallenge.user.UserRepository;
 import org.springframework.stereotype.Service;

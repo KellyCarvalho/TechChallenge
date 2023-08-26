@@ -1,5 +1,7 @@
 package br.com.fiap.techchallenge.person;
 
+import br.com.fiap.techchallenge.person.relatedPerson.Connection;
+import br.com.fiap.techchallenge.person.relatedPerson.RelatedPerson;
 import br.com.fiap.techchallenge.user.User;
 import jakarta.validation.constraints.*;
 

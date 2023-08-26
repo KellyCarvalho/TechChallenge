@@ -1,5 +1,6 @@
-package br.com.fiap.techchallenge.person;
+package br.com.fiap.techchallenge.person.relatedPerson;
 
+import br.com.fiap.techchallenge.person.Person;
 import br.com.fiap.techchallenge.user.User;
 import jakarta.persistence.*;
 

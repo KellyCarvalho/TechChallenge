@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge.person;
+package br.com.fiap.techchallenge.person.relatedPerson;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

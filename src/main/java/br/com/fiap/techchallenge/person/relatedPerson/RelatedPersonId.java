@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge.person;
+package br.com.fiap.techchallenge.person.relatedPerson;
 
 import jakarta.persistence.Embeddable;
 

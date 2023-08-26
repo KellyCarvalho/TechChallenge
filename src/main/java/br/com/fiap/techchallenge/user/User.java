@@ -1,6 +1,7 @@
 package br.com.fiap.techchallenge.user;
 
 import br.com.fiap.techchallenge.person.*;
+import br.com.fiap.techchallenge.person.relatedPerson.RelatedPerson;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
