@@ -1,8 +1,12 @@
 package br.com.fiap.techchallenge.address;
 
+import br.com.fiap.techchallenge.person.Person;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Entity
 public class Address {
@@ -27,6 +31,9 @@ public class Address {
     @NotBlank(message = "State is required")
     private String state;
 
+    @ManyToMany(mappedBy = "addresses")
+    private Collection<Person> people = new ArrayList<>();
+
     public Address() {
     }
 
@@ -36,14 +43,6 @@ public class Address {
         this.neighborhood = neighborhood;
         this.city = city;
         this.state = state;
-    }
-
-    public void toEntity(AddressView addressView) {
-        this.street = addressView.street();
-        this.number = addressView.number();
-        this.neighborhood = addressView.neighborhood();
-        this.city = addressView.city();
-        this.state = addressView.state();
     }
 
     public Long getId() {
@@ -92,5 +91,13 @@ public class Address {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public Collection<Person> getPeople() {
+        return people;
+    }
+
+    public void setPeople(Collection<Person> people) {
+        this.people = people;
     }
 }

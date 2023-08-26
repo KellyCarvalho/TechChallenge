@@ -45,6 +45,18 @@ public class AddressController {
         return ResponseEntity.ok(addressView);
     }
 
+    @Operation(description = "Retorna um endereço específico",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Caso o endereço tenha sido encontrado na base"),
+                    @ApiResponse(responseCode = "404", description = "Caso o endereço não tenha sido encontrado na base")
+            }
+    )
+    @GetMapping(value = "/search")
+    public ResponseEntity<Collection<AddressView>> search(@RequestBody AddressSearchForm addressSearchForm) {
+        Collection<AddressView> addressView = addressService.searchBy(addressSearchForm);
+        return ResponseEntity.ok(addressView);
+    }
+
     @Operation(description = "Cria um endereço na base de dados",
             responses = {
                     @ApiResponse(responseCode = "201", description = "Sucesso ao criar o endereço na base"),

@@ -28,6 +28,11 @@ public class AddressService {
         return new AddressView(address);
     }
 
+    public Collection<AddressView> searchBy(AddressSearchForm addressSearchForm) {
+        Collection<Address> addresses = addressRepository.searchBy(addressSearchForm);
+        return addresses.stream().map(AddressView::new).toList();
+    }
+
     public AddressView createAddress(AddressForm addressForm) {
         Person person = personRepository.findById(addressForm.personId()).orElseThrow(() -> new NotFoundException("Person id: %s not found.".formatted(addressForm.personId())));
         Address address = addressRepository.save(addressForm.toEntity());
