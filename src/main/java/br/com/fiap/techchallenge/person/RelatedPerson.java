@@ -1,5 +1,6 @@
 package br.com.fiap.techchallenge.person;
 
+import br.com.fiap.techchallenge.user.User;
 import jakarta.persistence.*;
 
 @Entity
@@ -9,8 +10,8 @@ public class RelatedPerson {
     private RelatedPersonId id = new RelatedPersonId();
 
     @ManyToOne
-    @MapsId("personId")
-    private Person person;
+    @MapsId("userId")
+    private User user;
 
     @ManyToOne
     @MapsId("relatedPersonId")
@@ -22,13 +23,9 @@ public class RelatedPerson {
     @Deprecated
     public RelatedPerson() {}
 
-    public RelatedPerson(Person person, Person relatedPerson, Connection connection) {
-        this.person = person;
+    public RelatedPerson(User user, Person relatedPerson, Connection connection) {
+        this.user = user;
         this.relatedPerson = relatedPerson;
         this.connection = connection;
-    }
-
-    public RelatedPerson createInverseRelation() {
-        return new RelatedPerson(relatedPerson, person, Connection.inverseConnection(connection));
     }
 }

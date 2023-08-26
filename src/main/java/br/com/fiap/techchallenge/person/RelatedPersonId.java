@@ -9,23 +9,23 @@ public class RelatedPersonId implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Long personId;
+    private Long userId;
     private Long relatedPersonId;
 
     public RelatedPersonId() {}
 
-    public RelatedPersonId(Long personId, Long relatedPersonId) {
+    public RelatedPersonId(Long userId, Long relatedPersonId) {
         super();
-        this.personId = personId;
+        this.userId = userId;
         this.relatedPersonId = relatedPersonId;
     }
 
-    public Long getPersonId() {
-        return personId;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setPersonId(Long personId) {
-        this.personId = personId;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Long getRelatedPersonId() {

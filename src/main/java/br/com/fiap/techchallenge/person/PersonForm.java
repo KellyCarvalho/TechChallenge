@@ -1,18 +1,18 @@
 package br.com.fiap.techchallenge.person;
 
+import br.com.fiap.techchallenge.user.User;
 import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
-import java.util.*;
 
 public record PersonForm(@NotNull @Size(min = 1, max = 255) String name,
-                         Collection<RelatedPersonForm> relatedPersons,
+                         @NotNull Long userId,
+                         @NotNull Connection userConnection,
                          @NotNull @Past LocalDate birthDate,
                          @NotNull Gender gender) {
 
-    @Override
-    public Collection<RelatedPersonForm> relatedPersons() {
-        return Optional.ofNullable(relatedPersons).orElse(Set.of());
+    public RelatedPerson relatedPersonEntity(User user, Person person) {
+        return new RelatedPerson(user, person, userConnection);
     }
 
     public Person toEntity() {

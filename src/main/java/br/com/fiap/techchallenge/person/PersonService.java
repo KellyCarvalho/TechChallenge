@@ -1,6 +1,8 @@
 package br.com.fiap.techchallenge.person;
 
 import br.com.fiap.techchallenge.exception.NotFoundException;
+import br.com.fiap.techchallenge.user.User;
+import br.com.fiap.techchallenge.user.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -12,11 +14,14 @@ public class PersonService {
 
     private final PersonRepository personRepository;
     private final RelatedPersonRepository relatedPersonRepository;
+    private final UserRepository userRepository;
 
     public PersonService(PersonRepository personRepository,
-                         RelatedPersonRepository relatedPersonRepository) {
+                         RelatedPersonRepository relatedPersonRepository,
+                         UserRepository userRepository) {
         this.personRepository = personRepository;
         this.relatedPersonRepository = relatedPersonRepository;
+        this.userRepository = userRepository;
     }
 
     public PersonView findById(Long id) {
@@ -32,14 +37,9 @@ public class PersonService {
     public PersonView create(PersonForm personForm) {
         Person person = personRepository.save(personForm.toEntity());
 
-        List<RelatedPerson> relations = personForm.relatedPersons().stream().map(relatedPersonForm -> {
-            Person relatedPerson = personRepository.findById(relatedPersonForm.personId()).orElseThrow(() -> new NotFoundException("Related Person id: %s not found.".formatted(relatedPersonForm.personId())));
-            return new RelatedPerson(person, relatedPerson, relatedPersonForm.connection());
-        }).collect(Collectors.toList());
-
-        relations.addAll(relations.stream().map(RelatedPerson::createInverseRelation).toList());
-
-        relatedPersonRepository.saveAll(relations);
+        User user = userRepository.getReferenceById(personForm.userId());
+        RelatedPerson relatedPerson = personForm.relatedPersonEntity(user, person);
+        relatedPersonRepository.save(relatedPerson);
 
         return new PersonView(person);
     }

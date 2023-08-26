@@ -8,6 +8,8 @@ import java.time.LocalDate;
 import java.util.*;
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorValue("PERSON")
 public class Person {
 
     @Id
@@ -17,9 +19,6 @@ public class Person {
     @NotNull
     @Size(min = 1, max = 255)
     private String name;
-
-    @OneToMany(mappedBy = "person")
-    private Collection<RelatedPerson> relatedPersons = new HashSet<>();
 
     @ManyToMany
     private Collection<Address> addresses = new ArrayList<>();
@@ -64,14 +63,6 @@ public class Person {
 
     public void addAddress(Address address) {
         this.addresses.add(address);
-    }
-
-    public Collection<RelatedPerson> getRelatedPersons() {
-        return Collections.unmodifiableCollection(relatedPersons);
-    }
-
-    public void addRelatedPersons(RelatedPerson relatedPersons) {
-        this.relatedPersons.add(relatedPersons);
     }
 
     public LocalDate getBirthDate() {
