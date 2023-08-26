@@ -29,4 +29,20 @@ public class RelatedPerson {
         this.relatedPerson = relatedPerson;
         this.connection = connection;
     }
+
+    public Person getRelatedPerson() {
+        return relatedPerson;
+    }
+
+    public void setRelatedPerson(Person relatedPerson) {
+        this.relatedPerson = relatedPerson;
+    }
+
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
 }

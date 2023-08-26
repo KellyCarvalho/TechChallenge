@@ -1,6 +1,8 @@
 package br.com.fiap.techchallenge.address;
 
+import br.com.fiap.techchallenge.appliance.Appliance;
 import br.com.fiap.techchallenge.person.Person;
+import br.com.fiap.techchallenge.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -31,8 +33,14 @@ public class Address {
     @NotBlank(message = "State is required")
     private String state;
 
+    @ManyToOne
+    private User user;
+
     @ManyToMany(mappedBy = "addresses")
     private Collection<Person> people = new ArrayList<>();
+
+    @OneToMany(mappedBy = "address")
+    private Collection<Appliance> appliances;
 
     public Address() {
     }
@@ -93,11 +101,27 @@ public class Address {
         this.state = state;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Collection<Person> getPeople() {
         return people;
     }
 
     public void setPeople(Collection<Person> people) {
         this.people = people;
+    }
+
+    public Collection<Appliance> getAppliances() {
+        return appliances;
+    }
+
+    public void setAppliances(Collection<Appliance> appliances) {
+        this.appliances = appliances;
     }
 }

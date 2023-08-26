@@ -24,7 +24,7 @@ public class Appliance {
     @Enumerated(EnumType.STRING)
     private Voltage voltage;
 
-    @OneToOne
+    @ManyToOne
     private Address address;
 
     @Deprecated
