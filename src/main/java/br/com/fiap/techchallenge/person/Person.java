@@ -97,5 +97,6 @@ public class Person {
         setName(personForm.name());
         setBirthDate(personForm.birthDate());
         setGender(personForm.gender());
+        getRelatedUser().setConnection(personForm.userConnection());
     }
 }

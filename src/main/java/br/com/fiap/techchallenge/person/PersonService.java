@@ -17,9 +17,7 @@ public class PersonService {
     private final RelatedPersonRepository relatedPersonRepository;
     private final UserRepository userRepository;
 
-    public PersonService(PersonRepository personRepository,
-                         RelatedPersonRepository relatedPersonRepository,
-                         UserRepository userRepository) {
+    public PersonService(PersonRepository personRepository, RelatedPersonRepository relatedPersonRepository, UserRepository userRepository) {
         this.personRepository = personRepository;
         this.relatedPersonRepository = relatedPersonRepository;
         this.userRepository = userRepository;
@@ -54,6 +52,8 @@ public class PersonService {
 
     public void deleteById(Long id) {
         personRepository.findById(id).orElseThrow(() -> new NotFoundException("Person id: %s not found.".formatted(id)));
+        relatedPersonRepository.deleteAll(relatedPersonRepository.findAllById_RelatedPersonId(id));
+
         personRepository.deleteById(id);
     }
 }
