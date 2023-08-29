@@ -1,6 +1,7 @@
 package br.com.fiap.techchallenge.person;
 
 import br.com.fiap.techchallenge.address.Address;
+import br.com.fiap.techchallenge.person.relatedPerson.RelatedPerson;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
@@ -19,6 +20,9 @@ public class Person {
     @NotNull
     @Size(min = 1, max = 255)
     private String name;
+
+    @OneToOne(mappedBy = "relatedPerson")
+    private RelatedPerson relatedUser;
 
     @ManyToMany
     private Collection<Address> addresses = new ArrayList<>();
@@ -55,6 +59,14 @@ public class Person {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public RelatedPerson getRelatedUser() {
+        return relatedUser;
+    }
+
+    public void setRelatedUser(RelatedPerson relatedUser) {
+        this.relatedUser = relatedUser;
     }
 
     public Collection<Address> getAddresses() {

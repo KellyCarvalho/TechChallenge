@@ -14,7 +14,7 @@ public class RelatedPerson {
     @MapsId("userId")
     private User user;
 
-    @ManyToOne
+    @OneToOne
     @MapsId("relatedPersonId")
     private Person relatedPerson;
 
