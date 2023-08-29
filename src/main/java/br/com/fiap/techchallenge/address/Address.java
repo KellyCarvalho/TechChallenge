@@ -7,8 +7,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 
 @Entity
 public class Address {
@@ -110,18 +109,18 @@ public class Address {
     }
 
     public Collection<Person> getPeople() {
-        return people;
+        return Collections.unmodifiableCollection(people);
     }
 
-    public void setPeople(Collection<Person> people) {
-        this.people = people;
+    public void addPerson(Person person) {
+        this.people.add(person);
     }
 
     public Collection<Appliance> getAppliances() {
-        return appliances;
+        return Collections.unmodifiableCollection(appliances);
     }
 
-    public void setAppliances(Collection<Appliance> appliances) {
-        this.appliances = appliances;
+    public void addAppliance(Appliance appliance) {
+        this.appliances.add(appliance);
     }
 }
