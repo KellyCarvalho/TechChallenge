@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
-@Repository
-public interface ApplianceRepository extends JpaRepository<Appliance, Long> {
+
+public interface ApplianceRepository extends JpaRepository<Appliance, Long>, ApplianceRepositoryCustom {
 }

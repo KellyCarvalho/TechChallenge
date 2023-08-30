@@ -6,6 +6,7 @@ import br.com.fiap.techchallenge.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class ApplianceService {
@@ -52,5 +53,11 @@ public class ApplianceService {
     public void deleteById(Long id) {
         applianceRepository.findById(id).orElseThrow(() -> new NotFoundException("Appliance id: %s not found.".formatted(id)));
         applianceRepository.deleteById(id);
+    }
+
+    public List<ApplianceView> searchBy(ApplianceSearchForm applianceSearchForm) {
+        Collection<Appliance> appliances = applianceRepository.searchBy(applianceSearchForm);
+
+        return appliances.stream().map(ApplianceView::new).toList();
     }
 }

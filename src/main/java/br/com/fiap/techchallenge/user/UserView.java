@@ -1,7 +1,6 @@
 package br.com.fiap.techchallenge.user;
 
 import br.com.fiap.techchallenge.person.Gender;
-import br.com.fiap.techchallenge.person.Person;
 
 import java.time.LocalDate;
 

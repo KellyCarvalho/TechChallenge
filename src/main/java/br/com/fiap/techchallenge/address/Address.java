@@ -31,6 +31,8 @@ public class Address {
 
     @NotBlank(message = "State is required")
     private String state;
+    @NotBlank(message = "CEP is required")
+    private String cep;
 
     @ManyToOne
     private User user;
@@ -44,12 +46,13 @@ public class Address {
     public Address() {
     }
 
-    public Address(String street, String number, String neighborhood, String city, String state) {
+    public Address(String street, String number, String neighborhood, String city, String state, String cep) {
         this.street = street;
         this.number = number;
         this.neighborhood = neighborhood;
         this.city = city;
         this.state = state;
+        this.cep = cep;
     }
 
     public Long getId() {
@@ -106,6 +109,14 @@ public class Address {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
     }
 
     public Collection<Person> getPeople() {

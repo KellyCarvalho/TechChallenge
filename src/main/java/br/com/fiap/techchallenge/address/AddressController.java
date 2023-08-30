@@ -45,7 +45,7 @@ public class AddressController {
         return ResponseEntity.ok(addressView);
     }
 
-    @Operation(description = "Retorna um endereço específico",
+    @Operation(description = "Retorna a busca de um endereco por campo",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Caso o endereço tenha sido encontrado na base"),
                     @ApiResponse(responseCode = "404", description = "Caso o endereço não tenha sido encontrado na base")

@@ -2,6 +2,7 @@ package br.com.fiap.techchallenge.person.relatedPerson;
 
 import jakarta.persistence.Embeddable;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 @Embeddable

@@ -17,9 +17,11 @@ public record AddressForm(@NotNull(message = "Person is mandatory")
                           @NotBlank(message = "City is required")
                           String city,
                           @NotBlank(message = "State is required")
-                          String state) {
+                          String state,
+                          @NotBlank(message = "CEP is required")
+                          String cep) {
 
     public Address toEntity() {
-        return new Address(street, number, neighborhood, city, state);
+        return new Address(street, number, neighborhood, city, state, cep);
     }
 }

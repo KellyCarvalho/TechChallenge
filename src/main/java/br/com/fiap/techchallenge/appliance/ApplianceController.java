@@ -4,12 +4,15 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.Collection;
+import java.util.List;
 
 @Tag(name = "Appliance", description = "Manipula dados de eletrodomésticos")
 @RestController
@@ -85,6 +88,19 @@ public class ApplianceController {
         applianceService.deleteById(id);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @Operation(description = "Retorna a busca de um eletrodoméstico por campo",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Caso o eletrodoméstico tenha sido encontrado na base"),
+                    @ApiResponse(responseCode = "404", description = "Caso o eletrodoméstico não tenha sido encontrado na base")
+            }
+    )
+    @GetMapping("/search")
+    ResponseEntity<List<ApplianceView>> searchBy(@RequestBody ApplianceSearchForm applianceSearchForm) {
+        List<ApplianceView> appliancesView =  applianceService.searchBy(applianceSearchForm);
+
+        return ResponseEntity.ok(appliancesView);
     }
 
 }
