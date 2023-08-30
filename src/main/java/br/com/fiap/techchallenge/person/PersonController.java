@@ -80,7 +80,7 @@ public class PersonController {
 
     @Operation(description = "Deleta uma pessoa na base de dados",
             responses = {
-                    @ApiResponse(responseCode = "204", description = "Ao dletar uma pessoa"),
+                    @ApiResponse(responseCode = "204", description = "Ao deletar uma pessoa"),
                     @ApiResponse(responseCode = "404", description = "Caso a pessoa buscada não seja encontrada")
             }
     )

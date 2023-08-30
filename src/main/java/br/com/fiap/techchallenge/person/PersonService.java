@@ -1,8 +1,6 @@
 package br.com.fiap.techchallenge.person;
 
 import br.com.fiap.techchallenge.exception.NotFoundException;
-import br.com.fiap.techchallenge.person.relatedPerson.RelatedPerson;
-import br.com.fiap.techchallenge.person.relatedPerson.RelatedPersonRepository;
 import br.com.fiap.techchallenge.user.User;
 import br.com.fiap.techchallenge.user.UserRepository;
 import org.springframework.stereotype.Service;
@@ -14,12 +12,10 @@ import java.util.List;
 public class PersonService {
 
     private final PersonRepository personRepository;
-    private final RelatedPersonRepository relatedPersonRepository;
     private final UserRepository userRepository;
 
-    public PersonService(PersonRepository personRepository, RelatedPersonRepository relatedPersonRepository, UserRepository userRepository) {
+    public PersonService(PersonRepository personRepository, UserRepository userRepository) {
         this.personRepository = personRepository;
-        this.relatedPersonRepository = relatedPersonRepository;
         this.userRepository = userRepository;
     }
 
@@ -34,11 +30,8 @@ public class PersonService {
     }
 
     public PersonView create(PersonForm personForm) {
-        Person person = personRepository.save(personForm.toEntity());
-
-        User user = userRepository.getReferenceById(personForm.userId());
-        RelatedPerson relatedPerson = personForm.relatedPersonEntity(user, person);
-        relatedPersonRepository.save(relatedPerson);
+        User user = userRepository.findById(personForm.userId()).orElseThrow(() -> new NotFoundException("User id: %s not found.".formatted(personForm.userId())));
+        Person person = personRepository.save(personForm.toEntity(user));
 
         return new PersonView(person);
     }
@@ -52,7 +45,6 @@ public class PersonService {
 
     public void deleteById(Long id) {
         personRepository.findById(id).orElseThrow(() -> new NotFoundException("Person id: %s not found.".formatted(id)));
-        relatedPersonRepository.deleteAll(relatedPersonRepository.findAllById_RelatedPersonId(id));
 
         personRepository.deleteById(id);
     }

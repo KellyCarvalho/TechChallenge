@@ -1,7 +1,5 @@
 package br.com.fiap.techchallenge.person;
 
-import br.com.fiap.techchallenge.person.relatedPerson.Connection;
-import br.com.fiap.techchallenge.person.relatedPerson.RelatedPerson;
 import br.com.fiap.techchallenge.user.User;
 import jakarta.validation.constraints.*;
 
@@ -13,11 +11,7 @@ public record PersonForm(@NotNull @Size(min = 1, max = 255) String name,
                          @NotNull @Past LocalDate birthDate,
                          @NotNull Gender gender) {
 
-    public RelatedPerson relatedPersonEntity(User user, Person person) {
-        return new RelatedPerson(user, person, userConnection);
-    }
-
-    public Person toEntity() {
-        return new Person(name, birthDate, gender);
+    public Person toEntity(User user) {
+        return new Person(name, birthDate, gender, user, userConnection);
     }
 }

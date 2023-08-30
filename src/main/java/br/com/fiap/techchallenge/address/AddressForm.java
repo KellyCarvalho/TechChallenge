@@ -1,12 +1,13 @@
 package br.com.fiap.techchallenge.address;
 
 
+import br.com.fiap.techchallenge.user.User;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public record AddressForm(@NotNull(message = "Person is mandatory")
-                          Long personId,
+public record AddressForm(@NotNull(message = "User is mandatory")
+                          Long userId,
                           @NotBlank(message = "Street is mandatory")
                           String street,
                           @NotBlank(message = "Number is required")
@@ -21,7 +22,7 @@ public record AddressForm(@NotNull(message = "Person is mandatory")
                           @NotBlank(message = "CEP is required")
                           String cep) {
 
-    public Address toEntity() {
-        return new Address(street, number, neighborhood, city, state, cep);
+    public Address toEntity(User user) {
+        return new Address(street, number, neighborhood, city, state, cep, user);
     }
 }

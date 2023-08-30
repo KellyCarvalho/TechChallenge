@@ -46,13 +46,14 @@ public class Address {
     public Address() {
     }
 
-    public Address(String street, String number, String neighborhood, String city, String state, String cep) {
+    public Address(String street, String number, String neighborhood, String city, String state, String cep, User user) {
         this.street = street;
         this.number = number;
         this.neighborhood = neighborhood;
         this.city = city;
         this.state = state;
         this.cep = cep;
+        this.user = user;
     }
 
     public Long getId() {

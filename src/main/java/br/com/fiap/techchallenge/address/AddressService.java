@@ -1,8 +1,9 @@
 package br.com.fiap.techchallenge.address;
 
 import br.com.fiap.techchallenge.exception.NotFoundException;
-import br.com.fiap.techchallenge.person.Person;
 import br.com.fiap.techchallenge.person.PersonRepository;
+import br.com.fiap.techchallenge.user.User;
+import br.com.fiap.techchallenge.user.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -12,10 +13,12 @@ public class AddressService {
 
     private final AddressRepository addressRepository;
     private final PersonRepository personRepository;
+    private final UserRepository userRepository;
 
-    public AddressService(AddressRepository addressRepository, PersonRepository personRepository) {
+    public AddressService(AddressRepository addressRepository, PersonRepository personRepository, UserRepository userRepository) {
         this.addressRepository = addressRepository;
         this.personRepository = personRepository;
+        this.userRepository = userRepository;
     }
 
     public Collection<AddressView> findAll() {
@@ -34,11 +37,11 @@ public class AddressService {
     }
 
     public AddressView createAddress(AddressForm addressForm) {
-        Person person = personRepository.findById(addressForm.personId()).orElseThrow(() -> new NotFoundException("Person id: %s not found.".formatted(addressForm.personId())));
-        Address address = addressRepository.save(addressForm.toEntity());
+        User user = userRepository.findById(addressForm.userId()).orElseThrow(() -> new NotFoundException("User id: %s not found.".formatted(addressForm.userId())));
+        Address address = addressRepository.save(addressForm.toEntity(user));
 
-        person.addAddress(address);
-        personRepository.save(person);
+        user.addAddress(address);
+        userRepository.save(user);
 
         return new AddressView(address);
     }
