@@ -9,9 +9,7 @@ import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.*;
 
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -44,6 +42,11 @@ public abstract class Human {
         this.name = name;
         this.birthDate = birthDate;
         this.gender = gender;
+    }
+
+    public Human(String name, LocalDate birthDate, Gender gender, List<Address> addresses) {
+        this(name, birthDate, gender);
+        this.addresses = addresses;
     }
 
     public Long getId() {

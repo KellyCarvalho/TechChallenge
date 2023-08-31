@@ -42,11 +42,13 @@ Pensando que este sistema tende a crescer e sofrer alterações não é boa prá
     curl -X POST 'localhost:8080/addresses' \
     -H 'Content-Type: application/json' \
     --data '{
+        "userId": 1,    
         "street": "Rua dos Bobos",
         "number": "0",
         "neighborhood": "Vila Pompéia",
         "city": "São Paulo",
-        "state": "SP"
+        "state": "SP",
+        "cep": "00000-000"
     }'
     ```
       - Exemplo de retorno em caso de sucesso:

@@ -1,10 +1,12 @@
 package br.com.fiap.techchallenge.person;
 
+import br.com.fiap.techchallenge.address.Address;
 import br.com.fiap.techchallenge.human.Human;
 import br.com.fiap.techchallenge.user.User;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 public class Person extends Human {
@@ -19,8 +21,8 @@ public class Person extends Human {
     public Person() {
     }
 
-    public Person(String name, LocalDate birthDate, Gender gender, User user, Connection connectionToUser) {
-        super(name, birthDate, gender);
+    public Person(String name, LocalDate birthDate, Gender gender, User user, Connection connectionToUser, List<Address> addresses) {
+        super(name, birthDate, gender, addresses);
         this.user = user;
         this.connectionToUser = connectionToUser;
     }
@@ -49,6 +51,6 @@ public class Person extends Human {
         setName(personForm.name());
         setBirthDate(personForm.birthDate());
         setGender(personForm.gender());
-        setConnectionToUser(personForm.userConnection());
+        setConnectionToUser(personForm.connectionToUser());
     }
 }
