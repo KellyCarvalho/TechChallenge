@@ -51,6 +51,18 @@ public class AddressController {
                     @ApiResponse(responseCode = "404", description = "Caso o endereço não tenha sido encontrado na base")
             }
     )
+    @GetMapping(value = "/{id}/members")
+    public ResponseEntity<AddressMembersView> members(@PathVariable Long id) {
+        AddressMembersView members = addressService.findMembers(id);
+        return ResponseEntity.ok(members);
+    }
+
+    @Operation(description = "Retorna a busca de um endereco por campo",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Caso o endereço tenha sido encontrado na base"),
+                    @ApiResponse(responseCode = "404", description = "Caso o endereço não tenha sido encontrado na base")
+            }
+    )
     @GetMapping(value = "/search")
     public ResponseEntity<Collection<AddressView>> search(@RequestBody AddressSearchForm addressSearchForm) {
         Collection<AddressView> addressView = addressService.searchBy(addressSearchForm);

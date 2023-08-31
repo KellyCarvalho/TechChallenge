@@ -88,4 +88,8 @@ public abstract class Human {
     public void addAddress(Address address) {
         this.addresses.add(address);
     }
+
+    public boolean hasAddress(Address address) {
+        return this.addresses.contains(address);
+    }
 }

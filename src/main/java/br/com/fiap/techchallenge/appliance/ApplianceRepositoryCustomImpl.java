@@ -1,10 +1,9 @@
 package br.com.fiap.techchallenge.appliance;
 
+import br.com.fiap.techchallenge.address.Address;
+import br.com.fiap.techchallenge.person.Person;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -43,6 +42,20 @@ public class ApplianceRepositoryCustomImpl implements ApplianceRepositoryCustom 
 
         if (Objects.nonNull(applianceSearchForm.potencyInWatts())) {
             predicates.add(criteriaBuilder.like(appliance.get("city"), "%" + applianceSearchForm.potencyInWatts() + "%"));
+        }
+
+        if (Objects.nonNull(applianceSearchForm.voltage())) {
+            predicates.add(criteriaBuilder.like(appliance.get("voltage"), "%" + applianceSearchForm.voltage() + "%"));
+        }
+
+        if (Objects.nonNull(applianceSearchForm.personId())) {
+            Join<Appliance, Person> personJoin = appliance.join("person");
+            predicates.add(criteriaBuilder.equal(personJoin.get("id"), applianceSearchForm.personId()));
+        }
+
+        if (Objects.nonNull(applianceSearchForm.addressId())) {
+            Join<Appliance, Address> addressJoin = appliance.join("address");
+            predicates.add(criteriaBuilder.equal(addressJoin.get("id"), applianceSearchForm.addressId()));
         }
 
         query.where(predicates.toArray(new Predicate[0]));

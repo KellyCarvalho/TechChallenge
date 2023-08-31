@@ -26,9 +26,14 @@ public class AddressService {
         return addresses.stream().map(AddressView::new).toList();
     }
 
-    public AddressView findById(Long id) throws NotFoundException {
+    public AddressView findById(Long id) {
         Address address = addressRepository.findById(id).orElseThrow(() -> new NotFoundException("Address id: %s not found.".formatted(id)));
         return new AddressView(address);
+    }
+
+    public AddressMembersView findMembers(Long id) {
+        Address address = addressRepository.findById(id).orElseThrow(() -> new NotFoundException("Address id: %s not found.".formatted(id)));
+        return new AddressMembersView(address);
     }
 
     public Collection<AddressView> searchBy(AddressSearchForm addressSearchForm) {

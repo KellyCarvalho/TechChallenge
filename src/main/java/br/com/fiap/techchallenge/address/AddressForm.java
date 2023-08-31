@@ -23,6 +23,6 @@ public record AddressForm(@NotNull(message = "User is mandatory")
                           String cep) {
 
     public Address toEntity(User user) {
-        return new Address(street, number, neighborhood, city, state, cep, user);
+        return new Address(street, number, neighborhood, city, state, user);
     }
 }
