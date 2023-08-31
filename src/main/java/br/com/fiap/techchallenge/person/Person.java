@@ -13,16 +13,16 @@ public class Person extends Human {
     private User user;
 
     @Enumerated(EnumType.STRING)
-    private Connection userConnection;
+    private Connection connectionToUser;
 
     @Deprecated
     public Person() {
     }
 
-    public Person(String name, LocalDate birthDate, Gender gender, User user, Connection userConnection) {
+    public Person(String name, LocalDate birthDate, Gender gender, User user, Connection connectionToUser) {
         super(name, birthDate, gender);
         this.user = user;
-        this.userConnection = userConnection;
+        this.connectionToUser = connectionToUser;
     }
 
     public User getUser() {
@@ -33,22 +33,22 @@ public class Person extends Human {
         this.user = user;
     }
 
-    public Connection getUserConnection() {
-        return userConnection;
-    }
-
     public Connection getConnectionToUser() {
-        return userConnection.inverseConnection();
+        return connectionToUser;
     }
 
-    public void setUserConnection(Connection userConnection) {
-        this.userConnection = userConnection;
+    public Connection getUserConnection() {
+        return connectionToUser.inverseConnection();
+    }
+
+    public void setConnectionToUser(Connection connectionToUser) {
+        this.connectionToUser = connectionToUser;
     }
 
     public void update(PersonForm personForm) {
         setName(personForm.name());
         setBirthDate(personForm.birthDate());
         setGender(personForm.gender());
-        setUserConnection(personForm.userConnection());
+        setConnectionToUser(personForm.userConnection());
     }
 }

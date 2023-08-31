@@ -50,7 +50,6 @@ public class PersonService {
 
     public void deleteById(Long id) {
         personRepository.findById(id).orElseThrow(() -> new NotFoundException("Person id: %s not found.".formatted(id)));
-
         personRepository.deleteById(id);
     }
 }

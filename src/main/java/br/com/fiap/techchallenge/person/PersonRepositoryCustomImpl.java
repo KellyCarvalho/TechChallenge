@@ -30,7 +30,7 @@ public class PersonRepositoryCustomImpl implements PersonRepositoryCustom {
         }
 
         if (Objects.nonNull(personSearchForm.connectionToUser())) {
-            predicates.add(criteriaBuilder.equal(person.get("userConnection"), personSearchForm.connectionToUser().inverseConnection()));
+            predicates.add(criteriaBuilder.equal(person.get("connectionToUser"), personSearchForm.connectionToUser()));
         }
 
         if (Objects.nonNull(personSearchForm.name())) {

@@ -7,11 +7,11 @@ import java.time.LocalDate;
 
 public record PersonForm(@NotNull @Size(min = 1, max = 255) String name,
                          @NotNull Long userId,
-                         @NotNull Connection userConnection,
+                         @NotNull Connection connectionToUser,
                          @NotNull @Past LocalDate birthDate,
                          @NotNull Gender gender) {
 
     public Person toEntity(User user) {
-        return new Person(name, birthDate, gender, user, userConnection);
+        return new Person(name, birthDate, gender, user, connectionToUser);
     }
 }
