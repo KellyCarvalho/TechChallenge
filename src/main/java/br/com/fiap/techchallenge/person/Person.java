@@ -2,11 +2,12 @@ package br.com.fiap.techchallenge.person;
 
 import br.com.fiap.techchallenge.address.Address;
 import br.com.fiap.techchallenge.human.Human;
+import br.com.fiap.techchallenge.person.FamilyRelation.FamilyRelation;
 import br.com.fiap.techchallenge.user.User;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.*;
 
 @Entity
 public class Person extends Human {
@@ -16,6 +17,9 @@ public class Person extends Human {
 
     @Enumerated(EnumType.STRING)
     private Connection connectionToUser;
+
+    @OneToMany(mappedBy = "familyMember")
+    private Collection<FamilyRelation> familyRelation;
 
     @Deprecated
     public Person() {
@@ -45,6 +49,14 @@ public class Person extends Human {
 
     public void setConnectionToUser(Connection connectionToUser) {
         this.connectionToUser = connectionToUser;
+    }
+
+    public Collection<FamilyRelation> getFamilyRelation() {
+        return Collections.unmodifiableCollection(familyRelation);
+    }
+
+    public void addFamilyRelation(FamilyRelation familyRelation) {
+        this.familyRelation.add(familyRelation);
     }
 
     public void update(PersonForm personForm) {
