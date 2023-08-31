@@ -1,13 +1,10 @@
 package br.com.fiap.techchallenge.person;
 
-import br.com.fiap.techchallenge.address.Address;
 import br.com.fiap.techchallenge.human.Human;
 import br.com.fiap.techchallenge.user.User;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
-import java.util.*;
 
 @Entity
 public class Person extends Human {
@@ -38,6 +35,10 @@ public class Person extends Human {
 
     public Connection getUserConnection() {
         return userConnection;
+    }
+
+    public Connection getConnectionToUser() {
+        return userConnection.inverseConnection();
     }
 
     public void setUserConnection(Connection userConnection) {

@@ -29,6 +29,11 @@ public class PersonService {
         return people.stream().map(PersonView::new).toList();
     }
 
+    public Collection<PersonView> searchBy(PersonSearchForm personSearchForm) {
+        Collection<Person> people = personRepository.searchBy(personSearchForm);
+        return people.stream().map(PersonView::new).toList();
+    }
+
     public PersonView create(PersonForm personForm) {
         User user = userRepository.findById(personForm.userId()).orElseThrow(() -> new NotFoundException("User id: %s not found.".formatted(personForm.userId())));
         Person person = personRepository.save(personForm.toEntity(user));

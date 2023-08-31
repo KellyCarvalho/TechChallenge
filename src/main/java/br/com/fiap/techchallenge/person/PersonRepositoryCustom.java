@@ -5,5 +5,4 @@ import java.util.Collection;
 public interface PersonRepositoryCustom {
 
     Collection<Person> searchBy(PersonSearchForm personSearchForm);
-
 }

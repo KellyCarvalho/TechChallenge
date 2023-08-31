@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -46,6 +47,12 @@ public class PersonController {
     ResponseEntity<List<PersonView>> findAll() {
         List<PersonView> peopleView = personService.findAll();
 
+        return ResponseEntity.ok(peopleView);
+    }
+
+    @GetMapping(value = "/search")
+    public ResponseEntity<Collection<PersonView>> search(@RequestBody PersonSearchForm personSearchForm) {
+        Collection<PersonView> peopleView = personService.searchBy(personSearchForm);
         return ResponseEntity.ok(peopleView);
     }
 
