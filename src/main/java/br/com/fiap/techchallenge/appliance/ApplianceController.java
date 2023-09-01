@@ -25,11 +25,7 @@ public class ApplianceController {
         this.applianceService = applianceService;
     }
 
-    @Operation(description = "Retorna uma lista de eletrodomésticos",
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "Sucesso no retorno da lista")
-            }
-    )
+    @Operation(summary = "Retorna uma lista de eletrodomésticos",responses = @ApiResponse(responseCode = "200", description = "Sucesso no retorno da lista"))
     @GetMapping
     ResponseEntity<Collection<ApplianceView>> findAll() {
         Collection<ApplianceView> appliancesView = applianceService.findAll();
@@ -37,12 +33,11 @@ public class ApplianceController {
         return ResponseEntity.ok(appliancesView);
     }
 
-    @Operation(description = "Retorna um eletrodoméstico específica",
+    @Operation(summary = "Retorna um eletrodoméstico específico",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Caso o eletrodomestico tenha sido encontrado na base"),
                     @ApiResponse(responseCode = "404", description = "Caso o eletrodomestico não tenha sido encontrado na base")
-            }
-    )
+            })
     @GetMapping("/{id}")
     ResponseEntity<ApplianceView> findById(@PathVariable("id") Long id) {
         ApplianceView applianceView = applianceService.findById(id);
@@ -50,12 +45,11 @@ public class ApplianceController {
         return ResponseEntity.ok(applianceView);
     }
 
-    @Operation(description = "Cria um eletrodoméstico na base de dados",
+    @Operation(summary = "Cria um eletrodoméstico na base de dados",
             responses = {
                     @ApiResponse(responseCode = "201", description = "Sucesso ao criar o eletrodomestico na base"),
                     @ApiResponse(responseCode = "400", description = "Erro de validação")
-            }
-    )
+            })
     @PostMapping
     ResponseEntity<ApplianceView> create(@Valid @RequestBody ApplianceForm applianceForm) {
         ApplianceView applianceView =  applianceService.createAppliance(applianceForm);
@@ -64,12 +58,11 @@ public class ApplianceController {
         return ResponseEntity.created(uri).body(applianceView);
     }
 
-    @Operation(description = "Atualiza um eletrodoméstico na base de dados",
+    @Operation(summary = "Atualiza um eletrodoméstico na base de dados",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Sucesso ao atualizar eletrodomestico na base"),
                     @ApiResponse(responseCode = "404", description = "Eletrodomestico buscado não encontrado")
-            }
-    )
+            })
     @PutMapping("/{id}")
     ResponseEntity<ApplianceView> update(@PathVariable Long id, @Valid @RequestBody ApplianceForm applianceForm) {
         ApplianceView applianceView = applianceService.update(id, applianceForm);
@@ -77,12 +70,11 @@ public class ApplianceController {
         return ResponseEntity.ok(applianceView);
     }
 
-    @Operation(description = "Deleta um eletrodomestico na base de dados",
+    @Operation(summary = "Deleta um eletrodomestico na base de dados",
             responses = {
                     @ApiResponse(responseCode = "204", description = "Sucesso ao deletar um eletrodomestico"),
                     @ApiResponse(responseCode = "404", description = "Eletrodomestico buscado não encontrado")
-            }
-    )
+            })
     @DeleteMapping("/{id}")
     ResponseEntity<?> delete(@PathVariable Long id) {
         applianceService.deleteById(id);
@@ -90,12 +82,11 @@ public class ApplianceController {
         return ResponseEntity.noContent().build();
     }
 
-    @Operation(description = "Retorna a busca de um eletrodoméstico por campo",
+    @Operation(summary = "Retorna a busca de um eletrodoméstico por campo",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Caso o eletrodoméstico tenha sido encontrado na base"),
                     @ApiResponse(responseCode = "404", description = "Caso o eletrodoméstico não tenha sido encontrado na base")
-            }
-    )
+            })
     @GetMapping("/search")
     ResponseEntity<List<ApplianceView>> searchBy(@RequestBody ApplianceSearchForm applianceSearchForm) {
         List<ApplianceView> appliancesView =  applianceService.searchBy(applianceSearchForm);

@@ -24,12 +24,11 @@ public class PersonController {
     }
 
 
-    @Operation(description = "Retorna uma pessoa específica",
+    @Operation(summary = "Retorna uma pessoa específica",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Caso a pessoa tenha sido encontrada na base"),
                     @ApiResponse(responseCode = "404", description = "Caso a pessoa não tenha sido encontrada na base")
-            }
-    )
+            })
     @GetMapping("/{id}")
     ResponseEntity<PersonView> findById(@PathVariable Long id) {
         PersonView personView = personService.findById(id);
@@ -38,11 +37,7 @@ public class PersonController {
     }
 
 
-    @Operation(description = "Retorna uma lista de pessoas",
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "Sucesso no retorno da lista")
-            }
-    )
+    @Operation(summary = "Retorna uma lista de pessoas", responses = @ApiResponse(responseCode = "200", description = "Sucesso no retorno da lista"))
     @GetMapping
     ResponseEntity<List<PersonView>> findAll() {
         List<PersonView> peopleView = personService.findAll();
@@ -50,19 +45,19 @@ public class PersonController {
         return ResponseEntity.ok(peopleView);
     }
 
+    @Operation(summary = "Busca uma pessoa na base de dados", responses = @ApiResponse(responseCode = "200", description = "Sucesso no retorno da lista"))
     @GetMapping(value = "/search")
-    public ResponseEntity<Collection<PersonView>> search(@RequestBody PersonSearchForm personSearchForm) {
+    ResponseEntity<Collection<PersonView>> search(@RequestBody PersonSearchForm personSearchForm) {
         Collection<PersonView> peopleView = personService.searchBy(personSearchForm);
         return ResponseEntity.ok(peopleView);
     }
 
 
-    @Operation(description = "Cria uma pessoa na base de dados",
+    @Operation(summary = "Cria uma pessoa na base de dados",
             responses = {
                     @ApiResponse(responseCode = "201", description = "Caso a pessoa tenha sido encontrada na base"),
-                    @ApiResponse(responseCode = "400", description = "Caso o usuario não tenha permisao de acesso aeste recurso")
-            }
-    )
+                    @ApiResponse(responseCode = "400", description = "Caso o usuario não tenha permissao de acesso aeste recurso")
+            })
     @PostMapping
     ResponseEntity<PersonView> create(@Valid @RequestBody PersonForm personForm) {
         PersonView personView = personService.create(personForm);
@@ -72,12 +67,11 @@ public class PersonController {
     }
 
 
-    @Operation(description = "Atualiza uma pessoa na base de dados",
+    @Operation(summary = "Atualiza uma pessoa na base de dados",
             responses = {
                     @ApiResponse(responseCode = "201", description = "Caso a pessoa tenha sido encontrada na base"),
                     @ApiResponse(responseCode = "404", description = "Caso a pessoa buscada não seja encontrada")
-            }
-    )
+            })
     @PutMapping("/{id}")
     ResponseEntity<PersonView> update(@Valid @RequestBody PersonForm personForm, @PathVariable Long id) {
         PersonView personView = personService.update(personForm, id);
@@ -85,12 +79,11 @@ public class PersonController {
         return ResponseEntity.ok(personView);
     }
 
-    @Operation(description = "Deleta uma pessoa na base de dados",
+    @Operation(summary = "Deleta uma pessoa na base de dados",
             responses = {
                     @ApiResponse(responseCode = "204", description = "Ao deletar uma pessoa"),
                     @ApiResponse(responseCode = "404", description = "Caso a pessoa buscada não seja encontrada")
-            }
-    )
+            })
     @DeleteMapping("/{id}")
     ResponseEntity<?> deleteById(@PathVariable Long id) {
         personService.deleteById(id);

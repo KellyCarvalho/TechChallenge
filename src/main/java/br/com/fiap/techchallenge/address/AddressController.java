@@ -22,59 +22,51 @@ public class AddressController {
         this.addressService = addressService;
     }
 
-    @Operation(description = "Retorna uma lista de endereços",
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "Sucesso no retorno da lista")
-            }
-    )
+    @Operation(summary = "Retorna uma lista de endereços", responses = @ApiResponse(responseCode = "200", description = "Sucesso no retorno da lista"))
     @GetMapping
-    public ResponseEntity<Collection<AddressView>> findAll() {
+    ResponseEntity<Collection<AddressView>> findAll() {
        Collection<AddressView> addressViews = addressService.findAll();
         return ResponseEntity.ok().body(addressViews);
     }
 
-    @Operation(description = "Retorna um endereço específico",
+    @Operation(summary = "Retorna um endereço específico",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Caso o endereço tenha sido encontrado na base"),
                     @ApiResponse(responseCode = "404", description = "Caso o endereço não tenha sido encontrado na base")
-            }
-    )
+            })
     @GetMapping(value = "/{id}")
-    public ResponseEntity<AddressView> findById(@PathVariable Long id) {
+    ResponseEntity<AddressView> findById(@PathVariable Long id) {
         AddressView addressView = addressService.findById(id);
         return ResponseEntity.ok(addressView);
     }
 
-    @Operation(description = "Retorna a busca de um endereco por campo",
+    @Operation(summary = "Busca os membros do endereço",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Caso o endereço tenha sido encontrado na base"),
                     @ApiResponse(responseCode = "404", description = "Caso o endereço não tenha sido encontrado na base")
-            }
-    )
+            })
     @GetMapping(value = "/{id}/members")
-    public ResponseEntity<AddressMembersView> members(@PathVariable Long id) {
+    ResponseEntity<AddressMembersView> members(@PathVariable Long id) {
         AddressMembersView members = addressService.findMembers(id);
         return ResponseEntity.ok(members);
     }
 
-    @Operation(description = "Retorna a busca de um endereco por campo",
+    @Operation(summary = "Retorna a busca de um endereco por campo",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Caso o endereço tenha sido encontrado na base"),
                     @ApiResponse(responseCode = "404", description = "Caso o endereço não tenha sido encontrado na base")
-            }
-    )
+            })
     @GetMapping(value = "/search")
-    public ResponseEntity<Collection<AddressView>> search(@RequestBody AddressSearchForm addressSearchForm) {
+    ResponseEntity<Collection<AddressView>> search(@RequestBody AddressSearchForm addressSearchForm) {
         Collection<AddressView> addressView = addressService.searchBy(addressSearchForm);
         return ResponseEntity.ok(addressView);
     }
 
-    @Operation(description = "Cria um endereço na base de dados",
+    @Operation(summary = "Cria um endereço na base de dados",
             responses = {
                     @ApiResponse(responseCode = "201", description = "Sucesso ao criar o endereço na base"),
                     @ApiResponse(responseCode = "400", description = "Erro de validação")
-            }
-    )
+            })
     @PostMapping
     public ResponseEntity<AddressView> createAddress(@Valid @RequestBody AddressForm addressForm) {
         AddressView addressView = addressService.createAddress(addressForm);
@@ -83,24 +75,22 @@ public class AddressController {
         return ResponseEntity.created(uri).body(addressView);
     }
 
-    @Operation(description = "Atualiza um endereço na base de dados",
+    @Operation(summary = "Atualiza um endereço na base de dados",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Sucesso ao atualizar endereço na base"),
                     @ApiResponse(responseCode = "404", description = "Endereço buscado não encontrado")
-            }
-    )
+            })
     @PutMapping(value = "/{id}")
     public ResponseEntity<AddressView> update(@PathVariable Long id, @RequestBody AddressForm addressForm) {
         AddressView addressView = addressService.update(id, addressForm);
         return ResponseEntity.ok(addressView);
     }
 
-    @Operation(description = "Deleta um endereço na base de dados",
+    @Operation(summary = "Deleta um endereço na base de dados",
             responses = {
                     @ApiResponse(responseCode = "204", description = "Sucesso ao deletar um endereço"),
                     @ApiResponse(responseCode = "404", description = "Endereço buscado não encontrado")
-            }
-    )
+            })
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         addressService.delete(id);

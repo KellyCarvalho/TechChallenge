@@ -23,7 +23,7 @@ public class UserController {
     }
 
 
-    @Operation(description = "Retorna uma usuário específica",
+    @Operation(summary = "Retorna uma usuário específica",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Caso a usuário tenha sido encontrada na base"),
                     @ApiResponse(responseCode = "404", description = "Caso a usuário não tenha sido encontrada na base")
@@ -37,7 +37,7 @@ public class UserController {
     }
 
 
-    @Operation(description = "Retorna uma lista de usuários",
+    @Operation(summary = "Retorna uma lista de usuários",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Sucesso no retorno da lista")
             }
@@ -50,7 +50,7 @@ public class UserController {
     }
 
 
-    @Operation(description = "Cria uma usuário na base de dados",
+    @Operation(summary = "Cria uma usuário na base de dados",
             responses = {
                     @ApiResponse(responseCode = "201", description = "Caso a usuário tenha sido encontrada na base"),
                     @ApiResponse(responseCode = "400", description = "Caso o usuario não tenha permisao de acesso aeste recurso")
@@ -65,7 +65,7 @@ public class UserController {
     }
 
 
-    @Operation(description = "Atualiza uma usuário na base de dados",
+    @Operation(summary = "Atualiza uma usuário na base de dados",
             responses = {
                     @ApiResponse(responseCode = "201", description = "Caso a usuário tenha sido encontrada na base"),
                     @ApiResponse(responseCode = "404", description = "Caso a usuário buscada não seja encontrada")
@@ -78,7 +78,7 @@ public class UserController {
         return ResponseEntity.ok(userView);
     }
 
-    @Operation(description = "Deleta uma usuário na base de dados",
+    @Operation(summary = "Deleta uma usuário na base de dados",
             responses = {
                     @ApiResponse(responseCode = "204", description = "Ao deletar uma usuário"),
                     @ApiResponse(responseCode = "404", description = "Caso a usuário buscada não seja encontrada")
