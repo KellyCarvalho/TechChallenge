@@ -1,5 +1,7 @@
 package br.com.fiap.techchallenge.person;
 
+import java.util.List;
+
 public enum Connection {
     PARENT, SON, BROTHER, GRANDFATHER, GRANDSON, UNCLE, NEPHEW, COUSIN, OTHER;
 
