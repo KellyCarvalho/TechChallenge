@@ -18,6 +18,15 @@ Além do estilo de código também foi importante discutir padrões de nomenclat
 Discussão sobre onde a lógica deveria estar surgiu na metade final do desenvolvimento, pois como ainda estamos trabalhando em um sistema pequeno a lógica é bem simples e curta, por isso estava direto no controller. 
 Pensando que este sistema tende a crescer e sofrer alterações não é boa prática a lógica permanecer no controller, pois isso acaba gerando um débito técnico levando em consideração o princípio da responsabilidade única.
 
+- Relacionamento entre pessoas da mesma família:
+  A maior dificuldade que tivemos foi relacionar usuários automaticamente, primeiro pensamos na abordagem de ter um método que funcionaria como uma espécie de job varrendo todos os usuários relacionados ao usuário que tinha a relação
+e a cada inserção o método pesquisaria cada relação e devolveria relação por relação, no início pareceu uma boa ideia, mas do meio para o fim tornou-se algo inviável e pensando em grande escala pouco performático por ter a ideia de 
+varrer usuário a usuário relacionado, mas tentamos de várias formas fazer funcionar até que pesquisando muito o Lucas teve a ideia de uma tabela hierárquica(árvore) e pesquisando mais um pouco acabou vendo o conceito de closure table, 
+foi um grande desafio, entender o conceito e aplicar, mas a técnica de modelagem denominada closure table é usada para representar estruturas hierárquicas, como árvores, grafos ou categorias aninhadas. A ideia fundamental é criar uma tabela
+adicional que armazena informações sobre as relações hierárquicas entre os elementos da estrutura. Esta tabela de fechamento geralmente é preenchida com dados de forma que cada linha represente uma relação pai-filho entre elementos na hierarquia. 
+A tabela inclui,pelo menos, duas colunas principais: uma coluna para o elemento pai e uma coluna para o elemento filho. E a promessa ao utilizar uma closure table é que seja possível consultar hierarquias complexas de forma eficiente. 
+E ainda as consultas podem ser feitas de maneira fácil podendo recuperar todos os filhos de um elemento, todos os pais de um elemento ou até mesmo para navegar na hierarquia de cima para baixo e de baixo para cima, de maneira geral era o que precisávamos e ainda acabamos conhecendo uma técnica nova.
+
 ## Tecnologias
 - Como linguagem base usamos Java na versão 17 LTS.
 - O Framework utilizado foi o Spring Boot que simplifica a configuração e o desenvolvimento.
