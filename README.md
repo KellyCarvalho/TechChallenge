@@ -19,14 +19,14 @@ Discussão sobre onde a lógica deveria estar surgiu na metade final do desenvol
 Pensando que este sistema tende a crescer e sofrer alterações não é boa prática a lógica permanecer no controller, pois isso acaba gerando um débito técnico levando em consideração o princípio da responsabilidade única.
 
 - Relacionamento entre pessoas da mesma família:
-  Foi um desafio interessante ter que relacionar usuários de maneira automática ao inserir, primeiro pensamos na abordagem de ter um método que funcionaria como uma espécie de job varrendo todos os usuários relacionados ao usuário que tinha a relação
+Foi um desafio interessante ter que relacionar usuários de maneira automática ao inserir, primeiro pensamos na abordagem de ter um método que funcionaria como uma espécie de job varrendo todos os usuários relacionados ao usuário que tinha a relação
 e a cada inserção o método pesquisaria cada relação e devolveria relação por relação, no início pareceu uma boa ideia, mas do meio para o fim tornou-se algo inviável e pensando em grande escala pouco performático por ter a ideia de 
-varrer usuário a usuário relacionado, mas tentamos de várias formas fazer funcionar até que pesquisando muito o Lucas teve a ideia de uma tabela hierárquica(árvore) e pesquisando mais um pouco acabou vendo o conceito de closure table, 
+varrer usuário a usuário relacionado, mas tentamos de várias formas fazer funcionar até que pesquisando muito o Lucas teve a ideia de uma tabela hierárquica (árvore) e pesquisando mais um pouco acabou vendo o conceito de closure table, 
 foi um grande desafio, entender o conceito e aplicar, mas a técnica de modelagem denominada closure table é usada para representar estruturas hierárquicas, como árvores, grafos ou categorias aninhadas. A ideia fundamental é criar uma tabela
 adicional que armazena informações sobre as relações hierárquicas entre os elementos da estrutura. Esta tabela de fechamento geralmente é preenchida com dados de forma que cada linha represente uma relação pai-filho entre elementos na hierarquia. 
 A tabela inclui,pelo menos, duas colunas principais: uma coluna para o elemento pai e uma coluna para o elemento filho. E a promessa ao utilizar uma closure table é que seja possível consultar hierarquias complexas de forma eficiente. 
 E ainda as consultas podem ser feitas de maneira fácil podendo recuperar todos os filhos de um elemento, todos os pais de um elemento ou até mesmo para navegar na hierarquia de cima para baixo e de baixo para cima, de maneira geral era o que precisávamos. 
-Nunca tínhamos ouvido falar desta técnica, sendo assim é mais um aprendizado que vamos levar durante a nossa jornada como desenvolvedores. 
+Nunca tínhamos ouvido falar desta técnica, sendo assim é mais um aprendizado que vamos levar durante a nossa jornada como desenvolvedores.
 
 ## Tecnologias
 - Como linguagem base usamos Java na versão 17 LTS.
@@ -44,6 +44,7 @@ Nunca tínhamos ouvido falar desta técnica, sendo assim é mais um aprendizado 
 - Maven
 - Copilot
 - Spring initializr
+- MySQL
 
 ## Documentacao das APIs
 - ### API de Endereços:
@@ -54,13 +55,12 @@ Nunca tínhamos ouvido falar desta técnica, sendo assim é mais um aprendizado 
     curl -X POST 'localhost:8080/addresses' \
     -H 'Content-Type: application/json' \
     --data '{
-        "userId": 1,    
+        "userId": 1,
         "street": "Rua dos Bobos",
         "number": "0",
         "neighborhood": "Vila Pompéia",
         "city": "São Paulo",
-        "state": "SP",
-        "cep": "00000-000"
+        "state": "SP"
     }'
     ```
       - Exemplo de retorno em caso de sucesso:
@@ -75,7 +75,7 @@ Nunca tínhamos ouvido falar desta técnica, sendo assim é mais um aprendizado 
       "state": "SP"
     }
     ```
-  - Buscar um endereço: 
+  - Buscar um endereço:
     - GET: http://localhost:8080/addresses/{id}
       - {id}: id do endereço buscado
     - Exemplo de requisição:

@@ -11,7 +11,7 @@ import java.util.*;
 public class User extends Human {
 
     @OneToMany(mappedBy = "user")
-    private Collection<Person> relatedPersons = new HashSet<>();
+    private Collection<Person> relatedPeople = new HashSet<>();
 
     @Deprecated
     public User() {
@@ -27,11 +27,11 @@ public class User extends Human {
         super(name, birthDate, gender);
     }
 
-    public Collection<Person> getRelatedPersons() {
-        return Collections.unmodifiableCollection(relatedPersons);
+    public Collection<Person> getRelatedPeople() {
+        return Collections.unmodifiableCollection(relatedPeople);
     }
 
     public void addRelatedPersons(Person relatedPersons) {
-        this.relatedPersons.add(relatedPersons);
+        this.relatedPeople.add(relatedPersons);
     }
 }

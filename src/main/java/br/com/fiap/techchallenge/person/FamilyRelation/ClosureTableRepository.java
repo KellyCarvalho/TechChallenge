@@ -20,12 +20,6 @@ public interface ClosureTableRepository extends JpaRepository<ClosureTable, Long
     """, nativeQuery = true)
     void insert(@Param("parentNodeId") Long parentNodeId, @Param("newDescendantId") Long newDescendantId);
 
-    @Query(value = "SELECT ancestor_id FROM closure_table WHERE descendant_id = :descendantId", nativeQuery = true)
-    List<Long> findAncestorsIds(@Param("descendantId") Long descendantId);
-
-    @Query(value = "SELECT descendant_id FROM closure_table WHERE ancestor_id = :ancestorId", nativeQuery = true)
-    List<Long> findDescendantsIds(@Param("ancestorId") Long ancestorId);
-
     @Query(value = """
     WITH Ancestors AS (
         SELECT ancestor_id, depth FROM closure_table WHERE descendant_id = :descendantId AND depth <> 0
