@@ -29,16 +29,12 @@ public class PersonRepositoryCustomImpl implements PersonRepositoryCustom {
             predicates.add(criteriaBuilder.equal(userJoin.get("id"), personSearchForm.userId()));
         }
 
-        if (Objects.nonNull(personSearchForm.connectionToUser())) {
-            predicates.add(criteriaBuilder.equal(person.get("connectionToUser"), personSearchForm.connectionToUser()));
-        }
-
         if (Objects.nonNull(personSearchForm.name())) {
             predicates.add(criteriaBuilder.like(person.get("name"), "%" + personSearchForm.name() + "%"));
         }
 
         if (Objects.nonNull(personSearchForm.gender())) {
-            predicates.add(criteriaBuilder.like(person.get("gender"), "%" + personSearchForm.gender() + "%"));
+            predicates.add(criteriaBuilder.equal(person.get("gender"), personSearchForm.gender()));
         }
 
         query.where(predicates.toArray(new Predicate[0]));

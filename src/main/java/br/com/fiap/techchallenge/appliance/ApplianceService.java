@@ -42,7 +42,7 @@ public class ApplianceService {
     }
 
     public ApplianceView createAppliance(ApplianceForm applianceForm) {
-        Optional<Person> possiblePerson = personRepository.findById(applianceForm.personId());
+        Optional<Person> possiblePerson = applianceForm.personId().flatMap(personRepository::findById);
         Address address = addressRepository.findById(applianceForm.addressId()).orElseThrow(() -> new NotFoundException("Address id: %s not found.".formatted(applianceForm.addressId())));
 
         if (possiblePerson.isPresent() && !possiblePerson.get().hasAddress(address)) {
@@ -57,7 +57,7 @@ public class ApplianceService {
     public ApplianceView update(Long id, ApplianceForm applianceForm) {
         Appliance appliance = applianceRepository.findById(id).orElseThrow(() -> new NotFoundException("Appliance id: %s not found.".formatted(id)));
 
-        Optional<Person> possiblePerson = personRepository.findById(applianceForm.personId());
+        Optional<Person> possiblePerson = applianceForm.personId().flatMap(personRepository::findById);
         Address address = addressRepository.findById(applianceForm.addressId()).orElseThrow(() -> new NotFoundException("Address id: %s not found.".formatted(applianceForm.addressId())));
 
         if (possiblePerson.isPresent() && !possiblePerson.get().hasAddress(address)) {

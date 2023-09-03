@@ -45,7 +45,7 @@ public class PersonController {
     }
 
     @Operation(summary = "Busca uma pessoa na base de dados", responses = @ApiResponse(responseCode = "200", description = "Sucesso no retorno da lista"))
-    @GetMapping(value = "/search")
+    @PostMapping(value = "/search")
     ResponseEntity<Collection<PersonView>> search(@RequestBody PersonSearchForm personSearchForm) {
         Collection<PersonView> peopleView = personService.searchBy(personSearchForm);
         return ResponseEntity.ok(peopleView);
