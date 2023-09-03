@@ -29,4 +29,8 @@ public class FamilyService {
     public List<PersonFamilyMember> findBrothers(Long personId) {
         return closureTableRepository.findBrothers(personId);
     }
+
+    public void deleteAllRelations(Long personId) {
+        closureTableRepository.deleteAllRelations(personId);
+    }
 }

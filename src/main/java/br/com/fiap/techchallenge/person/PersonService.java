@@ -3,8 +3,7 @@ package br.com.fiap.techchallenge.person;
 import br.com.fiap.techchallenge.address.Address;
 import br.com.fiap.techchallenge.address.AddressRepository;
 import br.com.fiap.techchallenge.exception.NotFoundException;
-import br.com.fiap.techchallenge.person.FamilyRelation.FamilyService;
-import br.com.fiap.techchallenge.person.FamilyRelation.PersonFamilyMemberDTO;
+import br.com.fiap.techchallenge.person.FamilyRelation.*;
 import br.com.fiap.techchallenge.user.User;
 import br.com.fiap.techchallenge.user.UserRepository;
 import org.springframework.stereotype.Service;
@@ -66,6 +65,13 @@ public class PersonService {
 
     public void deleteById(Long id) {
         personRepository.findById(id).orElseThrow(() -> new NotFoundException("Person id: %s not found.".formatted(id)));
+        boolean hasChildren = !familyService.findChildren(id).isEmpty();
+
+        if (hasChildren) {
+            throw new IllegalStateException("Person id: %s has children.".formatted(id));
+        }
+
+        familyService.deleteAllRelations(id);
         personRepository.deleteById(id);
     }
 

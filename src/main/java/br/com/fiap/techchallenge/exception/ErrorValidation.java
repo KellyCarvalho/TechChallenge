@@ -30,6 +30,12 @@ public class ErrorValidation {
         return Map.of("error", ex.getMessage());
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(IllegalStateException.class)
+    public Map<String, String> handleIllegalStateExceptions(IllegalStateException ex) {
+        return Map.of("error", ex.getMessage());
+    }
+
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NotFoundException.class)
     public Map<String, String> handleNotFoundException(NotFoundException ex) {
