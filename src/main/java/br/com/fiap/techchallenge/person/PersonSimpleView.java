@@ -3,10 +3,10 @@ package br.com.fiap.techchallenge.person;
 import java.time.LocalDate;
 import java.util.Collection;
 
-public record PersonSimpleView(Long id, String name, LocalDate birthDate, Gender gender, Connection connectionToUser) {
+public record PersonSimpleView(Long id, String name, LocalDate birthDate, Gender gender) {
 
     public PersonSimpleView(Person person) {
-        this(person.getId(), person.getName(), person.getBirthDate(), person.getGender(), person.getConnectionToUser());
+        this(person.getId(), person.getName(), person.getBirthDate(), person.getGender());
     }
 
     public static Collection<PersonSimpleView> fromList(Collection<Person> people) {

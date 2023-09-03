@@ -6,6 +6,7 @@ import br.com.fiap.techchallenge.person.PersonSimpleView;
 import java.time.LocalDate;
 
 public interface PersonFamilyMember {
+
     Long getId();
 
     String getName();
@@ -16,7 +17,7 @@ public interface PersonFamilyMember {
 
     int getDepth();
 
-    default PersonSimpleView personSimpleView() {
-        return new PersonSimpleView(getId(), getName(), getBirthDate(), getGender(), null);
+    default PersonFamilyMemberDTO toPersonFamilyMemberDTO() {
+        return new PersonFamilyMemberDTO(this);
     }
 }

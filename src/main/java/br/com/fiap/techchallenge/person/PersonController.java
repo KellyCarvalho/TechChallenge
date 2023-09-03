@@ -1,7 +1,5 @@
 package br.com.fiap.techchallenge.person;
 
-import br.com.fiap.techchallenge.address.AddressMembersView;
-import br.com.fiap.techchallenge.person.FamilyRelation.FamilyService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -53,18 +51,6 @@ public class PersonController {
         return ResponseEntity.ok(peopleView);
     }
 
-    @Operation(summary = "Busca os filhos da pessoa",
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "Caso o endereço tenha sido encontrado na base"),
-                    @ApiResponse(responseCode = "404", description = "Caso o endereço não tenha sido encontrado na base")
-            })
-    @GetMapping(value = "/{id}/family")
-    ResponseEntity<PersonFamilyView> members(@PathVariable Long id) {
-        PersonFamilyView members = personService.findChildren(id);
-        return ResponseEntity.ok(members);
-    }
-
-
     @Operation(summary = "Cria uma pessoa na base de dados",
             responses = {
                     @ApiResponse(responseCode = "201", description = "Caso a pessoa tenha sido encontrada na base"),
@@ -87,18 +73,6 @@ public class PersonController {
     @PutMapping("/{id}")
     ResponseEntity<PersonView> update(@Valid @RequestBody PersonForm personForm, @PathVariable Long id) {
         PersonView personView = personService.update(personForm, id);
-
-        return ResponseEntity.ok(personView);
-    }
-
-    @Operation(summary = "Atualiza uma pessoa na base de dados",
-            responses = {
-                    @ApiResponse(responseCode = "201", description = "Caso a pessoa tenha sido encontrada na base"),
-                    @ApiResponse(responseCode = "404", description = "Caso a pessoa buscada não seja encontrada")
-            })
-    @PostMapping("/{personId}/parent/{parentId}")
-    ResponseEntity<PersonView> addParent(@PathVariable Long personId, @PathVariable Long parentId) {
-        PersonView personView = personService.addChild(parentId, personId);
 
         return ResponseEntity.ok(personView);
     }

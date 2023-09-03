@@ -4,6 +4,7 @@ import br.com.fiap.techchallenge.address.Address;
 import br.com.fiap.techchallenge.address.AddressRepository;
 import br.com.fiap.techchallenge.exception.NotFoundException;
 import br.com.fiap.techchallenge.person.FamilyRelation.FamilyService;
+import br.com.fiap.techchallenge.person.FamilyRelation.PersonFamilyMemberDTO;
 import br.com.fiap.techchallenge.user.User;
 import br.com.fiap.techchallenge.user.UserRepository;
 import org.springframework.stereotype.Service;
@@ -76,8 +77,19 @@ public class PersonService {
         return new PersonView(person);
     }
 
-    public PersonFamilyView findChildren(Long id) {
-        Person person = personRepository.findById(id).orElseThrow(() -> new NotFoundException("Person id: %s not found.".formatted(id)));
-        return new PersonFamilyView(person, familyService.findChildren(id));
+    public PersonFamilyView findChildren(Long personId) {
+        Person person = personRepository.findById(personId).orElseThrow(() -> new NotFoundException("Person id: %s not found.".formatted(personId)));
+        List<PersonFamilyMemberDTO> descendants = familyService.findChildren(personId).stream().map(PersonFamilyMemberDTO::new).toList();
+        descendants.forEach(PersonFamilyMemberDTO::updateRelationForDescendant);
+
+        return new PersonFamilyView(person, descendants);
+    }
+
+    public PersonFamilyView findBrothers(Long personId) {
+        Person person = personRepository.findById(personId).orElseThrow(() -> new NotFoundException("Person id: %s not found.".formatted(personId)));
+        List<PersonFamilyMemberDTO> brothers = familyService.findBrothers(personId).stream().map(PersonFamilyMemberDTO::new).toList();
+        brothers.forEach(PersonFamilyMemberDTO::updateRelationForBrother);
+
+        return new PersonFamilyView(person, brothers);
     }
 }

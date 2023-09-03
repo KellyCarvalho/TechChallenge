@@ -33,7 +33,9 @@ Nunca tínhamos ouvido falar desta técnica, sendo assim é mais um aprendizado 
 - O Framework utilizado foi o Spring Boot que simplifica a configuração e o desenvolvimento.
   - Spring Web MVC para tratar as requisições HTTP, fazer o mapeamento de URLs e a comunicação entre a camada de apresentação e a camada de negócio.
   - O Spring Validation foi utilizado para validar os dados de entrada da API, para assegurar a integridade dos dados.
+  - O Spring Data JPA foi utilizado para facilitar a persistência dos dados.
 - A biblioteca Springdoc OpenAPI foi utilizada para facilitar a geração da documentação do projeto.
+- O SQL foi utilizado para buscas e ações mais avançadas não disponíveis diretamente no Spring Data JPA.
 
 ## Ferramentas
 - IntelliJ IDEA
