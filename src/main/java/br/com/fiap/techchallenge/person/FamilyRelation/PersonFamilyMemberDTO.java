@@ -26,6 +26,10 @@ public class PersonFamilyMemberDTO {
         return new PersonSimpleView(getId(), getName(), getBirthDate(), getGender());
     }
 
+    public void updateRelationForAncestor() {
+        this.relation = RelationHelper.getRelationForAncestor(depth);
+    }
+
     public void updateRelationForDescendant() {
         this.relation = RelationHelper.getRelationForDescendant(depth);
     }

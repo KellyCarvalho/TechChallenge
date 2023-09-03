@@ -30,11 +30,15 @@ public class FamilyService {
 //        return personRepository.findAllById(ancestorIds);
 //    }
 
-    public List<PersonFamilyMember> findBrothers(Long personId) {
-        return closureTableRepository.findBrothers(personId);
+    public List<PersonFamilyMember> findParents(Long personId) {
+        return closureTableRepository.findParents(personId);
     }
 
     public List<PersonFamilyMember> findChildren(Long personId) {
         return closureTableRepository.findChildren(personId);
+    }
+
+    public List<PersonFamilyMember> findBrothers(Long personId) {
+        return closureTableRepository.findBrothers(personId);
     }
 }

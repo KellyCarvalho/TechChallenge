@@ -27,22 +27,18 @@ public interface ClosureTableRepository extends JpaRepository<ClosureTable, Long
     List<Long> findDescendantsIds(@Param("ancestorId") Long ancestorId);
 
     @Query(value = """
-    WITH Ancestor AS (
-        SELECT descendant_id AS id, depth FROM closure_table WHERE descendant_id = :descendantId ORDER BY depth DESC LIMIT 1
-    ), Descentants AS (
-        SELECT ct.descendant_id, ct.depth FROM closure_table ct JOIN Ancestor a ON ct.ancestor_id = a.id WHERE ancestor_id = :descendantId AND ct.depth <> 0
-    ) SELECT p.id, p.name, p.birth_date AS birthDate, p.gender, d.depth FROM Descentants d JOIN person p ON d.descendant_id = p.id;
+    WITH Ancestors AS (
+        SELECT ancestor_id, depth FROM closure_table WHERE descendant_id = :descendantId AND depth <> 0
+    ) SELECT p.id, p.name, p.birth_date AS birthDate, p.gender, a.depth FROM Ancestors a JOIN person p ON a.ancestor_id = p.id;
     """, nativeQuery = true)
-    List<PersonFamilyMember> findChildren(@Param("descendantId") Long descendantId);
+    List<PersonFamilyMember> findParents(@Param("descendantId") Long descendantId);
 
     @Query(value = """
-    WITH Ancestor AS (
-        SELECT descendant_id AS id, depth FROM closure_table WHERE descendant_id = :descendantId ORDER BY depth DESC LIMIT 1
-    ), Descentants AS (
-        SELECT ct.descendant_id, ct.depth FROM closure_table ct JOIN Ancestor a ON ct.ancestor_id = a.id WHERE ancestor_id = :descendantId AND ct.depth BETWEEN 1 AND :maxDepth
+    WITH Descentants AS (
+        SELECT descendant_id, depth FROM closure_table WHERE ancestor_id = :ancestorId AND depth <> 0
     ) SELECT p.id, p.name, p.birth_date AS birthDate, p.gender, d.depth FROM Descentants d JOIN person p ON d.descendant_id = p.id;
     """, nativeQuery = true)
-    List<PersonFamilyMember> findChildren(@Param("descendantId") Long descendantId, @Param("maxDepth") int maxDepth);
+    List<PersonFamilyMember> findChildren(@Param("ancestorId") Long ancestorId);
 
     @Query(value = """
     WITH Ancestor AS (

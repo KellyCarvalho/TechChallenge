@@ -77,6 +77,14 @@ public class PersonService {
         return new PersonView(person);
     }
 
+    public PersonFamilyView findParents(Long personId) {
+        Person person = personRepository.findById(personId).orElseThrow(() -> new NotFoundException("Person id: %s not found.".formatted(personId)));
+        List<PersonFamilyMemberDTO> ancestors = familyService.findParents(personId).stream().map(PersonFamilyMemberDTO::new).toList();
+        ancestors.forEach(PersonFamilyMemberDTO::updateRelationForAncestor);
+
+        return new PersonFamilyView(person, ancestors);
+    }
+
     public PersonFamilyView findChildren(Long personId) {
         Person person = personRepository.findById(personId).orElseThrow(() -> new NotFoundException("Person id: %s not found.".formatted(personId)));
         List<PersonFamilyMemberDTO> descendants = familyService.findChildren(personId).stream().map(PersonFamilyMemberDTO::new).toList();
