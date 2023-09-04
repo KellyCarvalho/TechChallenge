@@ -76,8 +76,8 @@ public class PersonService {
     }
 
     public PersonView addChild(Long parentId, Long personId) {
-        Person parent = personRepository.findById(parentId).orElseThrow(() -> new NotFoundException("Person id: %s not found.".formatted(parentId)));
-        Person person = personRepository.findById(personId).orElseThrow(() -> new NotFoundException("Parent id: %s not found.".formatted(personId)));
+        Person parent = personRepository.findById(parentId).orElseThrow(() -> new NotFoundException("Parent id: %s not found.".formatted(parentId)));
+        Person person = personRepository.findById(personId).orElseThrow(() -> new NotFoundException("Person id: %s not found.".formatted(personId)));
         familyService.addChild(parent, person);
 
         return new PersonView(person);
