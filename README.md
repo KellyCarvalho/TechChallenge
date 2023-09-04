@@ -816,7 +816,7 @@
 
     - POST: http://localhost:8080/people/{personId}/parent/{parentId}
         - {personId}: id do filho
-        - {parentId}: id do responsavel
+        - {parentId}: id do responsável
           - Request:
             ```bash
               curl -X POST 'http://localhost:8080/people/2/parent/1'
@@ -857,7 +857,7 @@
     <summary>Buscar descendentes</summary>
     
     - POST: http://localhost:8080/people/{id}/descendants
-      - {id}: id do responsavel
+      - {id}: id do responsável
         - Request:
           ```bash
             curl -X GET 'http://localhost:8080/people/1/descendants'
