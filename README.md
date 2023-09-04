@@ -242,11 +242,11 @@
           }
         ```
       - Response 404:
-      ```json
-        {
-          "error": "Address id: 3 not found."
-        }
-      ```
+        ```json
+          {
+            "error": "Address id: 3 not found."
+          }
+        ```
 
   </details>
 
@@ -449,70 +449,25 @@
 
 - ### API de Eletrodomésticos:
 
-    - Cadastrar um eletrodoméstico:
-        - POST: http://localhost:8080/appliances/
-        - Exemplo de requisição:
-      ```bash
-      curl -X POST 'localhost:8080/appliances' \
-      -H 'Content-Type: application/json' \
-      --data '{
-          "name": "Refrigerador dummie",
-          "brand": "alta fridge",
-          "model": "UVNANO",
-          "potencyInWatts":5200,
-          "voltage": "ONE_HUNDRED_TWENTY_SEVEN",
-          "addressId": 1
-      }'
-      ```
-        - Exemplo de retorno em caso de sucesso:
-      ```json
-      // status 201
-      {
-        "id": 2,
-        "name": "Refrigerador dummie",
-        "brand": "alta fridge",
-        "model": "UVNANO",
-        "potencyInWatts": 5200,
-        "voltage": "ONE_HUNDRED_TWENTY_SEVEN"
-      }
-      ```
-    - Buscar um eletrodoméstico:
-        - GET: http://localhost:8080/appliances/{id}
-            - {id}: id do endereço buscado
-        - Exemplo de requisição:
-      ```bash
-      curl -X GET 'localhost:8080/appliances/1'
-      ```
-        - Exemplo de retorno em caso de sucesso:
-      ```json
-      // status 200
-      {
-        "id": 1,
-        "name": "Refrigerador dummie",
-        "brand": "alta fridge",
-        "model": "UVNANO",
-        "potencyInWatts": 5200,
-        "voltage": "ONE_HUNDRED_TWENTY_SEVEN"
-      }
-      ```
-    - Buscar todos os eletrodomésticos:
-        - GET: http://localhost:8080/appliances
-        - Exemplo de requisição:
-      ```bash
-      curl -X GET 'localhost:8080/appliances'
-      ```
-        - Exemplo de retorno em caso de sucesso:
-      ```json
-      // status 200
-      [
-        {
-          "id": 1,
-          "name": "Refrigerador dummie",
-          "brand": "alta fridge",
-          "model": "UVNANO",
-          "potencyInWatts": 5200,
-          "voltage": "ONE_HUNDRED_TWENTY_SEVEN"
-        },
+  <details>
+    <summary>Cadastrar um eletrodoméstico</summary>
+
+    - POST: http://localhost:8080/appliances/
+      - Request:
+        ```bash
+          curl -X POST 'localhost:8080/appliances' \
+          -H 'Content-Type: application/json' \
+          --data '{
+              "name": "Refrigerador dummie",
+              "brand": "alta fridge",
+              "model": "UVNANO",
+              "potencyInWatts":5200,
+              "voltage": "ONE_HUNDRED_TWENTY_SEVEN",
+              "addressId": 1
+          }'
+        ```
+      - Response 201:
+        ```json
         {
           "id": 2,
           "name": "Refrigerador dummie",
@@ -521,47 +476,120 @@
           "potencyInWatts": 5200,
           "voltage": "ONE_HUNDRED_TWENTY_SEVEN"
         }
-      ]
-      ```
-    - Pesquisar os eletrodomésticos por item:
+        ```
+      - Response 400
+        ```json
+          {
+            "name": "não deve estar em branco",
+            "brand": "não deve estar em branco",
+            "addressId": "não deve ser nulo"
+          }
+        ```
+  </details>
+  <details>
+    <summary>Buscar um eletrodoméstico</summary>
+
+    - GET: http://localhost:8080/appliances/{id} *(id do endereço buscado)*
+      - Request
+        ```bash
+          curl -X GET 'localhost:8080/appliances/1'
+        ```
+      - Response 200
+        ```json
+          {
+            "id": 1,
+            "name": "Refrigerador dummie",
+            "brand": "alta fridge",
+            "model": "UVNANO",
+            "potencyInWatts": 5200,
+            "voltage": "ONE_HUNDRED_TWENTY_SEVEN"
+          }
+        ```
+      - Response 404
+        ```json
+          {
+            "error": "Appliance id: 14 not found."
+          }
+        ```
+  </details>
+  <details>
+    <summary>Buscar todos os eletrodomésticos</summary>
+
+    - GET: http://localhost:8080/appliances
+      - Request:
+        ```bash
+          curl -X GET 'localhost:8080/appliances'
+        ```
+      - Response 200
+        ```json
+          [
+            {
+              "id": 1,
+              "name": "Refrigerador dummie",
+              "brand": "alta fridge",
+              "model": "UVNANO",
+              "potencyInWatts": 5200,
+              "voltage": "ONE_HUNDRED_TWENTY_SEVEN"
+            },
+            {
+              "id": 2,
+              "name": "Refrigerador dummie",
+              "brand": "alta fridge",
+              "model": "UVNANO",
+              "potencyInWatts": 5200,
+              "voltage": "ONE_HUNDRED_TWENTY_SEVEN"
+            }
+          ]
+        ```
+  </details>
+  <details>
+    <summary>Pesquisar os eletrodomésticos por item</summary>
+
     - POST: http://localhost:8080/appliances/search
-    - Exemplo de requisição:
-      ```bash
-      curl -X POST 'localhost:8080/appliances/search' \
-      -H 'Content-Type: application/json' \
-      --data '{
-          "name": "Refrigerador",
-          "brand": "",
-          "model": "UVNANO"
-      }'
-      ```
-    - Exemplo de retorno em caso de sucesso:
-      ```json
-      // status 200
-      [
-        {
-          "id": 1,
-          "street": "Rua dos Bobos",
-          "number": "0",
-          "neighborhood": "Vila Pompéia",
-          "city": "São Paulo",
-          "state": "SP"
-        },
-        {
-          "id": 2,
-          "street": "Rua dos dois",
-          "number": "1",
-          "neighborhood": "Vila Pompéia",
-          "city": "São Paulo",
-          "state": "SP"
-        }
-      ]
-      ```
-        - Atualizar um eletrodoméstico:
-            - PUT: http://localhost:8080/appliances/{id}
-                - {id}: id do eletrodoméstico a ser atualizado
-            - Exemplo de requisição:
-          ```bash
+      - Request:
+        ```bash
+          curl -X POST 'localhost:8080/appliances/search' \
+          -H 'Content-Type: application/json' \
+          --data '{
+              "name": "Refrigerador",
+              "brand": "",
+              "model": "UVNANO"
+          }'
+        ```
+      - Response 200:
+        ```json
+          [
+            {
+              "id": 1,
+              "street": "Rua dos Bobos",
+              "number": "0",
+              "neighborhood": "Vila Pompéia",
+              "city": "São Paulo",
+              "state": "SP"
+            },
+            {
+              "id": 2,
+              "street": "Rua dos dois",
+              "number": "1",
+              "neighborhood": "Vila Pompéia",
+              "city": "São Paulo",
+              "state": "SP"
+            }
+          ]
+        ```
+      - Response 404
+        ```json
+          {
+            "error": "Appliance id: 14 not found."
+          }
+        ```
+  </details>
+  <details>
+    <summary>Atualizar um eletrodoméstico</summary>
+
+    - PUT: http://localhost:8080/appliances/{id} *(id do eletrodoméstico a ser atualizado)*
+      - Request:
+        ```bash
           curl -X PUT 'localhost:8080/appliances/1' \
           -H 'Content-Type: application/json' \
           --data '{
@@ -571,10 +599,9 @@
               "potencyInWatts": 2000,
               "voltage": "BIVOLT"
           }'
-          ```
-            - Exemplo de retorno em caso de sucesso:
-          ```json
-          // status 200
+        ```
+      - Response 200:
+        ```json
           {
             "id": 1,
             "name": "Lavadora Lavanada",
@@ -583,272 +610,359 @@
             "potencyInWatts": 2000,
             "voltage": "BIVOLT"
           }
-          ```
-        - Deletar um eletrodoméstico:
-            - DELETE: http://localhost:8080/appliances/{id}
-                - {id}: id do eletrodoméstico a ser deletado
-            - Exemplo de requisição:
+        ```
+      - Response 404
+        ```json
+          {
+            "error": "Appliance id: 1 not found."
+          }
+        ```
+  </details>
+  <details>
+    <summary>Deletar um eletrodoméstico</summary>
+
+    - DELETE: http://localhost:8080/appliances/{id} *(id do eletrodoméstico a ser deletado)*
+        - Exemplo de requisição:
           ```bash
-          curl -X DELETE 'localhost:8080/appliances/1'
+            curl -X DELETE 'localhost:8080/appliances/1'
           ```
-            - Exemplo de retorno em caso de sucesso:
+        - Exemplo de retorno em caso de sucesso:
           ```json
-          // status 204
+            {}
           ```
+        - Response 404
+          ```json
+            {
+              "error": "Appliance id: 1 not found."
+            }
+          ```
+  </details>
 
 - ### API de Pessoas:
 
-    - Cadastrar uma pessoa:
-        - POST: http://localhost:8080/people/
-        - Exemplo de requisição:
-      ```bash
-      curl -X POST 'localhost:8080/people' \
-      -H 'Content-Type: application/json' \
-      --data '{
-          "name": "Sergio Bezerra da Silva",
-          "birthDate": "1974-05-25",
-          "gender": "MALE",
-          "addressesIds": [1],
-          "userId": 1
-      }'
-      ```
-        - Exemplo de retorno em caso de sucesso:
-      ```json
-      // status 201
-      {
-        "id": 1,
-        "name": "Sergio Bezerra da Silva",
-        "birthDate": "1974-05-25",
-        "gender": "MALE"
-      }
-      ```
-    - Buscar uma pessoa:
-        - GET: http://localhost:8080/people/{id}
-            - {id}: id da pessoa buscada
-        - Exemplo de requisição:
-      ```bash
-      curl -X GET 'localhost:8080/people/1'
-      ```
-        - Exemplo de retorno em caso de sucesso:
-      ```json
-      // status 200
-      {
-        "id": 2,
-        "name": "Sergio Bezerra da Silva",
-        "birthDate": "1974-05-25",
-        "gender": "MALE"
-      }
-      ```
-    - Buscar todas as pessoas:
-        - GET: http://localhost:8080/people
-        - Exemplo de requisição:
-      ```bash
-      curl -X GET 'localhost:8080/people'
-      ```
-        - Exemplo de retorno em caso de sucesso:
-      ```json
-      // status 200
-      [
-        {
-          "id": 1,
-          "name": "Sergio Bezerra da Silva",
-          "birthDate": "1974-05-25",
-          "gender": "MALE"
-        },
-        {
-          "id": 2,
-          "name": "Sergio Bezerra da Silva",
-          "birthDate": "1974-05-25",
-          "gender": "MALE"
-        }
-      ]
-      ```
-    - Pesquisar pessoas por item:
-    - POST: http://localhost:8080/people/search
-    - Exemplo de requisição:
-      ```bash
-      curl -X POST 'localhost:8080/people/search' \
-      -H 'Content-Type: application/json' \
-      --data '{
-          "userId": 1,
-          "name": "",
-          "gender": "MALE"
-      }'
-      ```
-    - Exemplo de retorno em caso de sucesso:
-      ```json
-      // status 200
-      [
-        {
-          "id": 1,
-          "street": "Rua dos Bobos",
-          "number": "0",
-          "neighborhood": "Vila Pompéia",
-          "city": "São Paulo",
-          "state": "SP"
-        },
-        {
-          "id": 2,
-          "street": "Rua dos dois",
-          "number": "1",
-          "neighborhood": "Vila Pompéia",
-          "city": "São Paulo",
-          "state": "SP"
-        }
-      ]
-      ```
-        - Atualizar uma pessoa:
-            - PUT: http://localhost:8080/people/{id}
-                - {id}: id da pessoa a ser atualizada
-            - Exemplo de requisição:
-          ```bash
-          curl -X PUT 'localhost:8080/people/1' \
+  <details>
+    <summary>Cadastrar uma pessoa</summary>
+
+    - POST: http://localhost:8080/people/
+      - Request:
+        ```bash
+          curl -X POST 'localhost:8080/people' \
           -H 'Content-Type: application/json' \
           --data '{
-              "name": "Sergio Bezerra Oliveira",
+              "name": "Sergio Bezerra da Silva",
               "birthDate": "1974-05-25",
-              "gender": "MALE"
+              "gender": "MALE",
+              "addressesIds": [1],
+              "userId": 1
           }'
-          ```
-            - Exemplo de retorno em caso de sucesso:
-          ```json
-          // status 200
+        ```
+      - Response 201:
+        ```json
           {
-            "id": 2,
-            "name": "Sergio Bezerra Oliveira",
+            "id": 1,
+            "name": "Sergio Bezerra da Silva",
             "birthDate": "1974-05-25",
             "gender": "MALE"
           }
-          ```
-        - Deletar uma pessoa:
-            - DELETE: http://localhost:8080/people/{id}
-                - {id}: id da pessoa a ser deletada
-            - Exemplo de requisição:
+        ```
+      - Response 400
+        ```json
+          {
+            "name": "não deve ser nulo",
+            "birthDate": "não deve ser nulo"
+          }
+        ```
+  </details>
+  <details>
+    <summary>Buscar uma pessoa</summary>
+
+    - GET: http://localhost:8080/people/{id}  *(id da pessoa buscada)*
+      - Request:
+        ```bash
+          curl -X GET 'localhost:8080/people/1'
+        ```
+      - Response 200:
+        ```json
+          {
+            "id": 2,
+            "name": "Sergio Bezerra da Silva",
+            "birthDate": "1974-05-25",
+            "gender": "MALE"
+          }
+        ```
+      - Response 404:
+        ```json
+          {
+            "error": "Person id: 10 not found."
+          }
+        ```
+  </details>
+  <details>
+    <summary>Buscar todas as pessoas</summary>
+
+    
+    - GET: http://localhost:8080/people
+      - Request:
+        ```bash
+          curl -X GET 'localhost:8080/people'
+        ```
+      - Exemplo de retorno em caso de sucesso:
+        ```json
+          [
+            {
+              "id": 1,
+              "name": "Sergio Bezerra da Silva",
+              "birthDate": "1974-05-25",
+              "gender": "MALE"
+            },
+            {
+              "id": 2,
+              "name": "Sergio Bezerra da Silva",
+              "birthDate": "1974-05-25",
+              "gender": "MALE"
+            }
+          ]
+        ```
+  </details>
+  <details>
+    <summary>Pesquisar pessoas por item</summary>
+
+    - POST: http://localhost:8080/people/search
+      - Request:
+        ```bash
+          curl -X POST 'localhost:8080/people/search' \
+          -H 'Content-Type: application/json' \
+          --data '{
+              "userId": 1,
+              "name": "",
+              "gender": "MALE"
+          }'
+        ```
+      - Response 200:
+        ```json
+          [
+            {
+              "id": 1,
+              "street": "Rua dos Bobos",
+              "number": "0",
+              "neighborhood": "Vila Pompéia",
+              "city": "São Paulo",
+              "state": "SP"
+            },
+            {
+              "id": 2,
+              "street": "Rua dos dois",
+              "number": "1",
+              "neighborhood": "Vila Pompéia",
+              "city": "São Paulo",
+              "state": "SP"
+            }
+          ]
+        ```
+  </details>
+  <details>
+    <summary>Atualizar uma pessoa</summary>
+
+    - PUT: http://localhost:8080/people/{id}  *(id da pessoa a ser atualizada)*
+        - Request:
           ```bash
-          curl -X DELETE 'localhost:8080/people/1'
+            curl -X PUT 'localhost:8080/people/1' \
+            -H 'Content-Type: application/json' \
+            --data '{
+                "name": "Sergio Bezerra Oliveira",
+                "birthDate": "1974-05-25",
+                "gender": "MALE"
+            }'
           ```
-            - Exemplo de retorno em caso de sucesso:
+        - Response 200:
           ```json
-          // status 204
+            {
+              "id": 2,
+              "name": "Sergio Bezerra Oliveira",
+              "birthDate": "1974-05-25",
+              "gender": "MALE"
+            }
           ```
-        - Definir responsável:
-            - POST: http://localhost:8080/people/{personId}/parent/{parentId}
-                - {personId}: id do filho
-                - {parentId}: id do responsavel
-            - Exemplo de requisição:
-          ```bash
-          curl -X POST 'http://localhost:8080/people/2/parent/1'
+        - Response 400:
+          ```json
+            {
+              "addressesIds": "não deve estar vazio",
+              "name": "não deve ser nulo",
+              "userId": "não deve ser nulo",
+              "birthDate": "não deve ser nulo"
+            }
           ```
+        - Response 404:
+          ```json
+            {
+              "error": "Person id: 10 not found."
+            }
+          ```
+  </details>
+  <details>
+    <summary>Deletar uma pessoa</summary>
 
-- Exemplo de retorno em caso de sucesso:
+    - DELETE: http://localhost:8080/people/{id}  *(id da pessoa a ser deletada)*
+      - Request:
+        ```bash
+          curl -X DELETE 'localhost:8080/people/1'
+        ```
+      - Response 204:
+        ```json
+          {}
+        ```
+      - Response 404:
+        ```json
+          {
+            "error": "Person id: 10 not found."
+          }
+        ```
+  </details>
+  <details>
+    <summary>Definir responsável</summary>
 
-  ```json
-  {
-    "id": 2,
-    "name": "Luiz Inacio",
-    "birthDate": "1971-09-03",
-    "gender": "MALE",
-    "relatedUser": {
-      "id": 1,
-      "name": "Sergio Bezerra da Silva",
-      "birthDate": "1974-05-25",
-      "gender": "MALE"
-    },
-    "addresses": [
-      {
-        "id": 1,
-        "street": "Rua dos Bobos",
-        "number": "0",
-        "neighborhood": "Vila Pompéia",
-        "city": "São Paulo",
-        "state": "SP"
-      }
-    ]
-  }
-  ```
-
-- Buscar descendentes:
-
+    - POST: http://localhost:8080/people/{personId}/parent/{parentId}
+        - {personId}: id do filho
+        - {parentId}: id do responsavel
+          - Request:
+            ```bash
+              curl -X POST 'http://localhost:8080/people/2/parent/1'
+            ```
+          - Response 200:
+            ```json
+              {
+                "id": 2,
+                "name": "Luiz Inacio",
+                "birthDate": "1971-09-03",
+                "gender": "MALE",
+                "relatedUser": {
+                  "id": 1,
+                  "name": "Sergio Bezerra da Silva",
+                  "birthDate": "1974-05-25",
+                  "gender": "MALE"
+                },
+                "addresses": [
+                  {
+                    "id": 1,
+                    "street": "Rua dos Bobos",
+                    "number": "0",
+                    "neighborhood": "Vila Pompéia",
+                    "city": "São Paulo",
+                    "state": "SP"
+                  }
+                ]
+              }            
+            ```
+          - Respomse 404:
+            ```json
+              {
+                "error": "Person id: 5 not found."
+              }            
+            ```
+  </details>
+  <details>
+    <summary>Buscar descendentes</summary>
+    
     - POST: http://localhost:8080/people/{id}/descendants
-    - {id}: id do responsavel
-    - Exemplo de requisição:
+      - {id}: id do responsavel
+        - Request:
+          ```bash
+            curl -X GET 'http://localhost:8080/people/1/descendants'
+          ```
+        - Response 200:
+            ```json
+            {
+              "id": 1,
+              "name": "Sergio Bezerra da Silva",
+              "birthDate": "1974-05-25",
+              "gender": "MALE",
+              "familyMembers": {
+                "SON": [
+                  {
+                    "id": 2,
+                    "name": "Luiz Inacio",
+                    "birthDate": "1971-09-03",
+                    "gender": "MALE"
+                  }
+                ]
+              }
+            }
+            ```
+        - Respomse 404:
+            ```json
+              {
+                "error": "Person id: 5 not found."
+              }            
+            ```
+  </details>
+  <details>
+    <summary>Buscar ancestrais</summary>
 
-  ```bash
-    curl -X GET 'http://localhost:8080/people/1/descendants'
-  ```
-
-    - Exemplo de retorno em caso de sucesso:
-
-  ```json
-  {
-    "id": 1,
-    "name": "Sergio Bezerra da Silva",
-    "birthDate": "1974-05-25",
-    "gender": "MALE",
-    "familyMembers": {
-      "SON": [
-        {
-          "id": 2,
-          "name": "Luiz Inacio",
-          "birthDate": "1971-09-03",
-          "gender": "MALE"
-        }
-      ]
-    }
-  }
-  ```
-
-- Buscar ancestrais:
     - POST: http://localhost:8080/people/{id}/ancestors
-    - {id}: id do descendente
-    - Exemplo de requisição:
-  ```bash
-    curl -X GET 'http://localhost:8080/people/2/ancestors'
-  ```
-- Exemplo de retorno em caso de sucesso:
+      - {id}: id do descendente
+        - Request:
+          ```bash
+            curl -X GET 'http://localhost:8080/people/2/ancestors'
+          ```
+        - Response 200:
+          ```json
+            {
+              "id": 2,
+              "name": "Luiz Inacio",
+              "birthDate": "1971-09-03",
+              "gender": "MALE",
+              "familyMembers": {
+                "PARENT": [
+                  {
+                    "id": 1,
+                    "name": "Sergio Bezerra da Silva",
+                    "birthDate": "1974-05-25",
+                    "gender": "MALE"
+                  }
+                ]
+              }
+            }
+          ```
+        - Respomse 404:
+            ```json
+              {
+                "error": "Person id: 5 not found."
+              }            
+            ```
+  </details>
+  <details>
+    <summary>Buscar irmãos</summary>
 
-  ```json
-  {
-    "id": 2,
-    "name": "Luiz Inacio",
-    "birthDate": "1971-09-03",
-    "gender": "MALE",
-    "familyMembers": {
-      "PARENT": [
-        {
-          "id": 1,
-          "name": "Sergio Bezerra da Silva",
-          "birthDate": "1974-05-25",
-          "gender": "MALE"
-        }
-      ]
-    }
-  }
-  ```
-
-- Buscar irmãos:
     - POST: http://localhost:8080/people/{id}/brothers
-    - {id}: id da pessoa
-    - Exemplo de requisição:
-  ```bash
-    curl -X GET 'http://localhost:8080/people/2/brothers'
-  ```
-- Exemplo de retorno em caso de sucesso:
-  ```json
-  {
-    "id": 2,
-    "name": "Luiz Inacio",
-    "birthDate": "1971-09-03",
-    "gender": "MALE",
-    "familyMembers": {
-      "BROTHER": [
-        {
-          "id": 3,
-          "name": "Luiz Terceiro",
-          "birthDate": "1971-09-13",
-          "gender": "MALE"
-        }
-      ]
-    }
-  }
-  ```
+      - {id}: id da pessoa
+        - Reqquest:
+          ```bash
+            curl -X GET 'http://localhost:8080/people/2/brothers'
+          ```
+        - Response 200:
+          ```json
+            {
+              "id": 2,
+              "name": "Luiz Inacio",
+              "birthDate": "1971-09-03",
+              "gender": "MALE",
+              "familyMembers": {
+                "BROTHER": [
+                  {
+                    "id": 3,
+                    "name": "Luiz Terceiro",
+                    "birthDate": "1971-09-13",
+                    "gender": "MALE"
+                  }
+                ]
+              }
+            }
+          ```
+        - Respomse 404:
+            ```json
+              {
+                "error": "Person id: 5 not found."
+              }            
+            ```
+  </details>
+
