@@ -20,7 +20,7 @@
 - Relacionamento entre pessoas da mesma família:
   Foi um desafio interessante ter que relacionar usuários de maneira automática ao inserir, primeiro pensamos na abordagem de ter um método que funcionaria como uma espécie de job varrendo todos os usuários relacionados ao usuário que tinha a relação
   e a cada inserção o método pesquisaria cada relação e devolveria relação por relação, no início pareceu uma boa ideia, mas do meio para o fim tornou-se algo inviável e pensando em grande escala pouco performático por ter a ideia de
-  varrer usuário a usuário relacionado, mas tentamos de várias formas fazer funcionar até que pesquisando muito tivemos a ideia de uma tabela hierárquica (árvore) e pesquisando mais um pouco acabou vendo o conceito de closure table,
+  varrer usuário a usuário relacionado, mas tentamos de várias formas fazer funcionar até que pesquisando muito tivemos a ideia de uma tabela hierárquica (árvore) e pesquisando mais um pouco acabamos vendo o conceito de closure table,
   foi um grande desafio, entender o conceito e aplicar, mas a técnica de modelagem denominada closure table é usada para representar estruturas hierárquicas, como árvores, grafos ou categorias aninhadas. A ideia fundamental é criar uma tabela
   adicional que armazena informações sobre as relações hierárquicas entre os elementos da estrutura. Esta tabela de fechamento geralmente é preenchida com dados de forma que cada linha represente uma relação pai-filho entre elementos na hierarquia.
   A tabela inclui,pelo menos, duas colunas principais: uma coluna para o elemento pai e uma coluna para o elemento filho. E a promessa ao utilizar uma closure table é que seja possível consultar hierarquias complexas de forma eficiente.
