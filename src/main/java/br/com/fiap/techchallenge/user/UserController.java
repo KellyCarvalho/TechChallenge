@@ -23,10 +23,10 @@ public class UserController {
     }
 
 
-    @Operation(summary = "Retorna uma usuário específica",
+    @Operation(summary = "Retorna um usuário específico",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Caso a usuário tenha sido encontrada na base"),
-                    @ApiResponse(responseCode = "404", description = "Caso a usuário não tenha sido encontrada na base")
+                    @ApiResponse(responseCode = "200", description = "Caso o usuário tenha sido encontrado na base"),
+                    @ApiResponse(responseCode = "404", description = "Caso o usuário não tenha sido encontrado na base")
             }
     )
     @GetMapping("/{id}")
@@ -50,10 +50,10 @@ public class UserController {
     }
 
 
-    @Operation(summary = "Cria uma usuário na base de dados",
+    @Operation(summary = "Cria um usuário na base de dados",
             responses = {
-                    @ApiResponse(responseCode = "201", description = "Caso a usuário tenha sido encontrada na base"),
-                    @ApiResponse(responseCode = "400", description = "Caso o usuario não tenha permisao de acesso aeste recurso")
+                    @ApiResponse(responseCode = "201", description = "Caso o usuário tenha sido encontrado na base"),
+                    @ApiResponse(responseCode = "400", description = "Erro de validação")
             }
     )
     @PostMapping
@@ -65,10 +65,11 @@ public class UserController {
     }
 
 
-    @Operation(summary = "Atualiza uma usuário na base de dados",
+    @Operation(summary = "Atualiza um usuário na base de dados",
             responses = {
-                    @ApiResponse(responseCode = "201", description = "Caso a usuário tenha sido encontrada na base"),
-                    @ApiResponse(responseCode = "404", description = "Caso a usuário buscada não seja encontrada")
+                    @ApiResponse(responseCode = "201", description = "Caso o usuário tenha sido encontrada na base"),
+                    @ApiResponse(responseCode = "400", description = "Erros de validação"),
+                    @ApiResponse(responseCode = "404", description = "Caso o usuário buscada não seja encontrado")
             }
     )
     @PutMapping("/{id}")
@@ -78,10 +79,10 @@ public class UserController {
         return ResponseEntity.ok(userView);
     }
 
-    @Operation(summary = "Deleta uma usuário na base de dados",
+    @Operation(summary = "Deleta um usuário na base de dados",
             responses = {
-                    @ApiResponse(responseCode = "204", description = "Ao deletar uma usuário"),
-                    @ApiResponse(responseCode = "404", description = "Caso a usuário buscada não seja encontrada")
+                    @ApiResponse(responseCode = "204", description = "Ao deletar um usuário"),
+                    @ApiResponse(responseCode = "404", description = "Caso o usuário buscada não seja encontrado")
             }
     )
     @DeleteMapping("/{id}")

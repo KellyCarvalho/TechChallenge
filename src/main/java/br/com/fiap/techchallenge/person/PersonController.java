@@ -54,7 +54,7 @@ public class PersonController {
     @Operation(summary = "Cria uma pessoa na base de dados",
             responses = {
                     @ApiResponse(responseCode = "201", description = "Caso a pessoa tenha sido encontrada na base"),
-                    @ApiResponse(responseCode = "400", description = "Caso o usuario não tenha permissao de acesso aeste recurso")
+                    @ApiResponse(responseCode = "400", description = "Erro de validação")
             })
     @PostMapping
     ResponseEntity<PersonView> create(@Valid @RequestBody PersonForm personForm) {
@@ -68,6 +68,7 @@ public class PersonController {
     @Operation(summary = "Atualiza uma pessoa na base de dados",
             responses = {
                     @ApiResponse(responseCode = "201", description = "Caso a pessoa tenha sido encontrada na base"),
+                    @ApiResponse(responseCode = "400", description = "Erro de validação"),
                     @ApiResponse(responseCode = "404", description = "Caso a pessoa buscada não seja encontrada")
             })
     @PutMapping("/{id}")

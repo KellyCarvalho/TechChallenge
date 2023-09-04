@@ -17,10 +17,10 @@ public class PersonFamilyController {
         this.personService = personService;
     }
 
-    @Operation(summary = "Busca os filhos da pessoa",
+    @Operation(summary = "Busca os pais da pessoa",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Caso o endereço tenha sido encontrado na base"),
-                    @ApiResponse(responseCode = "404", description = "Caso o endereço não tenha sido encontrado na base")
+                    @ApiResponse(responseCode = "200", description = "Caso os pais tenham sido encontrados na base"),
+                    @ApiResponse(responseCode = "404", description = "Caso os pais não tenham sido encontrados na base")
             })
     @GetMapping(value = "/{id}/ancestors")
     ResponseEntity<PersonFamilyView> ancestors(@PathVariable Long id) {
@@ -28,10 +28,10 @@ public class PersonFamilyController {
         return ResponseEntity.ok(ancestors);
     }
 
-    @Operation(summary = "Busca os filhos da pessoa",
+    @Operation(summary = "Busca os descendentes da pessoa",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Caso o endereço tenha sido encontrado na base"),
-                    @ApiResponse(responseCode = "404", description = "Caso o endereço não tenha sido encontrado na base")
+                    @ApiResponse(responseCode = "200", description = "Caso os descendentes tenham sido encontrados na base"),
+                    @ApiResponse(responseCode = "404", description = "Caso os descendentes não tenham sido encontrados na base")
             })
     @GetMapping(value = "/{id}/descendants")
     ResponseEntity<PersonFamilyView> descendants(@PathVariable Long id) {
@@ -39,10 +39,10 @@ public class PersonFamilyController {
         return ResponseEntity.ok(descendants);
     }
 
-    @Operation(summary = "Busca os filhos da pessoa",
+    @Operation(summary = "Busca os irmãos da pessoa",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Caso o endereço tenha sido encontrado na base"),
-                    @ApiResponse(responseCode = "404", description = "Caso o endereço não tenha sido encontrado na base")
+                    @ApiResponse(responseCode = "200", description = "Caso os irmãos tenham sido encontrados na base"),
+                    @ApiResponse(responseCode = "404", description = "Caso os irmãos não tenham sido encontrado na base")
             })
     @GetMapping(value = "/{id}/brothers")
     ResponseEntity<PersonFamilyView> brothers(@PathVariable Long id) {
@@ -50,10 +50,10 @@ public class PersonFamilyController {
         return ResponseEntity.ok(brothers);
     }
 
-    @Operation(summary = "Atualiza uma pessoa na base de dados",
+    @Operation(summary = "Adiciona os pais da pessoa",
             responses = {
                     @ApiResponse(responseCode = "201", description = "Caso a pessoa tenha sido encontrada na base"),
-                    @ApiResponse(responseCode = "404", description = "Caso a pessoa buscada não seja encontrada")
+                    @ApiResponse(responseCode = "404", description = "Caso a pessoa ou os pais não seja encontrados na base")
             })
     @PostMapping("/{personId}/parent/{parentId}")
     ResponseEntity<PersonView> addParent(@PathVariable Long personId, @PathVariable Long parentId) {

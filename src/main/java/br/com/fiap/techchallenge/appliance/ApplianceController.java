@@ -33,8 +33,8 @@ public class ApplianceController {
 
     @Operation(summary = "Retorna um eletrodoméstico específico",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Caso o eletrodomestico tenha sido encontrado na base"),
-                    @ApiResponse(responseCode = "404", description = "Caso o eletrodomestico não tenha sido encontrado na base")
+                    @ApiResponse(responseCode = "200", description = "Caso o eletrodoméstico tenha sido encontrado na base"),
+                    @ApiResponse(responseCode = "404", description = "Caso o eletrodoméstico não tenha sido encontrado na base")
             })
     @GetMapping("/{id}")
     ResponseEntity<ApplianceView> findById(@PathVariable("id") Long id) {
@@ -45,7 +45,7 @@ public class ApplianceController {
 
     @Operation(summary = "Cria um eletrodoméstico na base de dados",
             responses = {
-                    @ApiResponse(responseCode = "201", description = "Sucesso ao criar o eletrodomestico na base"),
+                    @ApiResponse(responseCode = "201", description = "Sucesso ao criar o eletrodoméstico na base"),
                     @ApiResponse(responseCode = "400", description = "Erro de validação")
             })
     @PostMapping
@@ -58,8 +58,9 @@ public class ApplianceController {
 
     @Operation(summary = "Atualiza um eletrodoméstico na base de dados",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Sucesso ao atualizar eletrodomestico na base"),
-                    @ApiResponse(responseCode = "404", description = "Eletrodomestico buscado não encontrado")
+                    @ApiResponse(responseCode = "200", description = "Sucesso ao atualizar eletrodoméstico na base"),
+                    @ApiResponse(responseCode = "400", description = "Erro de validação"),
+                    @ApiResponse(responseCode = "404", description = "Eletrodoméstico buscado não encontrado")
             })
     @PutMapping("/{id}")
     ResponseEntity<ApplianceView> update(@PathVariable Long id, @Valid @RequestBody ApplianceForm applianceForm) {
@@ -68,9 +69,9 @@ public class ApplianceController {
         return ResponseEntity.ok(applianceView);
     }
 
-    @Operation(summary = "Deleta um eletrodomestico na base de dados",
+    @Operation(summary = "Deleta um eletrodoméstico na base de dados",
             responses = {
-                    @ApiResponse(responseCode = "204", description = "Sucesso ao deletar um eletrodomestico"),
+                    @ApiResponse(responseCode = "204", description = "Sucesso ao deletar um eletrodoméstico"),
                     @ApiResponse(responseCode = "404", description = "Eletrodomestico buscado não encontrado")
             })
     @DeleteMapping("/{id}")
