@@ -50,142 +50,237 @@
 ## Documentacao das APIs
 
 - ### API de Usuários:
-    - Cadastrar um usuário:
-        - POST: http://localhost:8080/users/
-        - Exemplo de requisição:
-      ```bash
-      curl -X POST 'localhost:8080/users' \
-      -H 'Content-Type: application/json' \
-      --data '{
-          "name": "Sergio Bezerra da Silva",
-          "birthDate": "1974-05-25",
-          "gender": "MALE"
-      }'
-      ```
-        - Exemplo de retorno em caso de sucesso:
-      ```json
-      // status 201
-      {
-        "id": 1,
-        "name": "Sergio Bezerra da Silva",
-        "birthDate": "1974-05-25",
-        "gender": "MALE"
-      }
-      ```
+
+  - #### Cadastrar um usuário:
+    - POST: http://localhost:8080/users/
+      - Request:
+        ```bash
+          curl -X POST 'localhost:8080/users' -H 'Content-Type: application/json' \
+          --data '{
+              "name": "Sò Mais um Silva",
+              "birthDate": "1975-06-25",
+              "gender": "MALE"
+          }'
+        ```
+      - Response 201:
+        ```json
+          {
+            "id": 1,
+            "name": "Sergio Bezerra da Silva",
+            "birthDate": "1974-05-25",
+            "gender": "MALE"
+          }
+        ```
+      - Response 400:
+        ```json
+          {
+            "name": "tamanho deve ser entre 1 e 255",
+            "birthDate": "não deve ser nulo"
+          }
+        ```
+  - #### Retorna um usuário específico
+    - GET: http://localhost:8080/users/{id}
+      - Request:
+        ```bash
+          curl -X GET 'http://localhost:8080/users/2'
+        ```
+      - Response 200:
+        ```json
+          {
+            "id": 1,
+            "name": "Sergio Bezerra da Silva",
+            "birthDate": "1974-05-25",
+            "gender": "MALE"
+          }
+        ```
+      - Response 404:
+        ```json
+          {
+            "error": "User id: 1 not found."
+          }
+        ```
+  - #### Retorna uma lista de usuários
+    - GET: http://localhost:8080/users
+      - Request:
+        ```bash
+          curl -X GET 'http://localhost:8080/users'
+        ```
+      - Response 200:
+        ```json
+          [
+            {
+              "id": 1,
+              "name": "Sergio Bezerra da Silva",
+              "birthDate": "1974-05-25",
+              "gender": "MALE"
+            }
+          ]
+        ```
+  - #### Atualiza um usuário na base de dados
+    - PUT: http://localhost:8080/users/{id}
+      - Request:
+        ```bash
+          curl -X PUT 'localhost:8080/users/3' \
+          -H 'Content-Type: application/json' \
+          --data '{  
+                  "name": "Sergio Oliveira da Silva",
+                  "birthDate": "1974-05-25",
+                  "gender": "MALE"
+                }'
+        ```
+      - Response 200:
+        ```json
+          {
+            "id": 1,
+            "name": "Sergio da Silva",
+            "birthDate": "1974-05-25",
+            "gender": "MALE"
+          }
+        ```
+      - Response 400:
+        ```json
+          {
+            "name": "tamanho deve ser entre 1 e 255",
+            "birthDate": "não deve ser nulo"
+          }
+        ```
+      - Response 404:
+        ```json
+          {
+            "error": "User id: 2 not found."
+          }
+        ```
+    
+  - #### Deleta um usuário na base de dados
+    - DELETE: http://localhost:8080/users/{id}
+      - Request
+        ```bash
+          curl -X DELETE 'http://localhost:8080/users/3'
+        ```
+      - Response 204
+        ```json
+          {}
+        ```
+      - Response 404:
+        ```json
+          {
+            "error": "User id: 3 not found."
+          }
+        ```
 - ### API de Endereços:
 
     - Cadastrar um endereço:
         - POST: http://localhost:8080/addresses/
         - Exemplo de requisição:
-      ```bash
-      curl -X POST 'localhost:8080/addresses' \
-      -H 'Content-Type: application/json' \
-      --data '{
-          "userId": 1,
-          "street": "Rua dos Bobos",
-          "number": "0",
-          "neighborhood": "Vila Pompéia",
-          "city": "São Paulo",
-          "state": "SP"
-      }'
-      ```
+          ```bash
+          curl -X POST 'localhost:8080/addresses' \
+          -H 'Content-Type: application/json' \
+          --data '{
+              "userId": 1,
+              "street": "Rua dos Bobos",
+              "number": "0",
+              "neighborhood": "Vila Pompéia",
+              "city": "São Paulo",
+              "state": "SP"
+          }'
+          ```
         - Exemplo de retorno em caso de sucesso:
-      ```json
-      // status 201
-      {
-        "id": 1,
-        "street": "Rua dos Bobos",
-        "number": "0",
-        "neighborhood": "Vila Pompéia",
-        "city": "São Paulo",
-        "state": "SP"
-      }
-      ```
+          ```json
+          // status 201
+          {
+            "id": 1,
+            "street": "Rua dos Bobos",
+            "number": "0",
+            "neighborhood": "Vila Pompéia",
+            "city": "São Paulo",
+            "state": "SP"
+          }
+          ```
     - Buscar um endereço:
         - GET: http://localhost:8080/addresses/{id}
             - {id}: id do endereço buscado
         - Exemplo de requisição:
-      ```bash
-      curl -X GET 'localhost:8080/addresses/1'
-      ```
+          ```bash
+          curl -X GET 'localhost:8080/addresses/1'
+          ```
         - Exemplo de retorno em caso de sucesso:
-      ```json
-      // status 200
-      {
-        "id": 1,
-        "street": "Rua dos Bobos",
-        "number": "0",
-        "neighborhood": "Vila Pompéia",
-        "city": "São Paulo",
-        "state": "SP"
-      }
-      ```
+          ```json
+          // status 200
+          {
+            "id": 1,
+            "street": "Rua dos Bobos",
+            "number": "0",
+            "neighborhood": "Vila Pompéia",
+            "city": "São Paulo",
+            "state": "SP"
+          }
+          ```
     - Buscar todos os endereços:
         - GET: http://localhost:8080/addresses
         - Exemplo de requisição:
-      ```bash
-      curl -X GET 'localhost:8080/addresses'
-      ```
+          ```bash
+          curl -X GET 'localhost:8080/addresses'
+          ```
         - Exemplo de retorno em caso de sucesso:
-      ```json
-      // status 200
-      [
-        {
-          "id": 1,
-          "street": "Rua dos Bobos",
-          "number": "0",
-          "neighborhood": "Vila Pompéia",
-          "city": "São Paulo",
-          "state": "SP"
-        },
-        {
-          "id": 2,
-          "street": "Rua dos dois",
-          "number": "1",
-          "neighborhood": "Vila Pompéia",
-          "city": "São Paulo",
-          "state": "SP"
-        }
-      ]
-      ```
+          ```json
+          // status 200
+          [
+            {
+              "id": 1,
+              "street": "Rua dos Bobos",
+              "number": "0",
+              "neighborhood": "Vila Pompéia",
+              "city": "São Paulo",
+              "state": "SP"
+            },
+            {
+              "id": 2,
+              "street": "Rua dos dois",
+              "number": "1",
+              "neighborhood": "Vila Pompéia",
+              "city": "São Paulo",
+              "state": "SP"
+            }
+          ]
+          ```
 
-- Pesquisar os endereços por item:
+  - Pesquisar os endereços por item:
 
-    - POST: http://localhost:8080/addresses/search
-    - Exemplo de requisição:
-      ```bash
-      curl -X POST 'localhost:8080/addresses/search' \
-      -H 'Content-Type: application/json' \
-      --data '{
-          "street": "bobos",
-          "number": "",
-          "neighborhood": "",
-          "city": "",
-          "state": ""
-      }'
-      ```
-        - Exemplo de retorno em caso de sucesso:
-      ```json
-      // status 200
-      [
-        {
-          "id": 1,
-          "street": "Rua dos Bobos",
-          "number": "0",
-          "neighborhood": "Vila Pompéia",
-          "city": "São Paulo",
-          "state": "SP"
-        },
-        {
-          "id": 2,
-          "street": "Rua dos dois",
-          "number": "1",
-          "neighborhood": "Vila Pompéia",
-          "city": "São Paulo",
-          "state": "SP"
-        }
-      ]
-      ```
+      - POST: http://localhost:8080/addresses/search
+      - Exemplo de requisição:
+        ```bash
+        curl -X POST 'localhost:8080/addresses/search' \
+        -H 'Content-Type: application/json' \
+        --data '{
+            "street": "bobos",
+            "number": "",
+            "neighborhood": "",
+            "city": "",
+            "state": ""
+        }'
+        ```
+      - Exemplo de retorno em caso de sucesso:
+        ```json
+        // status 200
+        [
+          {
+            "id": 1,
+            "street": "Rua dos Bobos",
+            "number": "0",
+            "neighborhood": "Vila Pompéia",
+            "city": "São Paulo",
+            "state": "SP"
+          },
+          {
+            "id": 2,
+            "street": "Rua dos dois",
+            "number": "1",
+            "neighborhood": "Vila Pompéia",
+            "city": "São Paulo",
+            "state": "SP"
+          }
+        ]
+        ```
     - Atualizar um endereço:
         - PUT: http://localhost:8080/addresses/{id}
             - {id}: id do endereço a ser atualizado
