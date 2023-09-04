@@ -83,9 +83,9 @@
   </details>
 
   <details>  
-	  <summary>Retorna um usuário específico</summary>
+	  <summary>Retornar um usuário específico</summary>
 
-    - GET: http://localhost:8080/users/{id}
+    - GET: http://localhost:8080/users/{id} *(id do usuário buscado)*
       - Request:
         ```bash
           curl -X GET 'http://localhost:8080/users/2'
@@ -108,7 +108,7 @@
   </details>
 
   <details>
-    <summary>Retorna uma lista de usuários</summary>
+    <summary>Retornar uma lista de usuários</summary>
 
     - GET: http://localhost:8080/users
       - Request:
@@ -129,9 +129,9 @@
   </details>
 
   <details>
-    <summary>Atualiza um usuário na base de dados</summary>
+    <summary>Atualizar um usuário na base de dados</summary>
 
-    - PUT: http://localhost:8080/users/{id}
+    - PUT: http://localhost:8080/users/{id} *(id do usuário a ser atualizdo)*
       - Request:
         ```bash
           curl -X PUT 'localhost:8080/users/3' \
@@ -165,49 +165,11 @@
           }
         ```
   </details>
-
-  <details>  
-    <summary>Atualiza um usuário na base de dados</summary>
-
-    - PUT: http://localhost:8080/users/{id}
-      - Request:
-        ```bash
-          curl -X PUT 'localhost:8080/users/3' \
-          -H 'Content-Type: application/json' \
-          --data '{  
-                  "name": "Sergio Oliveira da Silva",
-                  "birthDate": "1974-05-25",
-                  "gender": "MALE"
-                }'
-        ```
-      - Response 200:
-        ```json
-          {
-            "id": 1,
-            "name": "Sergio da Silva",
-            "birthDate": "1974-05-25",
-            "gender": "MALE"
-          }
-        ```
-      - Response 400:
-        ```json
-          {
-            "name": "tamanho deve ser entre 1 e 255",
-            "birthDate": "não deve ser nulo"
-          }
-        ```
-      - Response 404:
-        ```json
-          {
-            "error": "User id: 2 not found."
-          }
-        ```
-  </details>
-
+  
   <details>
-    <summary>Deleta um usuário na base de dados</summary>
+    <summary>Deletar um usuário na base de dados</summary>
     
-    - DELETE: http://localhost:8080/users/{id}
+    - DELETE: http://localhost:8080/users/{id} *(id do usuário a ser deletado)*
       - Request
         ```bash
           curl -X DELETE 'http://localhost:8080/users/3'
@@ -233,7 +195,9 @@
   
 - ### API de Endereços:
 
-  - #### Cadastrar um endereço:
+  <details>
+	  <summary>Cadastrar um endereço</summary>
+
     - POST: http://localhost:8080/addresses
       - Request:
         ```bash
@@ -277,9 +241,20 @@
             "userId": "User is mandatory"
           }
         ```
-  - #### Buscar um endereço:
+      - Response 404:
+      ```json
+        {
+          "error": "Address id: 3 not found."
+        }
+      ```
+
+  </details>
+
+  <details>
+    <summary>Buscar um endereço</summary>
+
     - GET: http://localhost:8080/addresses/{id} *(id do endereço buscado)*
-      - Exemplo de requisição:
+      - Request:
         ```bash
           curl -X GET 'localhost:8080/addresses/1'
         ```
@@ -300,7 +275,11 @@
             "error": "Address id: 3 not found."
           }
         ```
-  - #### Buscar todos os endereços:
+  </details>
+
+  <details>
+    <summary>Buscar todos os endereços</summary>
+
     - GET: http://localhost:8080/addresses
       - Request:
         ```bash
@@ -327,11 +306,15 @@
           }
         ]
         ```
-  - #### Pesquisar os endereços por item:
+  </details>
+
+  <details>
+    <summary>Pesquisar os endereços por item</summary>
+
     - POST: http://localhost:8080/addresses/search
-      - Exemplo de requisição:
+      - Request:
         ```bash
-        curl -X POST 'localhost:8080/addresses/search' \
+          curl -X POST 'localhost:8080/addresses/search' \
         -H 'Content-Type: application/json' \
         --data '{
             "street": "bobos",
@@ -341,9 +324,8 @@
             "state": ""
         }'
         ```
-      - Exemplo de retorno em caso de sucesso:
+      - Response 200:
         ```json
-        // status 200
         [
           {
             "id": 1,
@@ -363,44 +345,107 @@
           }
         ]
         ```
-  - #### Atualizar um endereço:
-      - PUT: http://localhost:8080/addresses/{id}
-          - {id}: id do endereço a ser atualizado
-      - Exemplo de requisição:
-    ```bash
-    curl -X PUT 'localhost:8080/addresses/1' \
-    -H 'Content-Type: application/json' \
-    --data '{
-        "street": "Rua dos Bobos",
-        "number": "00",
-        "neighborhood": "Vila Pompéia",
-        "city": "São Paulo",
-        "state": "SP"
-    }'
-    ```
-      - Exemplo de retorno em caso de sucesso:
-    ```json
-    // status 200
-    {
-      "id": 1,
-      "street": "Rua dos Bobos",
-      "number": "00",
-      "neighborhood": "Vila Pompéia",
-      "city": "São Paulo",
-      "state": "SP"
-    }
-    ```
-  - #### Deletar um endereço:
-      - DELETE: http://localhost:8080/addresses/{id}
-          - {id}: id do endereço a ser deletado
-      - Exemplo de requisição:
-    ```bash
-    curl -X DELETE 'localhost:8080/addresses/1'
-    ```
-      - Exemplo de retorno em caso de sucesso:
-    ```json
-    // status 204
-    ```
+      - Response 404:
+        ```json
+          {
+            "error": "Address id: 3 not found."
+          }
+        ```
+  </details>
+
+  <details>
+    <summary>Atualizar um endereço</summary>
+
+    - PUT: http://localhost:8080/addresses/{id} *(id do endereço a ser atualizado)*
+      - Request:
+        ```bash
+          curl -X PUT 'localhost:8080/addresses/1' \
+          -H 'Content-Type: application/json' \
+          --data '{
+              "street": "Rua dos Bobos",
+              "number": "00",
+              "neighborhood": "Vila Pompéia",
+              "city": "São Paulo",
+              "state": "SP"
+          }'
+        ```
+      - Response 200:
+        ```json        
+          {
+            "id": 1,
+            "street": "Rua dos Bobos",
+            "number": "00",
+            "neighborhood": "Vila Pompéia",
+            "city": "São Paulo",
+            "state": "SP"
+          }
+        ```
+        - Response 404:
+        ```json
+          {
+            "error": "Address id: 3 not found."
+          }
+        ```
+  </details>
+
+  <details>
+    <summary>Deletar um endereço</summary>
+
+    - DELETE: http://localhost:8080/addresses/{id} *(id do endereço a ser deletado)*
+      - Request:
+        ```bash
+          curl -X DELETE 'localhost:8080/addresses/1'
+        ```
+      - Response 204:
+        ```json
+          {}
+        ```
+      - Response 404:
+        ```json
+          {
+            "error": "Address id: 3 not found."
+          }
+        ```      
+  </details>
+
+  <details>
+    <summary>Busca os membros do endereço</summary>
+
+    - GET: http://localhost:8080/addresses/1/members
+      - Request:
+        ```bash
+          curl -X GET 'http://localhost:8080/addresses/1/members'
+        ```
+      - Response 200:
+        ```json
+        [
+          {
+            "id": 1,
+            "street": "Rua dos Bobos",
+            "number": "0",
+            "neighborhood": "Vila Pompéia",
+            "city": "São Paulo",
+            "state": "SP"
+          },
+          {
+            "id": 2,
+            "street": "Rua dos dois",
+            "number": "1",
+            "neighborhood": "Vila Pompéia",
+            "city": "São Paulo",
+            "state": "SP"
+          }
+        ]
+        ```
+      - Response 404:
+        ```json
+          {
+            "error": "Address id: 3 not found."
+          }
+        ```
+  </details>
+  
+  
 
 - ### API de Eletrodomésticos:
 
